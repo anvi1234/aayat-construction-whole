@@ -1,0 +1,48 @@
+nb-checkbox {
+    margin-bottom: 1rem;
+  }
+  
+  .form-inline [fullWidth] {
+    flex: 1;
+  }
+  
+  .form-inline > * {
+    margin: 0 1.5rem 1.5rem 0;
+  }
+  
+  nb-card.inline-form-card nb-card-body {
+    padding-bottom: 0;
+  }
+  
+  nb-card{
+    background: transparent;
+  }
+  input{
+    margin-bottom: 1rem;
+  
+  }
+  #date{
+    width:100%;
+    height:40px;
+  
+  }
+  nb-select{
+    width:100%;
+    margin-bottom: 1rem;
+  }
+
+  #dateBox{
+    width:100%
+  }
+
+
+ 
+
+  th{
+    color:#8f9bb3
+  }
+
+  .icon{
+    color:white;
+    font-size: 25px;
+  }

@@ -1,0 +1,50 @@
+<nb-card>
+      <nb-card-header>
+        <div class="logo">
+          <img src="assets/image/logo.png">
+        </div>
+        
+        <div class="card-heading-login">
+          <span>
+           Aayat Construction
+          </span>
+        </div>
+      </nb-card-header>
+      <div id="login">
+      <nb-card-body>
+      
+        <form #loginForm="ngForm" autoComplete="on" (ngSubmit)="loginForm.valid && onSubmit(loginForm)">
+
+       
+         <div class="form-group">
+                <ion-input  appAutofill type="text" name="email" autocomplete="email"    #email="ngModel"  fullWidth id="inputFirstName" [(ngModel)]="model.email" 
+                [ngClass]="{'invalid-textbox':loginForm.submitted && !email.valid}" [pattern]="emailRegex" [ngModelOptions]="{standalone: true}"
+                placeholder="Enter Your Email"></ion-input>
+                <div class="red" *ngIf="isError">{{errorMessage}}</div>
+                <!-- <div *ngIf="loginForm.submitted && email.errors.pattern" >
+                  <label>Invalid email address</label>
+                </div> -->
+            </div>
+         <div class="form-group">
+              <ion-input  appAutofill type="password" name="password" autocomplete="current-password"  fullWidth id="inputLastName" 
+              #password="ngModel"
+              [ngClass]="{'invalid-textbox':loginForm.submitted && !password.valid}"
+              [(ngModel)]="model.password" placeholder="Password" [minlength]="10" [ngModelOptions]="{standalone: true}">
+            </ion-input>
+              <!-- <div *ngIf="loginForm.submitted && loginForm.errors?.minlength">
+                <label>Minimum 4 character</label> -->
+              <!-- </div> -->
+            </div>
+           <br>
+       <div style=" display: flex;
+       justify-content: center;
+       align-items: center;"> 
+       
+          <button type="submit"  status ="primary" nbButton>Login</button>
+        
+       </div>
+      </form>
+      </nb-card-body>
+    </div>
+    </nb-card>
+      

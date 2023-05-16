@@ -1,0 +1,86 @@
+<nb-card>
+    <nb-card-header>
+    
+       
+   
+    <div ><span class="card-heading">
+      Task
+    </span><button class="header-button" (click)="addTask()" nbButton status="primary"><span class="add-icon">+</span></button></div>
+  
+    </nb-card-header>
+  
+    <nb-card-body>
+      <div  *ngFor ="let item of wholeDataShow;index as i">
+        {{item._id}}
+      </div>
+     <div class="row ">
+         <div class="col-sm-6 offset-sm-3">
+           <div class="container">
+               <div class="item" style="color: red;" id="item-1"><b>Delayed</b></div>
+               <div class="item" style="color: orange;" id="item-2"><b>On Track</b></div>
+               <div class="item" style="color: green;" id="item-3"><b>Completed</b></div>
+           </div>
+           <div class="container">
+            <div class="item" style="color: red;text-align: center;" id="item-1"><b>{{completedStatus}}</b></div>
+            <div class="item" style="color: orange;" id="item-2"><b>{{onTrackStatus}}</b></div>
+            <div class="item" style="color: green;" id="item-3"><b>{{delayedStatus}}</b></div>
+        </div>
+         </div>
+     </div><br>
+
+     <div >
+       fdhfdhg
+      <!-- <h5 style="text-align: center;color:rgb(23, 23, 96)">{{siteNameValueheader}}-{{siteLocationNameheader}} Material On Site</h5> -->
+      <div  *ngFor ="let item of wholeDataShow;index as i">
+       
+        <span >Start Date : {{item.startDate}} &nbsp; &nbsp; &nbsp;End Date : {{item.endDate}}</span>
+        <!-- <span><b>Date:{{item.date|date}}</b><i style="font-size:18px" (click) = "updateCalednder($event,i)" *ngIf="calenderHide" class="fa">&#xf073;</i>&nbsp;&nbsp;&nbsp;<input type="date" *ngIf="!calenderHide" [(ngModel)]="calender" (change)="handler(item)"></span> <div><span><b>Total Expenses:{{item.expenseAmount | currency:'INR'}}</b></span>&nbsp;&nbsp;&nbsp;&nbsp;<span><b>Recieving Amount:{{item.totalAmount | currency:'INR'}}</b></span>&nbsp;&nbsp;&nbsp;&nbsp;<span><b>Site Amount:{{item.siteAmount | currency:'INR'}}</b></span></div> -->
+     <!-- <span class="action-icon">
+     <a class="table-row-action edit-action" *ngIf="!editData " (click)="enableEditMethod($event,i)">
+        <i class="fa fa-pencil" uib-tooltip="Edit" tooltip-trigger="mouseenter" tooltip-append-to-body="true" tooltip-placement="left"></i>
+        
+      </a>  &nbsp;   &nbsp;   &nbsp;
+      <a *ngIf="!editData " (click)="delete(item)"><i class="fa fa-trash" uib-tooltip="delete" style="color:red;font-size: 20px;" tooltip-trigger="mouseenter" tooltip-append-to-body="true" tooltip-placement="left"></i></a>
+      <i *ngIf="editData && enableEditIndex == i" style="color:red;font-size: 20px;" (click)="editData=false" class="fa fa-close" ng-click="cancel()"></i>
+   &nbsp;   &nbsp;   &nbsp;   <i *ngIf="editData && enableEditIndex == i" style="color:green;font-size: 20px;" id="saveBtn" class="fa fa-check"  (click) = "saveData(item)" type="submit"></i>
+    </span> -->
+    <table id="customers">
+      <tr>
+        <th>Worker's Name</th>
+        <th>Contact</th>
+        <th>Charge</th>
+        <th>Calender</th>
+        </tr>
+      <tr *ngFor = "let item of workersArray;index as i">
+        <td>{{item.name}}</td>
+        <td>{{item.contact}}</td>
+        <td>{{item.charge}}</td>
+        <td  ><i style="font-size:24px" *ngIf="!calenderView" (click)="viewCaledner(i,item)" class="fa">&#xf073;</i><input type="date"  *ngIf="calenderView && enableCalender == i"  (change)= "handleDateClick($event);"></td>
+     
+      </tr>
+     
+    </table>
+      <div class="botom-icon"> <span (click)=" addRow(i,item)"><i class="fa fa-plus" aria-hidden="true"></i></span></div>
+      <!-- &nbsp;&nbsp;&nbsp;<span (click)=" remove(i,item)"><i class="fa fa-minus" aria-hidden="true"></i></span> -->
+      <br></div>
+  </div>
+     <!-- <div class="container">
+      <div class="item" id="item1"><nb-select placeholder="Site Name"  required>
+               
+        <nb-option  *ngFor="let site of siteName" [value]="site.siteName" >{{site.siteName}}</nb-option>
+    
+      
+      
+      </nb-select></div>
+      <div class="item" id="item2"><nb-select placeholder="Location" required>
+               
+        <nb-option  *ngFor="let site of siteLocation" [value]="site.location">{{site.location}}</nb-option>
+    
+      
+      
+      </nb-select></div>
+    </div><br> -->
+     <!-- <ng2-smart-table [settings]="settings" [source]="source" (custom)="onCustomEvent($event,dialogview,dialogdelete)">
+    </ng2-smart-table> -->
+    </nb-card-body>
+  </nb-card>

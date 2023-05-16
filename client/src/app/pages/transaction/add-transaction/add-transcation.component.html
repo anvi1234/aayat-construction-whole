@@ -1,0 +1,134 @@
+<div class="row">
+    <div class="col-md-12">
+      <nb-card>
+        <nb-card-header><span [routerLink]="['/transaction']" class="card-heading">{{dialogTiltle}}</span>
+       
+        </nb-card-header>
+        <nb-card-body>
+          <form>
+            <!-- <div class="form-group row">
+              <label for="siteName"  class="label col-sm-2 col-form-label">Month</label>
+              <div class="col-sm-4">
+                <input type="text" nbInput fullWidth  [(ngModel)]="TransactionFormModel.month" id="work" [ngModelOptions]="{standalone: true}" disabled>
+               
+              </div>
+              <label for="siteLoc"   class="label  col-sm-2 col-form-label">Year</label>
+              <div class="col-sm-4">
+                <input type="text" nbInput fullWidth  [(ngModel)]="TransactionFormModel.year" id="work" [ngModelOptions]="{standalone: true}" disabled>
+              </div>
+            </div> -->
+            <div class="form-group row">
+              <label for="siteName"  class="label col-sm-2 col-form-label">Site Name</label>
+              <div class="col-sm-4">
+                <nb-select *ngIf= "!isShow" placeholder="Site Name" [(ngModel)]="TransactionFormModel.siteName" [ngModelOptions]="{standalone: true}"  (selectedChange)=" siteTypeChange($event)" required>
+                 
+                    <nb-option  *ngFor="let site of siteName" [value]="site.siteName">{{site.siteName}}</nb-option>
+               </nb-select>
+               <input *ngIf= "isShow"  type="text" nbInput fullWidth id="supervisorName" [(ngModel)]="TransactionFormModel.siteName" [ngModelOptions]="{standalone: true}" required disabled>
+                  <span *ngIf="error.siteName" class="required">*Required</span>
+                  </div>
+              <label for="siteLoc"   class="label  col-sm-2 col-form-label">Site Location</label>
+              <div class="col-sm-4">
+                <nb-select *ngIf= "!isShow" placeholder="Site Location" [(ngModel)]="TransactionFormModel.location" [ngModelOptions]="{standalone: true}"  (selectedChange)=" siteTypeChange($event)" required>
+                  <nb-option  *ngFor="let site of siteLocation" [value]="site.location">{{site.location}}</nb-option>
+                </nb-select>
+                <input *ngIf= "isShow"  type="text" nbInput fullWidth id="supervisorName" [(ngModel)]="TransactionFormModel.location" [ngModelOptions]="{standalone: true}" required disabled>
+                <span *ngIf="error.location" class="required">*Required</span>
+              </div>
+            </div>
+            <div class="form-group row">
+            
+              <label for="supervisorName" class="label col-sm-2 col-form-label">SuperVisor Name</label>
+              <div class="col-sm-4">
+
+                <nb-select  placeholder="SuperVisor Name" [(ngModel)]="TransactionFormModel.superVisorName" [ngModelOptions]="{standalone: true}"   required>
+                  <nb-option  *ngFor="let emp of employeeData" [value]="emp.fullName">{{emp.fullName}}</nb-option>
+                </nb-select>
+                <span *ngIf="error.superVisorName" class="required">*Required</span>
+              </div>
+              <label for="work" class="label col-sm-2 col-form-label">Given By</label>
+              <div class="col-sm-4">
+                <input type="text" nbInput fullWidth  [(ngModel)]="TransactionFormModel.givenBy" id="work" [ngModelOptions]="{standalone: true}" required>
+                <span *ngIf="error.givenBy" class="required">*Required</span>
+              </div>
+            </div>
+            <div class="form-group row">
+               
+                <label for="supervisorName" class="label col-sm-2 col-form-label">Recieved By</label>
+                <div class="col-sm-4">
+                  <input type="text" nbInput fullWidth id="supervisorName" [(ngModel)]="TransactionFormModel.recievedBy" [ngModelOptions]="{standalone: true}" required>
+                  <span *ngIf="error.recievedBy" class="required">*Required</span>
+                </div>
+                <label for="work" class="label col-sm-2 col-form-label">Amount</label>
+                <div class="col-sm-4">
+                  <input type="text" nbInput fullWidth  [(ngModel)]="TransactionFormModel.totalAmount" id="work" [ngModelOptions]="{standalone: true}" required>
+                  <span *ngIf="error.totalAmount" class="required">*Required</span>
+                </div>
+              </div>
+             
+              <div class="form-group row">
+                <label class="col-sm-2 label">Date</label>
+                <div class="col-sm-4">
+                  <input type="date" id="date" [(ngModel)]="TransactionFormModel.date" [ngModelOptions]="{standalone: true}" required>
+                  
+                </div>
+             
+                <!-- <label for="work" class="label col-sm-2 col-form-label">Reason</label> -->
+       
+                  <label class="col-sm-2 label">Expenses Type</label>
+                  <div class="col-sm-4">
+                    <nb-select placeholder="Expenses  Type" [(ngModel)]="TransactionFormModel.transactionType" [ngModelOptions]="{standalone: true}" (selectedChange)="expenseTypeChange($event)"  required>
+                      <nb-option value="Daily Expenses">Daily Expenses</nb-option>
+                      <nb-option value="Material On Site">Material On Site</nb-option>
+                      <nb-option value="Material Out Site">Material Out Site</nb-option>
+                      </nb-select> 
+                      <span *ngIf="error.transactionType" class="required">*Required</span>
+                  </div>
+              </div>
+              <div class="form-group row" *ngIf="partDetails ">
+           
+                <label for="supervisorName" class="label col-sm-2 col-form-label" >Party's Account Details</label>
+                <div class="col-sm-4">
+                  <input type="text" nbInput fullWidth id="supervisorName" [(ngModel)]="TransactionFormModel.partyDetailsAccount" [ngModelOptions]="{standalone: true}" required>
+                  
+                </div>
+                <label for="work" class="label col-sm-2 col-form-label">Bill No</label>
+                <div class="col-sm-4">
+                  <input type="text" nbInput fullWidth id="work" [(ngModel)]="TransactionFormModel.billNo" [ngModelOptions]="{standalone: true}" required>
+                </div>
+              </div>
+             
+            <div class="form-group row" *ngIf="partDetails ">
+              <label for="work" *ngIf="partDetails " class="label col-sm-2 col-form-label">Party's Name</label>
+              <div class="col-sm-4" *ngIf="partDetails ">
+                <input type="text" nbInput fullWidth id="work" [(ngModel)]="TransactionFormModel.partyDetailsName" [ngModelOptions]="{standalone: true}" required>
+               
+             
+            </div>
+            <div class="col-sm-4">
+
+            </div>
+            </div>
+
+            <div class="form-group row">
+           
+              <label for="supervisorName" class="label col-sm-2 col-form-label" >Remark</label>
+              <div class="col-sm-4">
+                <input type="text" nbInput fullWidth  [(ngModel)]="TransactionFormModel.remark" [ngModelOptions]="{standalone: true}" >
+                
+              </div>
+              
+              <div class="col-sm-4">
+                
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-4 offset-sm-4 text-center">
+                <button type="submit" nbButton status="primary" (click)="saveData(clickTitle)">{{clickTitle}}</button>
+              </div>
+            </div>
+          </form>
+        </nb-card-body>
+      </nb-card>
+   </div>
+  </div>

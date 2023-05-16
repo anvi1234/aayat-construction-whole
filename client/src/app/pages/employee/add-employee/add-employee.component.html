@@ -1,0 +1,113 @@
+<div class="row">
+    <div class="col-md-12">
+      <nb-card>
+        <nb-card-header><span [routerLink] = "['/user']" class="card-heading">{{dialogTiltle}}</span>
+       
+        </nb-card-header>
+        <nb-card-body>
+          <form>
+            <div class="form-group row">
+              <label for="siteName"  class="label col-sm-2 col-form-label">Site Name</label>
+              <div class="col-sm-4">
+                <nb-select placeholder="Site Name" [(ngModel)]="EmployeeFormModel.siteName
+                " [ngModelOptions]="{standalone: true}" (selectedChange)="siteNameChange($event)"  required>
+                 
+                  <nb-option  *ngFor="let site of siteName" [value]="site.siteName">{{site.siteName}}</nb-option>
+              
+               </nb-select>
+               <span *ngIf="error.siteName" class="required">*Required</span>
+                <!-- <span *ngIf="error.fullName" class="required">*Required</span> -->
+              </div>
+              <label for="siteLoc"   class="label  col-sm-2 col-form-label">Site Location</label>
+              <div class="col-sm-4">
+                <nb-select disabled placeholder="Site Location" [(ngModel)]="EmployeeFormModel.location" [ngModelOptions]="{standalone: true}"   required>
+                 
+                  <nb-option  *ngFor="let site of siteLocation" [value]="site.location">{{site.location}}</nb-option>
+              
+               </nb-select>
+               <span *ngIf="error.siteName" class="required">*Required</span>
+                <!-- <input type="text" nbInput fullWidth  [(ngModel)]="TaskFormModel.location" id="work" [ngModelOptions]="{standalone: true}" > -->
+                <!-- <span *ngIf="error.designation" class="required">*Required</span>   -->
+            </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="siteName"  class="label col-sm-2 col-form-label">Employee Name</label>
+              <div class="col-sm-4">
+                <input type="text" nbInput fullWidth  [(ngModel)]="EmployeeFormModel.fullName" id="work" [ngModelOptions]="{standalone: true}" >
+                <span *ngIf="error.fullName" class="required">*Required</span>
+              </div>
+              <label for="siteLoc"   class="label  col-sm-2 col-form-label">Designation</label>
+              <div class="col-sm-4">
+                <input type="text" nbInput fullWidth  [(ngModel)]="EmployeeFormModel.designation" id="work" [ngModelOptions]="{standalone: true}" >
+                <span *ngIf="error.designation" class="required">*Required</span>  
+            </div>
+            </div>
+            <div class="form-group row">
+              <label for="siteName"  class="label col-sm-2 col-form-label">Email</label>
+              <div class="col-sm-4">
+                <input type="text" nbInput fullWidth  [(ngModel)]="EmployeeFormModel.email" id="work" [ngModelOptions]="{standalone: true}" >
+                  <span *ngIf="error.email" class="required">*Required</span>
+                  </div>
+              <label for="siteLoc"   class="label  col-sm-2 col-form-label">Adhar No</label>
+              <div class="col-sm-4">
+                <input type="text" nbInput fullWidth id="siteLoc" [(ngModel)]="EmployeeFormModel.adharNo" [ngModelOptions]="{standalone: true}" required>
+                <span *ngIf="error.adharNo" class="required">*Required</span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="work" class="label col-sm-2 col-form-label">Phone Number</label>
+              <div class="col-sm-4">
+                <input type="text" nbInput fullWidth  [(ngModel)]="EmployeeFormModel.mobileNo" id="work" [ngModelOptions]="{standalone: true}" required>
+                <span *ngIf="error.mobileNo" class="required">*Required</span>
+              </div>
+              <label for="supervisorName" class="label col-sm-2 col-form-label">Address</label>
+              <div class="col-sm-4">
+                <input type="text" nbInput fullWidth id="supervisorName" [(ngModel)]="EmployeeFormModel.address" [ngModelOptions]="{standalone: true}" required>
+                <span *ngIf="error.address" class="required">*Required</span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 label">Password</label>
+              <div class="col-sm-4">
+                <input type="text" nbInput fullWidth id="supervisorName" [(ngModel)]="EmployeeFormModel.password" [ngModelOptions]="{standalone: true}" required>
+                <span *ngIf="error.password" class="required">*Required</span>
+              </div>
+              <label class="col-sm-2 label">Basic Pay</label>
+              <div class="col-sm-4">
+                <input type="text" nbInput fullWidth id="supervisorName" [(ngModel)]="EmployeeFormModel.basicPay" [ngModelOptions]="{standalone: true}" required>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 label">Bank Name</label>
+              <div class="col-sm-4">
+                <input type="text" nbInput fullWidth id="supervisorName" [(ngModel)]="EmployeeFormModel.bankName" [ngModelOptions]="{standalone: true}" required>
+               
+              </div>
+              <label class="col-sm-2 label">Account No.</label>
+              <div class="col-sm-4">
+                <input type="text" nbInput fullWidth id="supervisorName" [(ngModel)]="EmployeeFormModel.accNo" [ngModelOptions]="{standalone: true}" required>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 label">IFSC Code</label>
+              <div class="col-sm-4">
+                <input type="text" nbInput fullWidth id="supervisorName" [(ngModel)]="EmployeeFormModel.ifsccode" [ngModelOptions]="{standalone: true}" required>
+               
+              </div>
+              
+              <div class="col-sm-4">
+                
+              </div>
+            </div>
+         
+            <div class="form-group row">
+              <div class="col-sm-4 offset-sm-4 text-center">
+                <button type="submit" nbButton status="primary" (click)="saveData(clickTitle)">{{clickTitle}}</button>
+              </div>
+            </div>
+          </form>
+        </nb-card-body>
+      </nb-card>
+   </div>
+  </div>

@@ -1,0 +1,170 @@
+
+
+
+<nb-card id="wholecard">
+    <div class="invoice-heading">
+        <h3>TAX INVOICE</h3>
+    </div>
+    <div class="invoice-sub-heading">
+        <h6 style="color:red"><b>{{ addressOfConstructor }}</b></h6>
+        <h6> <b>{{email}} </b></h6>
+    </div>
+    <div class="parent1">
+        <div class="item1">
+            <h6><b>{{nameOfSender}}</b></h6>
+            <h6><b>{{address1}}</b></h6>
+            <h6><b>{{address2}}</b></h6>
+            <h6><b>{{landmark}}</b></h6>
+        </div>
+        <div class="item2">
+            <table style="width:100%">
+            <tr>
+              <th>Vendor Code:</th>
+              <td>{{sorBill.billDeatilsObj.vendorCode}}</td>
+            </tr>
+            <tr>
+              <th>Bill No:</th>
+              <td>{{sorBill.billDeatilsObj.billNo}}</td>
+            </tr>
+            <tr>
+              <th>Date:</th>
+              <td>{{sorBill.billDeatilsObj.Date}}</td>
+            </tr>
+            <tr>
+                <th>Location:</th>
+                <td>{{sorBill.billDeatilsObj.location}}</td>
+              </tr>
+          </table>
+          </div>
+    </div>
+    <div class="parent1">
+        <div class="item1">
+            <h6><b>Name of BPCL Buyer Location</b>-{{sorBill.billDeatilsObj.nameofbpclbuyerloc}}</h6>
+            <h6><b>State Code</b>-{{sorBill.billDeatilsObj.bpclstatecode}}</h6>
+            <h6><b>Address of BPCL Buyer State</b>-{{sorBill.billDeatilsObj.addressofbpcbuyerstate}}</h6>
+            <h6><b>Distt</b> -{{sorBill.billDeatilsObj.addressofbpcbuyerstate}}</h6>
+            <h6><b>GSTIN No.</b>-{{sorBill.billDeatilsObj.addressofbpcbuyerstate}}</h6>
+        </div>
+        <div class="item2">
+            <table style="width:100%">
+            <tr>
+              <th>PO/WO No-:</th>
+              <td>{{sorBill.billDeatilsObj.po}}</td>
+            </tr>
+            <tr>
+              <th></th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Party GSTIN No:</th>
+              <td>{{sorBill.billDeatilsObj.gstinNo}}</td>
+            </tr>
+            <tr>
+                <th>State:</th>
+                <td>{{sorBill.billDeatilsObj.state}}</td>
+              </tr>
+              <tr>
+                <th>PAN No.:</th>
+                <td>{{sorBill.billDeatilsObj.panNo}}</td>
+              </tr>
+              <tr>
+                <th>Work:</th>
+                <td>{{sorBill.billDeatilsObj.work}}</td>
+              </tr>
+          </table>
+          </div>
+    </div>
+    <div class="nameOfConstruction">
+        <input type="text"  [(ngModel)]="billDeatilsObj.nameOfBill" disabled>
+     
+    </div>
+    
+    <div *ngFor="let item of  headerData">
+        <div class="header-data">
+            <input type="text" style="width:6%" [(ngModel)]="item.h1" disabled>
+            <input type="text"  style="width:10%" [(ngModel)]="item.h2" disabled>
+            <input type="text" style="width:7%" [(ngModel)]="item.h3" disabled>
+            <input type="text" style="width:35%" [(ngModel)]="item.h4" disabled>
+            <input type="text" style="width:7%" [(ngModel)]="item.h5" disabled>
+            <input type="text" style="width:6%" [(ngModel)]="item.h6" disabled>
+            <input type="text" style="width:9%" [(ngModel)]="item.h7" disabled>
+            <input type="text" style="width:20%" [(ngModel)]="item.h8" disabled>
+           
+            
+    </div>
+   </div>
+    <div  *ngFor="let item of sorBill.data;let i=index">
+       
+        <div class="row-data">
+            <input type="text" style="width:6%" [(ngModel)]="item.SNO" disabled>
+            <input type="text"  style="width:10%" [(ngModel)]="item.SERVICENO" disabled>
+            <input type="text" style="width:7%" [(ngModel)]="item.sacNo" disabled>
+            <input type="text" style="width:35%" [(ngModel)]="item.JOBDESCRIPTION" disabled>
+            <input type="text" style="width:7%" [(ngModel)]="item.QTY" disabled>
+            <input type="text" style="width:6%" [(ngModel)]="item.UNIT" disabled>
+            <input type="text" style="width:9%" [(ngModel)]="item.SORRATE" disabled>
+            <input type="text" style="width:20%" [(ngModel)]="item.AMOUNT
+            " disabled>
+           
+        </div>
+           
+           
+            
+    </div>
+    <div class="row-data">
+        <input type="text" style="width:6%"  disabled>
+        <input type="text"  style="width:10%"  disabled>
+        <input type="text" style="width:7%"  disabled>
+        <input type="text" style="width:35%"  disabled>
+        <input type="text" style="width:7%" disabled>
+       
+        <input type="text" style="width:15%" value="TOTAL" disabled>
+        <input type="text" style="width:20%" [(ngModel)]="sorBill.totalAmount"
+         disabled>
+       
+    </div>
+    <div class="row-data">
+        <input type="text" style="width:6%"  disabled>
+        <input type="text"  style="width:10%"  disabled>
+        <input type="text" style="width:7%"  disabled>
+        <input type="text" style="width:35%"  disabled>
+        <input type="text" style="width:7%" disabled>
+       
+        <input type="text" style="width:15%"  [(ngModel)]="sorBill.sgst" disabled>
+        <input type="text" style="width:20%" [(ngModel)]="sorBill.sgstAmount"
+         disabled>
+       
+    </div>
+    <div class="row-data">
+        <input type="text" style="width:6%"  disabled>
+        <input type="text"  style="width:10%"  disabled>
+        <input type="text" style="width:7%"  disabled>
+        <input type="text" style="width:35%"  disabled>
+        <input type="text" style="width:7%" disabled>
+       
+        <input type="text" style="width:15%" [(ngModel)]="sorBill.cgst" disabled>
+        <input type="text" style="width:20%" [(ngModel)]="sorBill.gstAmount"
+         disabled>
+       
+    </div>
+    <div class="row-data">
+        <input type="text" style="width:6%"  disabled>
+        <input type="text"  style="width:10%"  disabled>
+        <input type="text" style="width:7%"  disabled>
+        <input type="text" style="width:35%"  disabled>
+        <input type="text" style="width:7%" disabled>
+       
+        <input type="text" style="width:15%" value="GRAND TOTAL"  disabled>
+        <input type="text" style="width:20%" [(ngModel)]="sorBill.combinedAmount"
+         disabled>
+       
+    </div>
+    <br>
+   
+   
+    
+<br>
+    
+
+</nb-card>
+<button styleSheetFile = "assets/css/print.css" printTitle="Bill" printSectionId="wholecard" class="btn btn-success" ngxPrint>print</button>

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "544497226887",
+    "firebase_url": "https://aayat-construction-default-rtdb.firebaseio.com",
+    "project_id": "aayat-construction",
+    "storage_bucket": "aayat-construction.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:544497226887:android:a65f1da3ceb62958045422",
+        "android_client_info": {
+          "package_name": "com.aayat.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "544497226887-cbv4tjpreclp50v5s7hggu66e5r54heg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBqTdEc62suQX7j53Vl_np7MKcPhxBCqw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "544497226887-cbv4tjpreclp50v5s7hggu66e5r54heg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

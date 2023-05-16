@@ -1,0 +1,163 @@
+
+
+
+<!-- <nb-card >
+    <nb-card-header>
+    <div ><span class="card-heading">
+      Site Registration
+    </span><button class="header-button"  nbButton status="primary"><span class="add-icon">+</span></button></div>
+  
+    </nb-card-header>
+  
+    <nb-card-body>
+      <div class="ng-table">
+        <ng2-smart-table [settings]="settings" [source]="source"   (custom)="onCustomEvent($event,dialogdelete,dialogviewImage)">
+        </ng2-smart-table>
+       <ng2-smart-table [settings]="settings" [source]="source"  (userRowSelect)="onUserRowSelect($event)" (custom)="onCustomEvent($event,dialogdelete,dialogviewImage)">
+      </ng2-smart-table> s
+  </div>
+  </nb-card-body>
+  </nb-card> -->
+ 
+  <ng-template #dialogdelete let-data let-ref="dialogRef">
+    <nb-card  style="width:500px">
+      <nb-card-header>Delete User</nb-card-header>
+      <nb-card-body>
+       Are You Sure You Want To Delete This User?
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton status="warning" (click)="  removeEmployee()">Delete</button>&nbsp; &nbsp;<button nbButton status="basic" (click)="styleOne=true &&  ref.close()">Cancel</button>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+  
+
+   <ng-template #dialogviewImage let-data let-ref="dialogRef">
+    <nb-card  style="width:950px" class="imageClass">
+      <nb-card-header><span class="card-heading">View Gallery</span><button class="header-gallery-button" (click)="gotoAddToDayPhoto(dialogviewImage)" nbButton status="primary"><span >Add today's photo</span></button></nb-card-header>
+      <nb-card-body>
+        <div class="row" id="gallery">
+            <div class="col-sm-2"  *ngFor="let item of urlOFFirebae;">
+              <div *ngIf= "getExtensionOfFile(item)=='mp4'">
+                <video [src]="item" controls>
+                  Your browser does not support HTML5 video.
+              </video>
+                
+              </div> 
+              <div *ngIf= "getExtensionOfFile(item) !='mp4'">
+                <a  href="" (click)="download(item)">
+                  <img [src]="item">
+                </a>
+                
+              </div>
+            </div>
+        
+         
+         
+          <!-- <h6>Uploaded Date : {{item.uploaded|date}}</h6>
+         
+          <div class="col-sm-2"   *ngFor = "let img of item.fireBaseUrl">
+            
+            <div *ngIf= "getExtensionOfFile(img)=='mp4'">
+              <video [src]="img" controls>
+                Your browser does not support HTML5 video.
+            </video>
+              
+            </div> 
+            <div *ngIf= "getExtensionOfFile(img) !='mp4'">
+              <img [src]="img">
+            </div>
+          </div> -->
+        </div>
+     
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton status="warning"  (click)="style4=true &&  ref.close()">Cancel</button>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+ 
+
+
+<nb-card>
+  <app-loader></app-loader>
+  <nb-card-header><span class="card-heading">
+    Site Registration
+ </span><button class="header-button" (click)="gotoAddEmployee()" nbButton status="primary"><span class="add-icon">+</span></button> </nb-card-header>
+  <nb-card-body>
+    <nav>
+      <input class="form-control" type="text" name="siteName" [(ngModel)]="siteName" (ngModelChange)="Search()"
+      placeholder="Enter Site's Name to search">
+    </nav>
+  <br>
+  <div class="container scroll">
+   
+    <table  class="new-rwd-table ">
+      <thead>
+        <tr>
+          <th>Action</th>
+          <th>SiteName</th> 
+          <th>Location</th> 
+          <th>Status</th> 
+          <th>PO.No.</th> 
+          <th>Bill No.</th> 
+          <th>Work</th>
+          <th>Deliver's Number</th>
+          <th>Date</th> 
+       </tr>
+      </thead>
+    
+         
+          <tbody  id="newtable">
+            <tr *ngFor="let item of gridData | paginate:{itemsPerPage:10,currentPage:p} ; let i = index">
+              <td data-label="Action">
+                <div>
+                <button class="del"  (click)="changeWithAction(i,'delete',item)" data-toggle="tooltip" data-placement="top" title="Remove">
+                  <img src="../../../assets/icon/delete.png">
+                  <!-- <i   [ngStyle]="(styleOne && byIndexingChangeColor == i  ) ?  {'color': 'red','font-size':'22px'} : {'color': 'grey','font-size':'22px'} " title="Delete"  data-toggle="tooltip" class="fa">&#xf014;</i> -->
+                </button>
+              
+              <button class="money"  (click)="changeWithAction(i,'trans',item)" data-toggle="tooltip" data-placement="top" title="Transaction">
+                <img src="../../../assets/icon/trans.png">
+                <!-- <i class="fa fa-money money"  [ngStyle]="(style3 && byIndexingChangeColor == i  ) ? {'color': '#08F917'} : {'color': 'grey'}" title="Transaction"  data-toggle="tooltip" style="font-size:24px;" aria-hidden="true"></i> -->
+              </button>
+              <button class="edit" data-toggle="tooltip" data-placement="top" title="Edit">
+                <img src="../../../assets/icon/edit.png" (click)="changeWithAction(i,'edit',item)">
+                <!-- <i style="font-size:24px"   [ngStyle]="(style2 && byIndexingChangeColor == i  ) ?  {'color': '#08C2F9 '} : {'color': 'grey'}" title="Edit"  data-toggle="tooltip" class="fa fa-edit edit"></i> -->
+              </button>
+             
+             <button class="image" (click)="changeWithAction(i,'image',item)" data-toggle="tooltip" data-placement="top" title="Gallery">
+              <img src="../../../assets/icon/gallery.png">
+              <!-- <i class="fa fa-image image"  [ngStyle]="(style4 && byIndexingChangeColor == i  ) ? {'color': '#F9AC08  '} :  {'color': 'grey'}"title="Gallery"  data-toggle="tooltip" style="font-size:24px;"></i> -->
+             </button>
+             <button class="task" (click)="changeWithAction(i,'task',item)" data-toggle="tooltip" data-placement="top" title="Task" >
+              <img src="../../../assets/icon/task.png">
+              <!-- <i class="fa fa-tasks task"  [ngStyle]="(style5 && byIndexingChangeColor == i  ) ? {'color': '#F508F9 '} : {'color': 'grey'} style="font-size:24px;"></i> -->
+             </button>
+            <button class="expenses" (click)="changeWithAction(i,'expense',item)" data-toggle="tooltip" data-placement="top" title="Expenses">
+              <img src="../../../assets/icon/expenses.png">
+              <!-- <i class="fa fa-book expenses"  [ngStyle]="(style6 && byIndexingChangeColor == i  ) ?{'color': '#33ECFF'} :  {'color': 'grey'} " title="Expenses"  data-toggle="tooltip" style="font-size:24px;"></i> -->
+            </button>
+          </div>
+              </td>
+              <td  id="start" data-label="SiteName">{{item.siteName}}</td>
+              <td data-label="Location">{{item.location}}</td> 
+              <td data-label="Status">  
+                <div *ngIf="item.status === 'Active' ">
+                <button class="pillbutton green">Active</button>
+            </div>
+            <div *ngIf="item.status === 'Closed'">
+                <button class="pillbutton red">Closed</button>
+            </div></td>
+              <td data-label="PO.No.">{{item.poNo}}</td>
+              <td data-label="Bill No.">{{item.billNo}}</td>
+              <td data-label="Work">{{item.work}}</td>
+              <td data-label="Deliver's Number">{{item.number}}</td>
+              <td data-label="Date">{{item.date | date}}</td>
+            </tr>
+      </tbody><br>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </table>
+</div>
+    </nb-card-body>
+    </nb-card>

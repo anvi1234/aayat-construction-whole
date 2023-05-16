@@ -1,0 +1,20 @@
+@import '../../styles/themes';
+// @import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+
+@include nb-install-component() {
+  .menu-sidebar ::ng-deep .scrollable {
+    padding-top: nb-theme(layout-padding-top);
+  }
+}
+
+nb-layout-column{
+  background: url('../../../../assets/image/bg-img.jpeg') bottom center no-repeat;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+ 
+}
+nb-layout{
+  overflow: hidden
+}

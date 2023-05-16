@@ -1,0 +1,91 @@
+nb-checkbox {
+    margin-bottom: 1rem;
+  }
+  
+  .form-inline [fullWidth] {
+    flex: 1;
+  }
+  
+  .form-inline > * {
+    margin: 0 1.5rem 1.5rem 0;
+  }
+
+
+  nb-card.inline-form-card nb-card-body {
+    padding-bottom: 0;
+  }
+  nb-card{
+   color:black
+  }
+  input{
+    margin-bottom: 1rem;
+  
+  }
+  nb-select{
+    width:100%;
+    margin-bottom: 1rem;
+  }
+
+  #dateBox{
+    width:100%
+  }
+
+  .label{
+    font-size: 15px;
+  }
+
+ label{
+    color:black;
+    font-size: 10px;
+ }
+ .label-size{
+  font-size: 16px;
+ }
+
+ .custom-select select{
+    width: 100%;
+    display: block;
+    font-size: 14px;
+    border: 2px solid #095179;
+    float: center;
+    /* background-color: #1389e3; */
+    height: 37px;
+    border-radius: 2px;
+    /* color: white; */
+    /* border: none; */
+
+ 
+ }
+
+ .col-sm-2,.col-sm-6,.col-sm-3{
+  float: left;
+  margin:5px;
+}
+
+@media screen and (max-width: 786px) {
+  input{
+    height: 42px;
+    width: 68% !important;
+  }
+  select{
+    width: 200px;
+  }
+}
+
+.parent {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction:row;
+  justify-content: space-between;
+  align-items: stretch;
+}
+.child>* {
+  flex: 1 1 160px;
+
+}
+.parent>.child2{
+  flex: 0.8;
+}
+.select-size{
+  max-width: 60%;
+}

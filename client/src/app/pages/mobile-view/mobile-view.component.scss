@@ -1,0 +1,51 @@
+
+.row{
+    display: flex;
+}
+.col-sm-6{
+    align-items: center;
+    position: relative;
+    width: 50%;
+    top:30px;
+    button{
+        padding:40px;
+        margin-top: 30px;
+        width: 170px;
+        font-size: 18px;
+        text-shadow: 2px 2px black;
+        color:rgb(250, 247, 247)
+    }
+}
+.yellow button{
+    background-color: rgb(0, 223, 7);
+   
+}
+.red button{
+    background-color: red;
+    
+}
+.userColor button{
+    background-color: rgb(255, 0, 238);
+  
+}
+.siteColor  button{
+    background-color: rgb(111, 0, 255);
+  
+}
+
+.attendColor button{
+    background-color: #ffea00;
+}
+
+.expenseColor button{
+    background-color: rgb(30, 0, 255);
+}
+.galleryColor button{
+    background-color: rgb(77, 77, 82);
+}
+.taskColor button{
+    background-color: rgb(208, 230, 7);
+}
+.otherToggle{
+    margin-top:40px
+}

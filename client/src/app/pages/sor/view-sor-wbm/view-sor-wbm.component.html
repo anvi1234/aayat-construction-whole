@@ -1,0 +1,139 @@
+<nb-card id="wholeCard">
+    <div class="nameOfConstruction">
+        <input type="text" [value]="data.nameOfConstruction" disabled>
+     
+    </div>
+    <div *ngFor="let item of  headerData">
+        <div class="header-data">
+            <input type="text" style="width:5%" [(ngModel)]="item.h1" disabled>
+            <input type="text"  style="width:10%" [(ngModel)]="item.h2" disabled>
+            <input type="text" style="width:30%" [(ngModel)]="item.h3" disabled>
+            <input type="text" style="width:5%" [(ngModel)]="item.h4" disabled>
+            <input type="text" style="width:6%" [(ngModel)]="item.h5" disabled>
+            <input type="text" style="width:6%" [(ngModel)]="item.h6" disabled>
+            <input type="text" style="width:9%" [(ngModel)]="item.h7" disabled>
+            <input type="text" style="width:6%" [(ngModel)]="item.h8" disabled>
+            <input type="text" style="width:7%" [(ngModel)]="item.h9"disabled>
+            <input type="text" style="width:7%" [(ngModel)]="item.h10" disabled>
+            <input type="text" style="width:9%" [(ngModel)]="item.h11" disabled>
+            
+    </div>
+   </div>
+   <div class="nameOfwork">
+    <input type="text" [value]="data.nameOfWork" disabled>
+  
+    </div>
+    <div  *ngFor="let item of data.data;let i=index">
+       
+        <div class="row-data">
+            
+            <input type="text" style="width:5%" [(ngModel)]="item.SNO" disabled>
+            <input type="text"  style="width:10%" [(ngModel)]="item.SERVICENO" disabled>
+            <input type="text" style="width:30%" [(ngModel)]="item.JOBDESCRIPTION" disabled>
+            <input type="text" style="width:5%" [(ngModel)]=blankString disabled>
+            <input type="text" style="width:6%" [(ngModel)]=blankString disabled>
+            <input type="text" style="width:6%" [(ngModel)]=blankString disabled>
+            <input type="text" style="width:9%" [(ngModel)]=blankString disabled>
+            <input type="text" style="width:6%" [(ngModel)]="item.QTY" disabled>
+            <input type="text" style="width:7%" [(ngModel)]="item.UNIT
+            " disabled>
+            <input type="text" style="width:7%" [(ngModel)]="item.SORRATE" disabled>
+            <input type="text" style="width:9%" [(ngModel)]="item.AMOUNT
+            " disabled>
+            
+        </div>
+            <div class="sub-row" *ngFor="let value of item.subArray;let j=index">
+                 
+                <input type="text" disabled style="width:5%" [(ngModel)]=blankString disabled>
+                <input type="text" disabled style="width:10%" [(ngModel)]=blankString disabled>
+                <input type="text" style="width:30%" [(ngModel)]="value.JOBDESCRIPTION
+                " disabled>
+                <input type="text"  style="width:5%" [(ngModel)]="value.NO" disabled>
+                <input type="text" style="width:6%" [(ngModel)]="value.L
+                " disabled>
+                <input type="text" style="width:6%" [(ngModel)]="value.B" disabled>
+                <input type="text" style="width:9%" [(ngModel)]="value.HDCOFE
+                " disabled>
+                <input type="text" style="width:6%" [(ngModel)]="value.QTY
+                " disabled> 
+                <input type="text" style="width:7%" disabled [(ngModel)]=blankString disabled>
+                <input type="text" style="width:7%" disabled [(ngModel)]=blankString disabled>
+                <input type="text" style="width:9%" disabled [(ngModel)]=blankString disabled>
+               
+             
+            </div>
+           
+            
+    </div><br>
+    <div class="sub-row">
+                 
+        <input type="text" disabled style="width:5%">
+        <input type="text" disabled style="width:10%" >
+        <input type="text" style="width:30%" disabled>
+        <input type="text"  style="width:5%" disabled>
+        <input type="text" style="width:6%" disabled>
+        <input type="text" style="width:6%" disabled>
+        <input type="text" style="width:9%" disabled>
+        <input type="text" style="width:6%" disabled> 
+      
+        <input type="text" style="width:14%" disabled value="TOTAL">
+        <input type="text" style="width:9%" disabled [(ngModel)]="data.totalAmount">
+       
+     
+    </div>
+    <div class="sub-row">
+                 
+        <input type="text" disabled style="width:5%" >
+        <input type="text" disabled style="width:10%"  >
+        <input type="text" style="width:30%" disabled>
+        <input type="text"  style="width:5%"disabled>
+        <input type="text" style="width:6%" disabled>
+        <input type="text" style="width:6%" disabled>
+        <input type="text" style="width:9%" disabled>
+        <input type="text" style="width:6%" disabled> 
+      
+        <input type="text" style="width:14%" disabled [(ngModel)]="data.cgst">
+        <input type="text" style="width:9%" disabled [(ngModel)]="data.gstAmount">
+       
+     
+    </div>
+    <div class="sub-row">
+                 
+        <input type="text" disabled style="width:5%" >
+        <input type="text" disabled style="width:10%"  >
+        <input type="text" style="width:30%" disabled>
+        <input type="text"  style="width:5%" disabled>
+        <input type="text" style="width:6%" disabled>
+        <input type="text" style="width:6%" disabled>
+        <input type="text" style="width:9%" disabled>
+        <input type="text" style="width:6%" disabled> 
+      
+        <input type="text" style="width:14%" disabled [(ngModel)]="data.sgst">
+        <input type="text" style="width:9%" disabled [(ngModel)]="data.sgstAmount">
+       
+     
+    </div>
+    <div class="sub-row">
+                 
+        <input type="text" disabled style="width:5%" >
+        <input type="text" disabled style="width:10%"  >
+        <input type="text" style="width:30%" disabled>
+        <input type="text"  style="width:5%" disabled>
+        <input type="text" style="width:6%" disabled>
+        <input type="text" style="width:6%" disabled>
+        <input type="text" style="width:9%" disabled>
+        <input type="text" style="width:6%" disabled> 
+      
+        <input type="text" style="width:14%" disabled value="GRAND TOTAL">
+        <input type="text" style="width:9%" disabled [(ngModel)]="data.combineAmount">
+       
+     
+    </div>
+    
+<br>
+    
+
+
+</nb-card>
+<button styleSheetFile = "assets/css/print.css" printTitle="MB" printSectionId="wholeCard" class="btn btn-warning" ngxPrint>print</button>
+

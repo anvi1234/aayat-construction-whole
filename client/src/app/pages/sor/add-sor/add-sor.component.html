@@ -1,0 +1,150 @@
+<nb-card>
+  <div *ngIf="isSelect">
+    <label for="">Select Sample:</label>
+    <select  (change)="sampleValueChanged($event)">
+      <option>Sample sor</option>
+      <option *ngFor="let item of sampleSorData" [value]="item.siteName">{{item.siteName}}</option>
+    </select>
+  </div>
+
+ 
+  <br>
+  <div class="nameOfConstruction">
+    <input type="text" [(ngModel)]="nameOfConstruction" >
+ 
+</div>
+    <div *ngFor="let item of  headerData">
+        <div class="header-data">
+            <input type="text" style="width:5%" [(ngModel)]="item.h1" disabled>
+            <input type="text"  style="width:7%" [(ngModel)]="item.h2" disabled>
+            <input type="text" style="width:33%" [(ngModel)]="item.h3" disabled>
+            <input type="text" style="width:5%" [(ngModel)]="item.h4" disabled>
+            <input type="text" style="width:6%" [(ngModel)]="item.h5" disabled>
+            <input type="text" style="width:6%" [(ngModel)]="item.h6" disabled>
+            <input type="text" style="width:9%" [(ngModel)]="item.h7" disabled>
+            <input type="text" style="width:6%" [(ngModel)]="item.h8" disabled>
+            <input type="text" style="width:7%" [(ngModel)]="item.h9"disabled>
+            <input type="text" style="width:7%" [(ngModel)]="item.h10" disabled>
+            <input type="text" style="width:7%" [(ngModel)]="item.h11" disabled>
+            
+    </div>
+   </div>
+   <div class="nameOfwork">
+    <input type="text" [(ngModel)]="nameOfWork" >
+ 
+</div>
+    <div  *ngFor="let item of data;let i=index">
+       
+        <div class="row-data">
+            <span (click)="addSubRowRow(i)">+</span> 
+            <input type="text" style="width:5%" [(ngModel)]="item.SNO">
+            <input type="text"  style="width:7%" [(ngModel)]="item.SERVICENO">
+            <input type="text" style="width:33%" [(ngModel)]="item.JOBDESCRIPTION">
+            <input type="text" style="width:5%" [(ngModel)]=blankString disabled>
+            <input type="text" style="width:6%" [(ngModel)]=blankString disabled>
+            <input type="text" style="width:6%" [(ngModel)]=blankString disabled>
+            <input type="text" style="width:9%" [(ngModel)]=blankString disabled>
+            <input type="text" style="width:6%" [(ngModel)]="item.QTY" disabled>
+            <input type="text" style="width:7%" [(ngModel)]="item.UNIT
+            ">
+            <input type="text" style="width:7%" [(ngModel)]="item.SORRATE">
+            <input type="text" style="width:7%" [(ngModel)]="item.AMOUNT
+            ">
+            <span (click)="deleteRow(i)">-</span>
+        </div>
+            <div class="sub-row" *ngFor="let value of item.subArray;let j=index">
+                <span (click)="addSubRowRow(i)">+</span> 
+                <input type="text" disabled style="width:5%" [(ngModel)]=blankString (change)="change(i,j,$event)">
+                <input type="text" disabled style="width:7%" [(ngModel)]=blankString (change)="change(i,j,$event)">
+                <input type="text" style="width:33%" [(ngModel)]="value.JOBDESCRIPTION
+                " (change)="change(i,j,$event)">
+                <input type="text"  style="width:5%" [(ngModel)]="value.NO" (change)="change(i,j,$event)">
+                <input type="text" style="width:6%" [(ngModel)]="value.L
+                " (change)="change(i,j,$event)">
+                <input type="text" style="width:6%" [(ngModel)]="value.B" (change)="change(i,j,$event)">
+                <input type="text" style="width:9%" [(ngModel)]="value.HDCOFE
+                " (change)="change(i,j,$event)">
+                <input type="text" style="width:6%" [(ngModel)]="value.QTY
+                " (change)="change(i,j,$event)"> 
+                <input type="text" style="width:7%" disabled [(ngModel)]=blankString (change)="change(i,j,$event)">
+                <input type="text" style="width:7%" disabled [(ngModel)]=blankString (change)="change(i,j,$event)">
+                <input type="text" style="width:7%" disabled [(ngModel)]=blankString (change)="change(i,j,$event)">
+               
+              <span (click)="deletesubRow(i,j)">-</span>
+                
+            </div>
+           
+            
+    </div><br>
+    <span>
+        <a class="row-link red" (click)="addRow()">Add</a> &nbsp; &nbsp; &nbsp;  <a class="row-link green" (click)="generateAmount()">Genterate Amount</a><button (click)="saveandNext()" *ngIf="isSelect" class="btn btn-success">Save & Next</button><button (click)="saveandNext()" *ngIf="!isSelect" class="btn btn-success">Update & Next</button>
+    </span>
+   
+    
+<br>
+    
+<div class="footer-data">
+    <div class="parent">
+        <div class="child"><b>TOTAL</b></div>
+        <div class="child">{{totalAmount | currency:'INR'}}</div>
+        <div class="child"></div>
+        <div class="child"></div>
+    </div>
+    <div class="parent">
+        <div class="child"><b>CGST {{cgst}}%</b><a class="row-link red" (click)="changeCGST()">Change</a></div>
+        <div class="child">{{gstAmount | currency:'INR'}}</div>
+        <div class="child"></div>
+        <div class="child"></div>
+    </div>
+    <div class="parent">
+        <div class="child"><b>SGST {{sgst}}%</b><a  class="row-link red" (click)=" changeSGST()">Change</a></div>
+        <div class="child">{{sgstAmount | currency:'INR'}}</div>
+        <div class="child"></div>
+        <div class="child"></div>
+    </div>
+    <div class="parent">
+        <div class="child"><b>TOTAL AMOUNT</b></div>
+        <div class="child">{{combineAmount | currency:'INR'}}</div>
+        <div class="child"></div>
+        <div class="child"></div>
+    </div>
+ </div>
+
+</nb-card>
+
+<ng-template #dialogsorName let-data let-ref="dialogRef">
+    <nb-card  style="width:500px">
+      <nb-card-header *ngIf="isSelect">Save MB</nb-card-header>
+      <nb-card-header *ngIf="!isSelect">Update MB</nb-card-header>
+      <nb-card-body>
+        <input nbInput type="text" [(ngModel)]="siteName" [disabled]="!isSelect">
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton *ngIf="isSelect" status="warning" (click)="save()">Save</button>&nbsp; &nbsp;<button nbButton status="basic" (click)="ref.close()">Cancel</button>
+        <button nbButton   *ngIf="!isSelect" status="warning" (click)="update()">Update</button>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+
+  <ng-template #dialogcgst let-data let-ref="dialogRef">
+    <nb-card  style="width:500px">
+      <nb-card-header>Change CGST Number</nb-card-header>
+      <nb-card-body>
+        <input nbInput type="text" [(ngModel)]="cgst">
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton status="warning" (click)="ref.close()">Change</button>&nbsp; &nbsp;<button nbButton status="basic" (click)="ref.close()">Cancel</button>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+  <ng-template #dialogsgst let-data let-ref="dialogRef">
+    <nb-card  style="width:500px">
+      <nb-card-header>Change SGST Number</nb-card-header>
+      <nb-card-body>
+        <input nbInput type="text" [(ngModel)]="sgst">
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton status="warning" (click)="ref.close()">Change</button>&nbsp; &nbsp;<button nbButton status="basic" (click)="ref.close()">Cancel</button>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>

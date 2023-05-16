@@ -1,0 +1,486 @@
+<nb-card>
+  <app-loader></app-loader>
+    <nb-card-header>
+    
+       
+   
+    <div ><span class="card-heading">
+      User
+    </span><button class="header-button" (click)="  gotoAddEmployee()" nbButton status="primary"><span class="add-icon">+</span></button></div>
+  
+    </nb-card-header>
+  
+    <!-- <nb-card-body>
+      <ng2-smart-table [settings]="settings" [source]="source" (custom)="onCustomEvent($event,dialogdelete,dialogviewAttendence )">
+      </ng2-smart-table>
+    </nb-card-body> -->
+    <nb-card-body>
+      <nav>
+        <input class="form-control" type="text" name="siteName" [(ngModel)]="siteName" (ngModelChange)="Search()"
+        placeholder="Enter Employee's Name to search">
+      </nav>
+    <br>
+    <div class="container scroll" >
+     
+      <table  class="new-rwd-table">
+        <thead>
+          <tr>
+            <th id="action">Action</th>
+            <th>Employee's Name</th> 
+            <th>Designation</th> 
+            <th>Password</th> 
+            <th>Site's Name</th> 
+            <th>Location</th> 
+            <th>Phone No.</th>
+            <th>Basic Pay</th>
+            <th>ID Proof</th> 
+            <th>Email Id</th> 
+            <th>Address</th> 
+            
+         </tr>
+        </thead>
+      
+           
+            <tbody  id="newtable">
+              <tr *ngFor="let item of gridData | paginate:{itemsPerPage:10,currentPage:p} ; let i = index">
+                <td data-label="Action" id="action">
+                  <div>
+                    <span>
+                      <button class="del"  (click)="delete(i,'delete',item)" data-toggle="tooltip" data-placement="top" title="Remove">
+                        <img src="../../../assets/icon/delete.png">
+                        <!-- <i   [ngStyle]="(styleOne && byIndexingChangeColor == i  ) ?  {'color': 'red','font-size':'22px'} : {'color': 'grey','font-size':'22px'} " title="Delete"  data-toggle="tooltip" class="fa">&#xf014;</i> -->
+                      </button>
+                      </span>
+                      <span>
+                        <button class="edit" data-toggle="tooltip" data-placement="top" title="Edit">
+                          <img src="../../../assets/icon/edit.png" (click)="delete(i,'edit',item)">
+                          <!-- <i style="font-size:24px"   [ngStyle]="(style2 && byIndexingChangeColor == i  ) ?  {'color': '#08C2F9 '} : {'color': 'grey'}" title="Edit"  data-toggle="tooltip" class="fa fa-edit edit"></i> -->
+                        </button>
+                      </span>
+                      <span>
+                        <button class="view" data-toggle="tooltip" data-placement="top" title="View">
+                          <img src="../../../assets/icon/att.png" (click)="delete(i,'view',item)">
+                          <!-- <i style="font-size:24px"   [ngStyle]="(style2 && byIndexingChangeColor == i  ) ?  {'color': '#08C2F9 '} : {'color': 'grey'}" title="Edit"  data-toggle="tooltip" class="fa fa-edit edit"></i> -->
+                        </button>
+                      </span>
+                    
+                 
+              </div>
+                </td>
+                <td  id="start" data-label="Employee's Name">{{item.fullName | titlecase}}</td>
+                <td data-label="Designation">{{item.designation  | titlecase}}</td> 
+                <td data-label="Password">{{item.password}}</td>
+                <td data-label="Site's Name" >{{item.siteName | titlecase}}</td>
+                <td data-label="Location"> {{item.location}}  </td>
+                <td data-label="Phone No.">{{item. mobileNo}}</td>
+                <td data-label="Basic Pay" >₹ {{item.basicPay}}</td>
+                <td data-label="ID Proof">{{item.adharNo}}</td>
+                <td data-label="Email Id" >{{item.email}}</td>
+                <td data-label="Address">{{item.address  | titlecase}}</td>
+               
+              </tr>
+        </tbody><br>
+   
+    </table>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+      </nb-card-body>
+   
+  </nb-card>
+ 
+  <ng-template #dialogdelete let-data let-ref="dialogRef">
+    <nb-card  style="width:500px">
+      <nb-card-header>Delete User</nb-card-header>
+      <nb-card-body>
+       Are You Sure You Want To Delete This User?
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton status="warning" (click)="  removeEmployee()">Delete</button>&nbsp; &nbsp;<button nbButton status="basic" (click)="ref.close()">Cancel</button>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+  
+  
+
+  <ng-template #dialogviewAttendence let-data let-ref="dialogRef">
+    <nb-card   class="imageClass">
+      <nb-card-header style="padding-top: 2px;
+      padding-bottom: 2px;"><span class="calendder-card-heading">View Attendence</span>&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" class="leave-btn" nbButton hero status="success" style="font-size:12px" (click)="recordCheck()">View Record</button></nb-card-header>
+      <nb-card-body>
+        <div  class="container" id='calendar'>
+        <full-calendar  [options]="calendarOptions"
+       
+        ></full-calendar>
+      </div>
+      </nb-card-body>
+     
+    </nb-card>
+  </ng-template>
+ 
+
+  <ng-template #dialogrecord let-data let-ref="dialogRef">
+    <nb-card class="employeeAttenRecord">
+      <nb-card-header>Employee Attendence Record&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <button  nbButton status="basic" (click)="paysilip()">PaySlip</button>
+      </nb-card-header>
+     
+      <nb-card-body>
+        <div style="text-align:center">Year : {{currentYear}}</div>
+        <table class="new-rwd-table">
+          <tr>
+            <th *ngFor="let item of AttendecneMonth">{{item}}</th>
+          </tr>
+        
+          <tr>
+            <td *ngFor="let item of monthCountArray">{{item}}</td>
+           
+            </tr>
+        </table>
+        
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton status="basic" (click)="ref.close()">Cancel</button>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+  
+
+  <ng-template #approvalAttendence let-data let-ref="dialogRef">
+    <nb-card   class="imageClass">
+      <nb-card-header><span class="card-heading">Approved/Rejected Attendence</span></nb-card-header>
+      <nb-card-body>
+        <button nbButton status="success" (click)="submitApproval('Approved')">Approved</button>  &nbsp; &nbsp; &nbsp; <button nbButton status="warning" (click)="submitApproval('Rejected')">Rejected</button>
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton status="basic" (click)="ref.close()">Cancel</button>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+
+  <ng-template #payslip let-data let-ref="dialogRef">
+    <nb-card   class="imageClass">
+      <nb-card-header><span class="card-heading">Select Month</span></nb-card-header>
+      <nb-card-body>
+        <nb-select placeholder="Site Location" [(ngModel)]="month" [ngModelOptions]="{standalone: true}" (selectedChange)="selectedMonth($event)"  required>
+                 
+          <nb-option  *ngFor="let site of AttendecneMonth" [value]="site">{{site}}</nb-option>
+      
+       </nb-select>
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton status="basic" (click)="ref.close()">Cancel</button>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+  <ng-template #payslipValue let-data let-ref="dialogRef">
+    <nb-card  >
+      <nb-card-body>
+      <div class="salary-slip" id="salarySlip" >
+        <table class="empDetail">
+          <tr height="100px" style='background-color: #a5d8ff'>
+            <td colspan='4'>
+              <img height="90px" src='assets/image/logo.png' /></td>
+            <td colspan='4' class="companyName">Aayat Construction</td>
+          </tr>
+          <tr>
+            <th>
+            Employee Id:
+    </th>
+            <td>
+            {{employeeData._id}}
+    </td>
+            <td></td>
+         
+            <td></td>
+            <th>
+              Employee Name:
+    </th>
+            <td>
+              {{employeeData.fullName}}
+    </td>
+          </tr>
+          <tr>
+            <th>
+            Location:
+    </th>
+            <td>
+              {{employeeData.address}}
+    </td>
+    <td></td>
+         
+    <td></td>    
+    <th>
+        Date:
+    </th>
+        <td>
+          {{currentDate | date:'yyyy-MM-dd'}}
+    </td>
+        
+       
+          </tr>
+          <tr>
+            <th>
+             Designation:
+    </th>
+            <td>
+              {{employeeData.designation}}
+    </td><td></td>
+          <td></td>
+            <th>
+              IFSC Code:
+    </th>
+            <td>
+              {{employeeData.ifsccode}}   
+    </td>
+          </tr>
+          <tr>
+            <th>
+             Bank Name:
+    </th>
+            <td>
+              {{employeeData.bankName}}
+    </td><td></td>
+       <td></td>
+            <th>
+            Bank A\C No:
+    </th>
+            <td>
+              xxxx-xxxx-xxxx-{{employeeData.accNo | slice:-4}}
+    </td>
+          </tr>
+          <tr>
+            <th>
+             Adhar No:
+    </th>
+            <td>
+              {{employeeData.adharNo}}
+    </td><td></td>
+     <td></td>
+            <th>
+              PAN No:
+    </th>
+            <td>
+              
+    </td>
+          </tr>
+          <tr class="myBackground">
+            <th colspan="2">
+              Payments
+    </th>
+            <th >
+              Particular
+    </th>
+            <th class="table-border-right">
+              Amount (Rs.)
+    </th>
+            <th colspan="2">
+              Deductions
+    </th>
+            <th >
+              Particular
+    </th>
+            <th >
+              Amount (Rs.)
+    </th>
+          </tr>
+          <tr>
+            <th colspan="2">
+              Basic Salary
+    </th>
+            <td></td>
+            <td class="myAlign">
+              {{employeeData.basicPay}}
+    </td>
+            <th colspan="2" >
+              Provident Fund
+    </th >
+            <td></td>
+    
+            <td class="myAlign">
+              00.00
+    </td>
+          </tr >
+          <tr>
+            <th colspan="2">
+            HRA
+    </th>
+            <td></td>
+    
+            <td class="myAlign">
+              00.00
+    </td>
+            <th colspan="2" >
+              LWP
+    </th >
+            <td></td>
+    
+            <td class="myAlign">
+             {{totalpayment.LWP}}
+    </td>
+          </tr >
+          <tr>
+            <th colspan="2">
+              Special Allowance
+    </th>
+            <td></td>
+    
+            <td class="myAlign">
+              00.00
+    </td>
+            <th colspan="2" >
+             
+    </th >
+            <td></td>
+    
+            <td class="myAlign">
+              
+    </td>
+          </tr >
+          <tr>
+        
+            <td></td>
+            
+          </tr >
+     
+         
+          <tr class="myBackground">
+            <th colspan="3">
+              Total Payments
+    </th>
+            <td class="myAlign">
+              {{totalpayment.totalPayment}}
+    </td>
+            <th colspan="3" >
+              Total Deductions
+    </th >
+            <td class="myAlign">
+              {{totalpayment.LWP}}
+    </td>
+          </tr >
+          <tr height="40px">
+            <th colspan="2">
+              Projection for Financial Year:
+            </th>
+            <th>
+            </th>
+            <td class="table-border-right">
+            </td>
+            <th colspan="2" class="table-border-bottom" >
+              Net Salary
+            </th >
+            <td >
+            </td>
+            <td >
+            {{totalpayment.netSalary}}
+            </td>
+          </tr >
+          <tr>
+            <td colspan="2">
+              Gross Salary
+            </td> <td></td>
+            <td class="myAlign">
+              00.00
+    </td><td colspan="4"></td>
+          </tr >
+          <tr>
+            <td colspan="2">
+              Aggr. Dedu - P.Tax & Std Ded
+    </td> <td></td>
+            <td class="myAlign">
+              00.00
+    </td>
+            <th colspan="2" >
+              Cumulative
+    </th >
+            <td colspan="2"></td>
+          </tr >
+          <tr>
+            <td colspan="2">
+              Gross Total Income
+    </td> <td></td>
+            <td class="myAlign">
+              00.00
+    </td>
+            <td colspan="2" >
+              Empl PF Contribution
+    </td > <td></td>
+            <td class="myAlign">
+              00.00
+    </td>
+          </tr >
+   
+          <tr>
+            <td colspan="2">
+              Total Income
+    </td> <td></td>
+            <td class="myAlign">
+              00.00
+    </td>
+            <td colspan="4"></td>
+          </tr >
+          <tbody class="border-center">
+            <tr>
+              <th>
+                Attend/ Absence
+    </th>
+              <th>
+                Days in Month
+    </th>
+              <th>
+                Days Paid
+    </th>
+              <th>
+                Days Not Paid
+    </th>
+              <th>
+                Leave Position
+    </th>
+              <th>
+                Privilege Leave
+    </th>
+              <th>
+                Sick Leave
+    </th>
+              <th>
+                Casual Leave
+    </th>
+            </tr>
+            <tr>
+              <td ></td>
+              <td ></td>
+              <td ></td>
+              <td ></td>
+              <td>Yrly Open Balance</td>
+              <td>0.0</td> <td>0.0</td>
+              <td>0.0</td>
+            </tr >
+            <tr>
+              <th >Current Month</th>
+              <td>{{aatendecneObj.noOfDay}}</td>
+              <td >{{aatendecneObj.present}}</td>
+              <td >{{aatendecneObj.abscent}}</td>
+              <td>Availed</td>
+              <td>0.0</td> <td>0.0</td>
+              <td>0.0</td>
+            </tr >
+          
+            <tr>
+              <td colspan="4"> &nbsp; </td>
+              <td > </td>
+              <td > </td>
+              <td > </td>
+              <td > </td>
+            </tr >
+          
+          </tbody>
+        </table >
+    
+      </div >
+    </nb-card-body>
+      <nb-card-footer>
+        <button nbButton status="basic" (click)="ref.close()">Cancel</button>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+
+  

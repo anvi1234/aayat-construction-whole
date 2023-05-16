@@ -1,0 +1,102 @@
+<div class="main-overview">
+    <div class="overviewcard1 color1">
+      <div class="overviewcard__icon">Total Expenses</div>
+      <div class="overviewcard__info">{{totalEx }}</div>
+    </div>
+    <div class="overviewcard2 color2">
+      <div class="overviewcard__icon">Total Transaction</div>
+      <div class="overviewcard__info">{{totalTrans}}</div>
+    </div>
+    <div class="overviewcard3 color3">
+      <div class="overviewcard__icon">No. Of Employee</div>
+      <div class="overviewcard__info">{{totalEmployee}}</div>
+    </div>
+    <div class="overviewcard4 color4">
+      <div class="overviewcard__icon">Total Sites</div>
+      <div class="overviewcard__info">{{totalSite}}</div>
+    </div>
+  </div>
+
+  <div class="main-cards">
+    <div class="card">
+      <h5>Site's Transaction And Expenses</h5>
+      <nav>
+        <input class="form-control" type="text" name="siteName" [(ngModel)]="siteName1" (ngModelChange)="Search1()"
+        placeholder="Enter Site's Name to search">
+      </nav><br>
+        <div class="container table scroll">
+          <table class="dashboard-rwd-table">
+            <tbody>
+              <tr>
+                <th>Site Name</th>
+                <th>Location</th>
+                <th>Total Transaction</th>
+                <th>Total Expenses</th>
+              </tr>
+              <tr *ngFor="let item of wholeDataOfProject | paginate:{itemsPerPage:4,currentPage:p1} ">
+                <td data-th="Supplier Code">
+                  {{item.siteName | titlecase}}
+                </td>
+                <td data-th="Supplier Name">
+                {{item.location | titlecase}}
+                </td>
+                <td data-th="Invoice Number">
+                  ₹ {{item.transaction}}
+                </td>
+                <td data-th="Invoice Number">
+                  ₹ {{item.expenses}}
+                  </td>
+               
+              </tr>
+             
+            </tbody>
+          </table>
+          <pagination-controls (pageChange)="p1 = $event"></pagination-controls>
+        </div>
+
+    </div>
+    <div class="card">
+      <h5>Site's Details And Status</h5>
+      <nav>
+        <input class="form-control" type="text" name="siteName" [(ngModel)]="siteName2" (ngModelChange)="Search2()"
+        placeholder="Enter Site's Name to search">
+      </nav><br>
+        <div class="container table scroll">
+            <table class="dashboard-rwd-table" id="mobile-table">
+              <tbody>
+                <tr>
+                  <th>Site Name</th>
+                  <th>Location</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                </tr>
+                <tr *ngFor="let item of siteDetails | paginate:{itemsPerPage:4,currentPage:p2}">
+                  <td data-th="Site Name">
+                    {{item.siteName | titlecase}}
+                  </td>
+                  <td data-th="Location">
+                    {{item.location | titlecase}}
+                  </td>
+                  <td data-th="Date">
+                    {{item.date | date}}
+                  </td>
+                  <td data-th="Status">
+                    <div *ngIf="item.status === 'Active' ">
+                        <button class="pillbutton green">Active</button>
+                    </div>
+                    <div *ngIf="item.status === 'Closed'">
+                        <button class="pillbutton red">Closed</button>
+                    </div>
+                  </td>
+                 
+                 
+                </tr>
+               
+              </tbody>
+           
+            </table>
+            <pagination-controls (pageChange)="p2 = $event"></pagination-controls>
+          </div>
+    </div>
+   
+  </div>

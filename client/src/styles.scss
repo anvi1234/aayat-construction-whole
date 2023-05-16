@@ -1,0 +1,506 @@
+
+@use 'themes' as *;
+
+@use '@nebular/theme/styles/globals' as *;;
+
+
+@include nb-install() {
+  @include nb-theme-global();
+};
+
+/* You can add global styles to this file, and also import other style files */
+
+ng2-st-tbody-custom {display: flex; color:white;}
+
+ng2-st-tbody-edit-delete a.ng2-smart-action {display: inline-block !important; }
+ng2-st-tbody-create-cancel a.ng2-smart-action {display: inline-block !important;}
+ng2-st-tbody-custom a.ng2-smart-action.ng2-smart-action-custom-custom {
+    display: inline-block;
+    width: 50px;
+    position: relative;
+   
+    font-size: 20px;
+    top:20px;
+    text-align: center;
+}
+
+.card-heading{
+  font-size: 26px;
+  color:white
+}
+.header-button{
+  position: relative;
+  left:70%;
+  
+}
+::ng-deep nb-layout-column {
+  height: 80vw;
+}
+.required{
+  color:red;
+  font-size: 14px;
+  position: relative;
+  bottom: 1rem;
+}
+.add-icon{
+  font-size: xx-large;
+  
+}
+nb-card{
+ position: relative;
+ top:30px;
+  font-size: 20px;
+}
+body{
+  cursor: pointer;
+}
+nb-card-body {
+  flex: 1;
+  -ms-flex: 5 1 auto;
+  overflow: auto;
+  padding: nb-theme(card-padding);
+  position: relative;
+  @include nb-scrollbars(
+    nb-theme(card-scrollbar-color),
+    nb-theme(card-scrollbar-background-color),
+    nb-theme(50px)
+  );
+}
+nb-layout-header.fixed ~ .layout-container nb-sidebar .main-container {
+  margin-top: 35px;
+  /* position: relative; */
+  /* bottom: 85px; */
+  height: calc(var(--sidebar-height) - var(--header-height));
+}
+
+ .layout-container .content{
+    display: flex;
+    flex: 1;
+    -ms-flex: 1 1 auto;
+    flex-direction: column;
+    min-width: 0;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,81,121,1) 35%, rgba(0,212,255,1) 100%);
+ }
+ 
+ .label{
+  font-size: 20px;
+  color:white
+}
+
+nb-sidebar .scrollable {
+  padding: var(--sidebar-padding);
+  position: relative;
+  -webkit-transform: translate3d(0, 0, 0);
+  background: #095179;
+  
+  
+  
+}
+.menu-title{
+  color:white;
+  font-size: 20px;
+}
+
+nb-layout-header{
+  background-color: hsl(193, 53%, 97%);
+  color:white;
+ 
+  a{
+    color:white;
+  }
+    span{
+      color:white
+    }
+}
+
+nb-layout .layout .layout-container .content nb-layout-footer nav{
+  background: #095179;
+  color:white
+}
+
+nb-card nb-card-header{
+  background-color: rgba(9,81,121,1);
+  color:white
+}
+
+[nbInput].status-basic:disabled {
+  background-color: #f1e8e8;
+  border-color: var(--input-basic-disabled-border-color);
+  color: rgb(18 20 20);
+}
+
+img{
+  image-rendering: auto;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+
+  /* Safari seems to support, but seems deprecated and does the same thing as the others. */
+  image-rendering: -webkit-optimize-contrast;
+}
+
+.rwd-table {
+  margin: auto;
+  width: 100%;
+  max-width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  overflow:scroll;
+  table-layout:fixed;
+  word-wrap:break-word;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+.rwd-table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color:  rgba(9,81,121,1);
+  color: white;
+}
+
+.rwd-table tr {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  background-color: #f5f9fc;
+}
+
+.rwd-table tr:nth-child(odd){
+  background-color: #ebf3f9;
+}
+
+.rwd-table th {
+  display: none;
+}
+
+.rwd-table td {
+  display: block;
+}
+
+.rwd-table td:first-child {
+  margin-top: .5em;
+}
+
+.rwd-table td:last-child {
+  margin-bottom: .5em;
+}
+
+.rwd-table td:before {
+  content: attr(data-label) ": ";
+  font-weight: bold;
+  width: 120px;
+  font-size: 13px;
+  display: inline-block;
+  color: #000;
+}
+.rwd-table th,
+.rwd-table td {
+  text-align: left;
+}
+
+.rwd-table {
+  color: #333;
+  border-radius: .4em;
+  overflow: hidden;
+}
+
+.rwd-table tr {
+  border-color: #bfbfbf;
+}
+
+.rwd-table th,
+.rwd-table td {
+  padding: .5em 1em;
+}
+.rwd-table tbody {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  height: 500px;
+}
+.rwd-table thead tr {
+  display: block;
+}
+#siteTableBody button{
+  background-color: transparent;
+  border:none;
+  img{
+    height:25px;
+    width:25px;
+    float: left;
+  }
+}
+
+.toastr-overlay-container {
+  z-index: -1;
+  margin-top:20%
+}
+
+ng2-smart-table table tr.selected {
+  background-color: rgb(233, 246, 151) !important;
+  color:white!important
+  }
+
+  nb-dialog-container {
+    margin-right: -5px;
+    max-height:700px
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #444343;
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgba(9,81,121,1); 
+    border-radius: 5px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background:rgb(7, 66, 98); 
+  }
+  .fc-event-title{
+    font-size:20px !important;
+  }
+  
+  
+  .fc-event-main .fc-event-title {
+    margin: 1px;
+    padding: 1px;
+    word-wrap: break-word!important;
+    line-height:10px;
+    padding: 10px;
+    font-size:8px !important;
+    }
+
+  
+
+.fc .fc-daygrid-day.fc-day-today {
+  background-color: rgb(229, 248, 225, 0.5) !important;
+}
+
+.fc-event-title {
+  font-size:5px !important;
+  
+  white-space: normal;
+}
+
+.fc-event-time {
+
+  white-space: normal;
+  font-size:5px !important;
+  width: 3em;
+}
+.fc .fc-button {
+  display: inline-block;
+  font-weight: 100;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: 0.4em 0.65em;
+  font-size: 0.6em !important;
+  line-height: 1.5;
+  border-radius: 0.25em;
+}
+.welcome-box {
+  font-size: 15px;
+  color: black;
+  position: absolute;
+  right: 145px;
+  bottom: 16px;
+}
+nb-layout-header nav{
+  color: var(--header-text-color);
+  box-shadow: var(--header-shadow);
+  height: var(--header-height);
+  height: 80px;
+  padding: var(--header-padding);
+}
+
+.fc .fc-scrollgrid-sync-inner{
+  color:red !important
+}
+
+@media screen and (max-width: 786px) {
+  
+  .dashboardtable ,.scroll::-webkit-scrollbar {
+    display: none;
+  }
+  nb-card-body {
+    font-size: 16px;
+  }
+  /* Hide scrollbar for IE, Edge add Firefox */
+  .scroll {
+    -ms-overflow-style: none;
+    scrollbar-width: none; /* Firefox */
+  }
+  .scroll::-webkit-scrollbar {
+    display: none;
+    }
+  
+  nb-dialog-container {
+    overflow: hidden scroll;
+    margin-right: -5px;
+    max-height: 700px;
+    max-width: 368px;
+ }
+ nb-card-body .label{
+  font-size: 12px;
+}
+input{
+  height: 28px;
+  font-size: 12px;
+}
+nb-select.appearance-outline.size-medium .select-button {
+  padding-right: var(--select-icon-offset);
+  height: 28px;
+  padding: 3px;
+}
+.card-heading{
+  font-size: 18px;
+}
+nb-layout-header nav{
+  color: var(--header-text-color);
+  box-shadow: var(--header-shadow);
+  height: var(--header-height);
+  height: 106px;
+  padding: var(--header-padding);
+}
+nb-card{
+  margin-top: 35px;
+}
+.toastr-overlay-container {
+  z-index: -1;
+  margin-top:35%;
+  font-size:10px
+}
+
+  .header-button {
+    position: relative;
+    left: 37px;
+}
+
+ng2-smart-table .ng2-smart-actions a.ng2-smart-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  font-size: 1.4rem !important;
+  color: var(--smart-table-fg-secondary);
+}
+
+
+}
+.fc .fc-toolbar-title {
+  font-size: 14px !important;
+  font-weight: 400;
+  /* margin: 0; */
+  position: relative;
+  top: 40px;
+  align-items: center;
+  /* text-align: center; */
+  /* left: -50px; */
+  /* margin-top: 13px; */
+}
+.fc .fc-col-header-cell-cushion {
+  display: inline-block;
+  padding: 2px 4px;
+  font-size: 14px;
+  color: red;
+  text-decoration: none;
+}
+.fc .fc-daygrid-day-number {
+  position: relative;
+  z-index: 4;
+  padding: 3px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #0095ff;
+  text-decoration: none !important;
+}
+
+nb-option-list .option-list {
+  max-height: 198px;
+  max-height: var(--option-list-max-height);
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+}
+
+#siteTableBody .selected{
+
+  backGround: rgb(36, 123, 170);
+  color:white
+  }
+
+
+@media screen and (min-width: 600px) {
+ 
+ 
+  .rwd-table tr:hover:not(:first-child) {
+    background-color: #d8e7f3;
+  }
+  .rwd-table tr:focus:first-child {
+    background-color: #d8e7f3;
+  }
+  .rwd-table tr:focus {
+    background-color: yellow;
+  }
+  .rwd-table td:before {
+    display: none;
+  }
+  .rwd-table th,
+  .rwd-table td {
+    display: table-cell;
+    font-size: 13px;
+    
+  }
+  .rwd-table th:first-child,
+  .rwd-table td:first-child {
+    padding-left: 0;
+  }
+  .rwd-table th:last-child,
+  .rwd-table td:last-child {
+    padding-right: 0;
+  }
+  .rwd-table th,
+  .rwd-table td {
+    padding: 1em !important;
+  }
+
+  
+}
+
+nb-layout.window-mode .layout nb-layout-header {
+  max-width: 1920px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  height: 80px!important;
+}
+.header-container .logo img {
+  width: 45%;
+  position: relative;
+  bottom: 26px;
+  right: 31px;
+}
+@media screen and (max-width: 786px){
+  .tab-text{
+    font-size: 10px;
+   }
+}

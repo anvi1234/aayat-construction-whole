@@ -1,0 +1,179 @@
+<div class="row">
+  <div class="col-md-12">
+    <nb-card>
+      <nb-card-header [routerLink]="['/site']"
+        ><span class="card-heading">{{ dialogTiltle }}</span>
+      </nb-card-header>
+      <nb-card-body>
+        <form>
+          <div class="form-group row">
+            <label for="siteName" class="label col-sm-2 col-form-label"
+              >Site Name</label
+            >
+            <div class="col-sm-4">
+              <nb-select
+                *ngIf="!isOther"
+                placeholder="Site Name"
+                [(ngModel)]="SiteFormModel.siteName"
+                (selectedChange)="siteValueChange($event)"
+                [ngModelOptions]="{ standalone: true }"
+                required
+              >
+                <nb-option *ngFor="let site of siteName" [value]="site.value">{{
+                  site.name
+                }}</nb-option>
+              </nb-select>
+              <input
+                *ngIf="isOther"
+                type="text"
+                nbInput
+                fullWidth
+                id="siteName"
+                [(ngModel)]="SiteFormModel.siteName"
+                [ngModelOptions]="{ standalone: true }"
+                required
+              />
+              <!-- <span *ngIf="error.siteName" class="required">*Required</span> -->
+            </div>
+            <label for="siteLoc" class="label col-sm-2 col-form-label"
+              >Site Location</label
+            >
+            <div class="col-sm-4">
+              <input
+                type="text"
+                nbInput
+                fullWidth
+                id="siteLoc"
+                [(ngModel)]="SiteFormModel.location"
+                [ngModelOptions]="{ standalone: true }"
+                required
+              />
+              <!-- <span *ngIf="error.location" class="required">*Required</span> -->
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="work" class="label col-sm-2 col-form-label"
+              >P.O Number</label
+            >
+            <div class="col-sm-4">
+              <input
+                type="text"
+                nbInput
+                fullWidth
+                [(ngModel)]="SiteFormModel.poNo"
+                id="work"
+                [ngModelOptions]="{ standalone: true }"
+                required
+              />
+              <!-- <span *ngIf="error.work" class="required">*Required</span> -->
+            </div>
+            <label for="supervisorName" class="label col-sm-2 col-form-label"
+              >Bill No.</label
+            >
+            <div class="col-sm-4">
+              <input
+                type="text"
+                nbInput
+                fullWidth
+                [(ngModel)]="SiteFormModel.billNo"
+                id="work"
+                [ngModelOptions]="{ standalone: true }"
+                required
+              />
+
+              <!-- <span *ngIf="error.superVisorName" class="required">*Required</span> -->
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="work" class="label col-sm-2 col-form-label"
+              >Status</label
+            >
+            <div class="col-sm-4">
+              <nb-select
+                placeholder="Site Status"
+                [(ngModel)]="SiteFormModel.status"
+                [ngModelOptions]="{ standalone: true }"
+                required
+              >
+                <nb-option value="Active">Active</nb-option>
+                <nb-option value="Hold">Hold</nb-option>
+                <nb-option value="Closed">Closed</nb-option>
+              </nb-select>
+            </div>
+            <label for="work" class="label col-sm-2 col-form-label">Work</label>
+            <div class="col-sm-4">
+              <input
+                type="text"
+                nbInput
+                fullWidth
+                [(ngModel)]="SiteFormModel.work"
+                id="work"
+                [ngModelOptions]="{ standalone: true }"
+                required
+              />
+            </div>
+
+            <div class="col-sm-4"></div>
+          </div>
+          <div class="form-group row">
+            <label for="work" class="label col-sm-2 col-form-label"
+              >Date Of Registration</label
+            >
+            <div class="col-sm-4">
+              <input
+                type="date"
+                [(ngModel)]="SiteFormModel.date"
+                [ngModelOptions]="{ standalone: true }"
+                required
+              />
+            </div>
+
+            <label for="work" class="label col-sm-2 col-form-label"
+              >Closed Date</label
+            >
+            <div class="col-sm-4">
+              <input
+                type="date"
+                [(ngModel)]="SiteFormModel.closingdate"
+                [ngModelOptions]="{ standalone: true }"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="work" class="label col-sm-2 col-form-label"
+              >Dealer's Contact Number</label
+            >
+            <div class="col-sm-4">
+              <input
+                type="text"
+                nbInput
+                fullWidth
+                [(ngModel)]="SiteFormModel.number"
+                id="work"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+            <div class="col-sm-4">
+             
+            </div>
+
+            <div class="col-sm-4"></div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-4 offset-sm-4 text-center">
+              <button
+                type="submit"
+                nbButton
+                status="primary"
+                (click)="saveData(clickTitle)"
+              >
+                {{ clickTitle }}
+              </button>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

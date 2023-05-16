@@ -1,0 +1,33 @@
+<div class="header-container">
+ 
+  <div class="logo-container">
+  
+    <a class="logo"><img src="../../../../assets/image/logo.png"></a>
+
+   
+  </div>
+  <span class="welcome-box">
+    <ul>
+      <li><a ><button class="designation-btn">{{ designation | titlecase }}</button></a></li>
+      <li><a>Welcome , Mr. {{employee | titlecase }}</a></li>
+      <li style="float:right"><a  (click)="optionValue()" ><i class="fa fa-angle-down" aria-hidden="true"></i></a>
+       </li>
+    </ul>
+    <div class="dropdown-content" *ngIf="dropdownShow">
+      <a  *ngIf="logoutShow" href="/dashboard"><i class="fa fa-home" aria-hidden="true"></i> &nbsp; Home</a>
+      <a  *ngIf="!logoutShow" href="/mobile-view"><i class="fa fa-home" aria-hidden="true"></i> &nbsp; Home</a>
+      <a (click)="logout()"><i   class="fa">&#xf08b;</i> &nbsp;Logout</a>
+     
+    </div>
+    <!-- <span class="wave">👋</span>
+  Welcome , Mr. {{employee | titlecase }}  <div class="welcome-box1">( {{ designation | titlecase }} )</div> -->
+
+</span><br>
+ 
+ 
+
+
+</div>
+
+
+

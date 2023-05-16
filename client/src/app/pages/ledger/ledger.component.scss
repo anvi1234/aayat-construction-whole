@@ -1,0 +1,12 @@
+div .header-data {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    left: 11px;
+  }
+  .header-data input[type="text"],
+  textarea {
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+  }

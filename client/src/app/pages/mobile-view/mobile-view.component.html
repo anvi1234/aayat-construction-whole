@@ -1,0 +1,54 @@
+
+
+  <div class="admin"  *ngIf="adminToggle">
+ <div class="row">
+    <div  class="col-sm-6 d-flex justify-content-center siteColor" >
+        <button nbButton shape="semi-round"  (click)="site()">Site Details</button>
+    </div>
+    <div class="col-sm-6 d-flex justify-content-center userColor" >
+        <button nbButton shape="semi-round"  (click)="user()">User</button>
+    </div>
+    <div   class="col-sm-6 d-flex justify-content-center attendColor" >
+        <button nbButton shape="semi-round"  (click)=" addAttendecne()">Attendence</button>
+    </div>
+    <div  class="col-sm-6 d-flex justify-content-center yellow" >
+        <button nbButton shape="semi-round"  (click)="drawing()">Drawing</button>
+    </div>
+ </div>
+
+  </div>
+
+  
+
+     <div class="supervisor"  *ngIf="supToggle">
+        <div class="row">
+            <div *ngIf="!adminToggle" class="col-sm-6 d-flex justify-content-center expenseColor">
+                <button nbButton shape="semi-round"  (click)="expenses()">Expenses</button>
+            </div>
+            <div *ngIf="!adminToggle " class="col-sm-6 d-flex justify-content-center attendColor" >
+                <button nbButton shape="semi-round"  (click)="attendence()">Attendence</button>
+            </div>
+            <div *ngIf="!adminToggle" class="col-sm-6 d-flex justify-content-center galleryColor">
+                <button nbButton shape="semi-round"  (click)="gallery()">Gallery</button>
+            </div>
+            <div *ngIf="!adminToggle" class="col-sm-6 d-flex justify-content-center taskColor">
+                <button nbButton shape="semi-round"  (click)="task()">Task</button>
+            </div>
+           <div  class="col-sm-6 d-flex justify-content-center yellow" >
+               <button nbButton shape="semi-round"  (click)="drawing()">Drawing</button>
+           </div>
+           <div *ngIf="!adminToggle"  class="col-sm-6 d-flex justify-content-center red" >
+            <button nbButton shape="semi-round"  (click)="transaction()">Transaction</button>
+        </div>
+        </div>
+       
+         </div>
+
+         <div  class="otherToggle" *ngIf = "otherToggle">
+            <div class="row">
+                <div  class="col-sm-12 d-flex justify-content-center" >
+                    <button nbButton shape="semi-round" status="primary" (click)="attendence()">Attendence</button>
+                </div>
+            </div>
+           
+           </div>

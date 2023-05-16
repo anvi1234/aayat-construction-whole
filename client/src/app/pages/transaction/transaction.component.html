@@ -1,0 +1,99 @@
+<nb-card>
+    <nb-card-header>
+    
+       
+   
+    <div ><span class="card-heading">
+       Site Transactionss
+    </span><button class="header-button" (click)="gotoAddTransaction()" nbButton status="primary"><span class="add-icon">+</span></button></div>
+  
+    </nb-card-header>
+  
+    <!-- <nb-card-body>
+      <ng2-smart-table [settings]="settings" [source]="source" (custom)="onCustomEvent($event,dialogdelete )">
+      </ng2-smart-table>
+    </nb-card-body> -->
+    <nb-card-body>
+      <app-loader></app-loader>
+      <nav>
+        <input class="form-control" type="text" name="siteName" [(ngModel)]="siteName" (ngModelChange)="Search()"
+        placeholder="Enter Site's Name to search">
+      </nav>
+    <br>
+    <div class="container scroll" >
+     
+      <table  class="new-rwd-table">
+        <thead>
+          <tr>
+            <th id="action">Action</th>
+            <th>SiteName</th> 
+            <th>Expense Type</th> 
+            <th>Transaction Date</th> 
+            <th>SuperVisor's Name</th> 
+            <th>Total Amount</th> 
+            <th>Remark</th>
+            <th>Party's Details</th>
+            <th>Bill No</th> 
+            <th>Party's Name</th> 
+            <th>Transact By</th> 
+            <th>Reciever</th> 
+         </tr>
+        </thead>
+      
+           
+            <tbody  id="newtable">
+              <tr *ngFor="let item of gridData | paginate:{itemsPerPage:10,currentPage:p} ; let i = index">
+                <td data-label="Action">
+                  <div>
+                    <span>
+                      <button class="del"  (click)="delete(i,'delete',item)" data-toggle="tooltip" data-placement="top" title="Remove">
+                        <img src="../../../assets/icon/delete.png">
+                        <!-- <i   [ngStyle]="(styleOne && byIndexingChangeColor == i  ) ?  {'color': 'red','font-size':'22px'} : {'color': 'grey','font-size':'22px'} " title="Delete"  data-toggle="tooltip" class="fa">&#xf014;</i> -->
+                      </button>
+                      </span>
+                      <span>
+                        <button class="edit" data-toggle="tooltip" data-placement="top" title="Edit">
+                          <img src="../../../assets/icon/edit.png" (click)="delete(i,'edit',item)">
+                          <!-- <i style="font-size:24px"   [ngStyle]="(style2 && byIndexingChangeColor == i  ) ?  {'color': '#08C2F9 '} : {'color': 'grey'}" title="Edit"  data-toggle="tooltip" class="fa fa-edit edit"></i> -->
+                        </button>
+                      </span>
+                    
+                    
+                 
+              </div>
+                </td>
+                <td  id="start" data-label="SiteName">{{item.siteName}} ({{item.location}})</td>
+                <td data-label="Expense Type">{{item.transactionType  | titlecase}}</td> 
+                <td data-label="Transaction Date">{{item.date | date}}</td>
+                <td data-label="SuperVisor's Name" >{{item.superVisorName | titlecase}}</td>
+                <td data-label="Total Amount">₹ {{item.totalAmount}}  </td>
+                <td data-label="Remark">{{item.remark  | titlecase}}</td>
+                <td data-label="Party's Details" >{{item.partyDetailsAccount  | titlecase}}</td>
+                <td data-label="Bill No">{{item.billNo}}</td>
+                <td data-label="Party's Name" >{{item.partyDetailsName  | titlecase}}</td>
+                <td data-label="Transact By">{{item.givenBy  | titlecase}}</td>
+                <td data-label="Reciever">{{item.recievedBy  | titlecase}}</td>
+              </tr>
+        </tbody><br>
+   
+    </table>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+      </nb-card-body>
+
+  </nb-card>
+ 
+  <ng-template #dialogdelete let-data let-ref="dialogRef">
+    <nb-card  style="width:500px">
+      <nb-card-header>Delete Expense</nb-card-header>
+      <nb-card-body>
+       Are You Sure You Want To Delete This Expenses?
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton status="warning" (click)="removeExpense()">Delete</button>&nbsp; &nbsp;<button nbButton status="basic" (click)="ref.close()">Cancel</button>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+  
+  
+ 

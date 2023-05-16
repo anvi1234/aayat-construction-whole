@@ -1,0 +1,70 @@
+<nb-card>
+    <nb-card-header>
+      <app-loader></app-loader>
+       
+   
+    <div ><span class="card-heading">
+       Site Gallery
+    </span><button class="header-button" (click)="gotoAddExpenses()" nbButton status="primary"><span class="add-icon">+</span></button></div>
+  
+    </nb-card-header>
+  
+    <nb-card-body>
+      <ng2-smart-table [settings]="settings" [source]="source" (custom)="onCustomEvent($event,dialogdelete,dialogview )">
+      </ng2-smart-table>
+    </nb-card-body>
+  </nb-card>
+  <!-- <ng-template #dialog let-data let-ref="dialogRef">
+    <nb-card  style="width:950px">
+      <nb-card-header>View Expenses</nb-card-header>
+      <nb-card-body>
+      <h5>
+        {{GalleryFormModel.work}}
+      </h5>
+      <pdf-viewer src=" {{GalleryFormModel.imageUrl}}"
+      [render-text]="true"
+      [original-size]="false"
+      style="width: 400px; height: 500px"
+></pdf-viewer>
+<button style="position: absolute; right: 10px; bottom: 10px;" (click)="download()">Download PDF</button>
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton status="basic" (click)="ref.close()">Cancel</button>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template> -->
+  <ng-template #dialogdelete let-data let-ref="dialogRef">
+    <nb-card  style="width:500px">
+      <nb-card-header>Delete Expense</nb-card-header>
+      <nb-card-body>
+       Are You Sure You Want To Delete This Expenses?
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton status="warning" (click)="removeFile()">Delete</button>&nbsp; &nbsp;<button nbButton status="basic" (click)="ref.close()">Cancel</button>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+  
+  <ng-template #dialogview let-data let-ref="dialogRef">
+    <nb-card  style="width:950px" class="imageClass">
+      <nb-card-header>View Gallery</nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-sm-4"  *ngFor="let item of imageGallery">
+            <div > 
+              <a href="{{item}}" download>
+                <img src="{{item}}" height="300px" width="300px">
+              </a>
+             
+            </div> 
+          </div>
+        </div>
+     
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton status="warning" (click)="ref.close()">Cancel</button>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+  
+ 

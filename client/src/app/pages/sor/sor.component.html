@@ -1,0 +1,3 @@
+<input type="text" [(ngModel)]="fileName" style="width:100%">
+
+<br><br><input type="file"  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"  (change)="onFileChange($event)">

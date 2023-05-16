@@ -1,0 +1,286 @@
+:host {
+    ::ng-deep .ng2-smart-title {
+     width: 150px;
+    }
+  }
+  .transactHeading {
+    background-color: lightgrey;
+    width: 100%;
+    border: 5px solid green;
+    padding: 10px;
+    font-size: 2vh;
+    text-align: center;
+    margin: 10px;
+  }
+  
+  #amt{
+    width:20px
+  }
+  #customers #quant{
+    width:100px
+  }
+  #product{
+    width:250px
+  }
+  input {
+    width: calc(100% - 12px); /* IE 9,10 , Chrome, Firefox */
+    width: -webkit-calc(100% - 12px); /*For safari 6.0*/
+}
+
+  @media only screen and (max-width: 600px) {
+    
+    .date-border{
+      border: 1px solid black;
+      width: 100%;
+      height:30px;
+      padding:5px;
+      margin-top:5px;
+      .col-sm-4{
+        display: block;
+        float: left;
+        font-size: 10px;
+        align-items: center;
+        flex-wrap: nowrap;
+      }
+    }
+    #amt{
+      width:20px
+    }
+    #customers #quant{
+      width:100px
+    }
+    #product{
+      width:250px
+    }
+    
+  }
+
+  .transactHeading {
+    background-color: lightgrey;
+    width: 100%;
+    border: 5px solid green;
+    padding: 10px;
+    font-size: 1.5vh;
+    text-align: center;
+    margin: 10px;
+  }
+
+  .flex-parent {
+ 
+    display: inline-block;
+  }
+  
+  .flex-item {
+    padding: 16px;
+    float: left;
+    align-items: left;
+    background: #efefef;
+    border: 3px solid #333;
+  }
+  
+  /* =========================
+     GENERAL STYLES 
+     NOT RELATED TO THE TUTORIAL
+  ============================ */
+  
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  
+ 
+  body {
+    min-height: 100vh;
+    font-family: var(--ff-body);
+    font-weight: var(--fw-body);
+    font-size: 1.25rem;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .container {
+    width: min(95%, 45rem);
+    margin: 0 auto;
+  }
+
+
+  .date-border{
+    border: 1px solid black;
+    width: 100%;
+    height:30px;
+    padding:5px;
+    margin-top:5px;
+    .col-sm-4{
+      display: block;
+      float: left;
+      align-items: center;
+      flex-wrap: nowrap;
+    }
+  }
+
+  @media screen and (max-width: 786px) {
+
+    #customers th{
+      width:20px
+    }
+    #amt{
+      width:20px
+    }
+    #customers #quant{
+      width:100px
+    }
+    #product{
+      width:250px
+    }
+    span{
+      font-size: 13px;
+    }
+    .duration-class{
+      position: relative;
+      left: -25px;
+    }
+    .flex-parent {
+      right: 12px;    position: relative;
+      display: inline-flex;
+    }
+    /* Styles go here */
+    .flex-item {
+      font-size: 10px;
+      background: #efefef;
+      text-align: center;
+      flex-wrap: nowrap;
+      width:auto;
+      display: inline-block;
+      border: 1px solid #333;
+    }
+
+    h4{
+      font-size: 14px;
+      text-align: left;
+    }
+
+    .container {
+      width: min(95%, 45rem);
+      position: relative;
+      right: 31px;
+    }
+    #amt{
+      width:20px
+    }
+    #customers #quant{
+      width:100px
+    }
+    #product{
+      width:300px
+    }
+
+  
+  #customers {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width:50px;
+    position: relative;
+    right: 10px;
+    margin-top: 5px;
+    font-size: 10px; 
+  }
+  #customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 0px;
+  }
+  .itemclass input[type="text"]{
+    width:100px;
+    border: none;
+  }
+
+  .quantityclass input[type="text"]{
+    width: 50px;
+    border: none;
+  }
+
+  input[type="number"]{
+    width:70px;
+    border: none;
+  }
+  .action-icon{
+    position: relative;
+    left:10px;
+      .fa{
+        font-size: 13px;
+      }
+}
+}
+
+  #customers{
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    
+  }
+  
+  #customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #customers tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #customers tr:hover {background-color: #ddd;}
+  
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color:  rgba(9,81,121,1);
+    color: white;
+  }
+ 
+
+//   input[type=text]{
+//       border:none
+//   }
+//   input[type=number]{
+//     border:none
+// }
+  .action-icon{
+    float: right;
+    .fa{
+      font-size: 20px;
+    }
+  }
+  .botom-icon{
+    float:right;
+    font-size: 20px;
+  }
+
+  @media screen and (max-width: 786px){
+    .tab-text{
+      font-size: 10px;
+     }
+  }
+
+  .expenses-grid table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .expenses-grid td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  .expenses-grid  th {
+   background-color: rgb(114, 223, 245);
+  }
+  
+  .expenses-grid tr:nth-child(even) {
+    background-color: #e6edac;
+   
+  }
+  .remove-icon-grid{
+    position: absolute;
+    right: 0;
+  }

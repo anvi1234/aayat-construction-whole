@@ -1,0 +1,254 @@
+
+<nb-card>
+  <nb-card-header>
+  
+     
+ 
+  <div ><span class="card-heading">
+    Task
+  </span><button class="header-button" (click)="addTask()" nbButton status="primary"><span class="add-icon">+</span></button></div>
+
+  </nb-card-header>
+   <nb-card-body>
+    <h4>{{siteNameForHeader}} - {{locationNameForHeader}}</h4>
+<div  *ngFor = "let item of gridData;index as i">
+    <span class="date-value"><b>Start Date:</b>&nbsp;{{item.startDate |date}}&nbsp;<b>End Date:</b>&nbsp;{{item.endDate |date}}&nbsp;<i (click) = "updateCalednder($event,i)" *ngIf="calenderHide" class="fa">&#xf073;</i><input type="date" *ngIf="!calenderHide"  [(ngModel)]="calenderFrom" (change)="handler(item)"></span>
+  <div class="taskName"><b>Task Name : </b>&nbsp;{{item.taskName}} </div><br>
+  <span class="action-icon">
+    <a class="table-row-action edit-action" *ngIf="!editData " (click)="enableEditMethod($event,i,item)">
+       <i class="fa fa-pencil" uib-tooltip="Edit" tooltip-trigger="mouseenter" tooltip-append-to-body="true" tooltip-placement="left"></i>
+       
+     </a>  &nbsp;   &nbsp;   &nbsp;
+     <a *ngIf="!editData " (click)="delete(item)"><i class="fa fa-trash" uib-tooltip="delete" style="color:red;" tooltip-trigger="mouseenter" tooltip-append-to-body="true" tooltip-placement="left"></i></a>
+     <i *ngIf="editData && enableEditIndex == i" style="color:red" (click)="editData=false" class="fa fa-close" ng-click="cancel()"></i>
+  &nbsp;   &nbsp;   &nbsp;   <i *ngIf="editData && enableEditIndex == i" style="color:green;" id="saveBtn" class="fa fa-check"  (click) = "saveData(item)" type="submit"></i>
+   </span>
+  <table id="customers">
+    <tr>
+      <th>Worker's Name</th>
+      <th>Contact</th>
+      <th>Charge</th>
+      <th>Calender</th>
+      <th>Record View</th>
+      <th>Task Image</th>
+      </tr>
+    <tr *ngFor = "let labour of item.laboursArray;let j =index">
+      <td  id="name"><input type="text" [(ngModel)]="labour.name"  [disabled]="!editData"></td>
+      <td id="contact"><input type="text" [(ngModel)]="labour.contact"  [disabled]="!editData"></td>
+      <td id="charge"><input type="text" [(ngModel)]="labour.charge"  [disabled]="!editData"></td>
+      <td><i  *ngIf="labour.actionBtn" (click)="viewCaledner(i,j,labour,item)" style="color:#f9a805;" class="fa">&#xf073;</i><input type="date"  *ngIf="!labour.actionBtn"  (change)= "handleDateClick($event);"> &nbsp;<i   *ngIf="!labour.actionBtn"  (click)="removeCalender(i,j,labour,item)"style="font-size:16px" style="color:red" class="fa">&#xf00d;</i></td>
+    
+     
+      <td><i   (click)="viewRecord(labour,item)" class="fa" style="color: #0095ff">&#xf06e;</i></td>
+    <td>
+      <i class="fa fa-picture-o" (click)="viewImage(item)" style="color: #db8b00" aria-hidden="true"></i>
+    </td>
+    </tr>
+   
+  </table>
+  <div class="botom-icon"> <span (click)="addRow(i,item)"><i class="fa fa-plus" aria-hidden="true"></i></span></div>
+  <br>
+</div>
+</nb-card-body>
+</nb-card>
+
+
+
+<ng-template #dialogdelete let-data let-ref="dialogRef">
+  <nb-card  style="width:500px">
+    <nb-card-header>Delete Task</nb-card-header>
+    <nb-card-body>
+     Are You Sure You Want To Delete This Task?
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton status="warning" (click)="removeTask()">Delete</button>&nbsp; &nbsp;<button nbButton status="basic" (click)="ref.close()">Cancel</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+<ng-template #dialogview let-data let-ref="dialogRef">
+  <nb-card  style="width:950px" class="imageClass">
+    <nb-card-header>View Gallery
+  <button type="submit" class="leave-btn" nbButton hero status="success" (click)="showWorkers()">Workers</button>
+    </nb-card-header>
+    <nb-card-body>
+     
+      <div class="row" *ngIf="!workerShow">
+        <div class="col-sm-4"  *ngFor="let item of imageGallery">
+          <div > 
+            <img src="{{item}}" height="200px" width="200px">
+          </div> 
+        </div>
+      </div>
+   
+<!-- <div  *ngIf="workerShow">
+<table id="customers">
+  <tr>
+    <th>Worker's Name</th>
+    <th>Contact</th>
+    <th>Charge</th>
+    <th>Calender</th>
+    </tr>
+  <tr *ngFor = "let item of workersArray;index as i">
+    <td>{{item.name}}</td>
+    <td>{{item.contact}}</td>
+    <td>{{item.charge}}</td>
+    <td  ><i style="font-size:24px" *ngIf="!calenderView" (click)="viewCaledner(i,item)" class="fa">&#xf073;</i><input type="date"  *ngIf="calenderView && enableCalender == i"  (change)= "handleDateClick($event);"></td>
+  </tr>
+ </table>
+</div> -->
+
+
+</nb-card-body>
+    <nb-card-footer>
+      <button nbButton status="warning" (click)="ref.close()">Cancel</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+<ng-template #dialogcalenderStatement let-data let-ref="dialogRef">
+  <nb-card  style="width:500px">
+    <nb-card-header>
+      Selected Date : {{selectedDate | date}}
+    </nb-card-header>
+    <nb-card-body>
+      <div class="form-group row">
+      
+        <label for="siteName"  class="label col-sm-2 col-form-label">Add P / A</label>
+        <div class="col-sm-4">
+          <input type="text" nbInput fullWidth [(ngModel)]="attendecne"  id="work"  >
+          <!-- <span *ngIf="error.designation" class="required">*Required</span>   -->
+      </div>
+      <label for="siteLoc"   class="label  col-sm-2 col-form-label">Over Time in hours</label>
+        <div class="col-sm-4">
+          <input type="text" nbInput fullWidth [(ngModel)]="overTime"  id="work"  >
+       
+      </div>
+      </div>
+      <div class="form-group row">
+      
+        <label for="siteName"  class="label col-sm-2 col-form-label">Advance Payment</label>
+        <div class="col-sm-4">
+          <input type="text" nbInput fullWidth [(ngModel)]="advancePayment"  id="work"  >
+          <!-- <span *ngIf="error.designation" class="required">*Required</span>   -->
+      </div>
+    
+        <div class="col-sm-4">
+         
+       
+      </div>
+      </div>
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton status="warning" (click)="submitWork()">Submit</button>&nbsp; &nbsp;<button nbButton status="basic" (click)="ref.close()">Cancel</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+<ng-template #dialogRecordView let-data let-ref="dialogRef">
+  <nb-card class="imageClass">
+    <nb-card-header>View Record
+ 
+    </nb-card-header>
+    <nb-card-body  id="dialog-card-task">
+      <button type="submit" class="leave-btn" nbButton hero status="success" (click)="showPayment()">Payment</button>
+      <br>
+        <div class="flex-parent">
+          <div class="flex-item">
+          <b style="color:rgb(44, 97, 44)">Worker's Payment:</b> {{totaalPaymentOfWorker}}
+          </div>
+          <div class="flex-item">
+            <b style="color:rgb(168, 69, 11)">Paid Payment:</b> {{totalPaymentPaid}}
+          </div>
+          <div class="flex-item">
+            <b style="color:rgb(10, 71, 121)">Pending Payment:</b> {{totalPaymentPending}}
+          </div>
+        
+     </div><br>
+      <table id="customers2">
+        <tr *ngFor="let key of totalWorkey">
+          <th>{{key | titlecase}}</th>
+          <td *ngFor="let data of totalWork">
+              {{data[key]}}
+          </td>
+      </tr>
+       </table>
+   
+
+
+</nb-card-body>
+    <nb-card-footer>
+      <button nbButton status="warning" (click)="ref.close()">Cancel</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+<ng-template #dialogPaymentView let-data let-ref="dialogRef">
+  <nb-card  style="width:950px" class="imageClass">
+    <nb-card-header>Payment
+ 
+    </nb-card-header>
+    <nb-card-body>
+      <div class="form-group row">
+        <label for="siteName"  class="label col-sm-2 col-form-label">From Date</label>
+        <div class="col-sm-4">
+            <input type="date" [(ngModel)]="fromDate" [ngModelOptions]="{standalone: true}" required>
+          
+          <!-- <span *ngIf="error.designation" class="required">*Required</span>   -->
+      </div>
+      <label for="siteLoc"   class="label  col-sm-2 col-form-label">To Date</label>
+        <div class="col-sm-4">
+          <input type="date" [(ngModel)]="toDate" [ngModelOptions]="{standalone: true}" required>
+         </div>
+         </div>
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton status="primary" (click)="submitPayment()">Submit</button>&nbsp; &nbsp; <button nbButton status="warning" (click)="ref.close()">Cancel</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+<ng-template #dialogviewImage let-data let-ref="dialogRef">
+  <nb-card  style="width:950px" class="imageClass">
+    <nb-card-header><span class="card-heading">View Gallery</span></nb-card-header>
+    <nb-card-body>
+      <div class="row">
+          <div class="col-sm-2" *ngFor="let img of urlOFFirebae" >
+            <div *ngIf= "getExtensionOfFile(img)=='mp4'">
+              <video [src]="img"  controls>
+                Your browser does not support HTML5 video.
+            </video>
+              
+            </div> 
+            <div *ngIf= "getExtensionOfFile(img) !='mp4'">
+              <a  href="" >
+                <img [src]="img" >
+              </a>
+              
+            </div>
+          </div>
+      
+       
+       
+        <!-- <h6>Uploaded Date : {{item.uploaded|date}}</h6>
+       
+        <div class="col-sm-2"   *ngFor = "let img of item.fireBaseUrl">
+          
+          <div *ngIf= "getExtensionOfFile(img)=='mp4'">
+            <video [src]="img" controls>
+              Your browser does not support HTML5 video.
+          </video>
+            
+          </div> 
+          <div *ngIf= "getExtensionOfFile(img) !='mp4'">
+            <img [src]="img">
+          </div>
+        </div> -->
+      </div>
+   
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton status="warning" (click)="ref.close()">Cancel</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

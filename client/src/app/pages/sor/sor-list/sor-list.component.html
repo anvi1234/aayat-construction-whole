@@ -1,0 +1,104 @@
+<nb-card class="table-card">
+    <nb-card-header><span class="card-heading">
+      SOR
+   </span> </nb-card-header>
+    <nb-card-body>
+      <nav>
+        <input class="form-control" type="text" name="siteName" [(ngModel)]="serviceNumber" (ngModelChange)="Search()"
+        placeholder="Enter Service Number to search">
+      </nav>
+    <br>
+    <div>
+       <div class="sor-scroll">
+      <table  class="rwd-table ">
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th>S.No.</th> 
+            <th style="width:10%">Ser.No.</th>
+            <th style="width:100%">Description</th> 
+            <th>UOM</th>
+            <th>Estim.</th> 
+            <th>F.Rate</th> 
+            
+           
+         </tr>
+        </thead>
+      
+           
+            <tbody  id="siteTableBody">
+                <tr *ngFor = "let item of gridData | paginate:{itemsPerPage:10,currentPage:p}">
+                    <td>   <button class="edit" data-toggle="tooltip" data-placement="top" title="Edit">
+                        <img src="../../../assets/icon/edit.png" (click)="edit('edit',item)">
+                        <!-- <i style="font-size:24px"   [ngStyle]="(style2 && byIndexingChangeColor == i  ) ?  {'color': '#08C2F9 '} : {'color': 'grey'}" title="Edit"  data-toggle="tooltip" class="fa fa-edit edit"></i> -->
+                      </button></td>
+                    <td>{{item.Sn}}</td>
+                    <td>{{item.ServiceNo}}</td>
+                    <td>{{item.Description}}</td>
+                    <td>{{item.UoM}}</td>
+                    <td>{{item.Estimate}}</td>
+                    <td>{{item.FinalRate}}</td>
+                    
+                </tr>
+           
+        </tbody><br>
+   
+    </table>
+</div>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+      </nb-card-body>
+      </nb-card>
+
+
+      <ng-template #dialogsor let-data let-ref="dialogRef">
+        <nb-card  style="width:500px">
+          <nb-card-header>Update SOR</nb-card-header>
+          <nb-card-body>
+          <form>
+            <div class="form-group row">
+                <label for="siteName"  class="label col-sm-2 col-form-label">Serial No.:</label>
+                <div class="col-sm-4">
+                 
+                    <input   type="text" nbInput fullWidth id="siteName" [(ngModel)]="SorFormModel.Sn"  [ngModelOptions]="{standalone: true}" required>
+                    <!-- <span *ngIf="error.siteName" class="required">*Required</span> -->
+                    </div>
+                <label for="siteLoc"   class="label  col-sm-2 col-form-label">Service No:</label>
+                <div class="col-sm-4">
+                  <input type="text" nbInput fullWidth id="siteLoc" [(ngModel)]="SorFormModel.ServiceNo" [ngModelOptions]="{standalone: true}" required>
+                  <!-- <span *ngIf="error.location" class="required">*Required</span> -->
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="siteName"  class="label col-sm-2 col-form-label">Description:</label>
+                <div class="col-sm-4">
+                 
+                    <input   type="text" nbInput fullWidth id="siteName"  [(ngModel)]="SorFormModel.Description" [ngModelOptions]="{standalone: true}" required>
+                    <!-- <span *ngIf="error.siteName" class="required">*Required</span> -->
+                    </div>
+                <label for="siteLoc"   class="label  col-sm-2 col-form-label">Category:</label>
+                <div class="col-sm-4">
+                  <input type="text" nbInput fullWidth id="siteLoc" [(ngModel)]="SorFormModel.Category" [ngModelOptions]="{standalone: true}" required>
+                  <!-- <span *ngIf="error.location" class="required">*Required</span> -->
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="siteName"  class="label col-sm-2 col-form-label">Estimate:</label>
+                <div class="col-sm-4">
+                 
+                    <input   type="text" nbInput fullWidth id="siteName"  [(ngModel)]="SorFormModel.Estimate" [ngModelOptions]="{standalone: true}" required>
+                    <!-- <span *ngIf="error.siteName" class="required">*Required</span> -->
+                    </div>
+                <label for="siteLoc"   class="label  col-sm-2 col-form-label">Final Rate:</label>
+                <div class="col-sm-4">
+                  <input type="text" nbInput fullWidth id="siteLoc" [(ngModel)]="SorFormModel.FinalRate" [ngModelOptions]="{standalone: true}" required>
+                  <!-- <span *ngIf="error.location" class="required">*Required</span> -->
+                </div>
+              </div>
+          </form>
+          </nb-card-body>
+          <nb-card-footer>
+            <button nbButton status="warning" (click)="update()">Update</button>&nbsp; &nbsp;<button nbButton status="basic" (click)=" ref.close()">Cancel</button>
+          </nb-card-footer>
+        </nb-card>
+      </ng-template>

@@ -1,0 +1,53 @@
+nb-checkbox {
+    margin-bottom: 1rem;
+  }
+  
+  .form-inline [fullWidth] {
+    flex: 1;
+  }
+  
+  .form-inline > * {
+    margin: 0 1.5rem 1.5rem 0;
+  }
+  
+  nb-card.inline-form-card nb-card-body {
+    padding-bottom: 0;
+  }
+  nb-card{
+    background-color: rgba(2,0,36,1) ;
+  }
+  input{
+    margin-bottom: 1rem;
+  
+  }
+  input[type="date"]{
+    width:100%
+  }
+  nb-select{
+    width:100%;
+    margin-bottom: 1rem;
+  }
+
+  #dateBox{
+    width:100%
+  }
+
+  .label{
+    font-size: 15px;
+  }
+
+  th{
+    color:#8f9bb3
+  }
+
+  .icon{
+    color:white;
+    font-size: 25px;
+  }
+
+  @media screen and (max-width: 786px) {
+    .leave-btn{
+      position: relative;
+      top:50px
+    }
+  }

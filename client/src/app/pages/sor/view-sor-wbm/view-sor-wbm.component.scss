@@ -1,0 +1,80 @@
+.nameOfConstruction input[type="text"], textarea{
+    background-color :yellow; 
+    width: 100%;
+    text-align: center;
+   }
+
+.row-data input[type="text"],
+textarea {
+  background-color: #ffffd4;
+  font-size: 18px;
+  font-weight: 700;
+  word-break: break-all;
+}
+
+.sub-row input[type="text"],
+textarea {
+  background-color: #c8f4ff;
+  font-size: 15px;
+  word-break: break-all;
+}
+.header-data {
+  position: relative;
+  
+}
+.header-data input[type="text"],
+textarea {
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+}
+.parent {
+  display: flex;
+  position: relative;
+  left: 20px;
+}
+.child {
+  width: 25%;
+}
+
+.footer-data {
+  background-color: orange;
+  color: black;
+  font-size: 16px;
+}
+
+.row-link {
+  font-size: 14px;
+  position: relative;
+  left: 10px;
+}
+
+.btn {
+  position: relative;
+  width: 150px;
+}
+a {
+  color: blue;
+}
+
+.nameOfConstruction input[type="text"],
+textarea {
+  background-color: yellow;
+  width: 100%;
+  position: relative;
+  text-align: center;
+}
+
+.nameOfwork input[type="text"],
+textarea{
+  background-color: rgb(0, 208, 255);
+  width: 100%;
+  position: relative;
+  text-align: center;
+}
+
+select{
+     width:200px;
+     background-color: green;
+     height: 40px;
+}

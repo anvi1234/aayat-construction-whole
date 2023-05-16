@@ -1,0 +1,181 @@
+
+
+
+<nb-card>
+    <div class="invoice-heading">
+        <h3>TAX INVOICE</h3>
+    </div>
+    <div class="invoice-sub-heading">
+        <h6 style="color:red"><b>{{ addressOfConstructor }}</b></h6>
+        <h6> <b>{{email}} </b></h6>
+    </div>
+    <div class="parent1">
+        <div class="item1">
+            <h6><b>{{nameOfSender}}</b></h6>
+            <h6><b>{{address1}}</b></h6>
+            <h6><b>{{address2}}</b></h6>
+            <h6><b>{{landmark}}</b></h6>
+        </div>
+        <div class="item2">
+            <table style="width:100%">
+            <tr>
+              <th>Vendor Code:</th>
+              <td><input type="text" [(ngModel)]="detailsOfBill.vendorCode"></td>
+            </tr>
+            <tr>
+              <th>Bill No:</th>
+              <td><input type="text" [(ngModel)]="detailsOfBill.billNo"></td>
+            </tr>
+            <tr>
+              <th>Date:</th>
+              <td><input type="text"  [(ngModel)]="detailsOfBill.Date"></td>
+            </tr>
+            <tr>
+                <th>Location:</th>
+                <td><input type="text" [(ngModel)]="detailsOfBill.location"></td>
+              </tr>
+          </table>
+          </div>
+    </div>
+    <div class="parent1">
+        <div class="item1 textAreaOfVendorLocation">
+          Name of BPCL Buyer Location-<input type="text"  [(ngModel)]="detailsOfBill.nameofbpclbuyerloc">
+          State Code-<input type="text"  [(ngModel)]="detailsOfBill.bpclstatecode">
+          Address of BPCL Buyer State-<input type="text"  [(ngModel)]="detailsOfBill.addressofbpcbuyerstate">
+          Distt-<input type="text"  [(ngModel)]="detailsOfBill.distt">
+          GSTIN No.-<input type="text"  [(ngModel)]="detailsOfBill.buyergstin">
+        </div>
+        <div class="item2">
+            <table style="width:100%">
+            <tr>
+              <th>PO/WO No-:</th>
+              <td><input type="text"  [(ngModel)]="detailsOfBill.po"></td>
+            </tr>
+            <tr>
+              <th></th>
+              <td><input type="text" [(ngModel)]="detailsOfBill.extra"></td>
+            </tr>
+            <tr>
+              <th>Party GSTIN No:</th>
+              <td><input type="text" [(ngModel)]="detailsOfBill.gstinNo"></td>
+            </tr>
+            <tr>
+                <th>State:</th>
+                <td><input type="text" [(ngModel)]="detailsOfBill.state"></td>
+              </tr>
+              <tr>
+                <th>PAN No.:</th>
+                <td><input type="text"  [(ngModel)]="detailsOfBill.panNo"></td>
+              </tr>
+              <tr>
+                <th>Work:</th>
+                <td><input type="text" [(ngModel)]="detailsOfBill.work"></td>
+              </tr>
+          </table>
+          </div>
+    </div>
+    <div class="nameOfConstruction">
+        <input type="text"  [(ngModel)]="detailsOfBill.nameOfBill">
+    </div>
+    
+    <div *ngFor="let item of  headerData">
+        <div class="header-data">
+            <input type="text" style="width:6%" [(ngModel)]="item.h1" disabled>
+            <input type="text"  style="width:7%" [(ngModel)]="item.h2" disabled>
+            <input type="text" style="width:7%" [(ngModel)]="item.h3" disabled>
+            <input type="text" style="width:35%" [(ngModel)]="item.h4" disabled>
+            <input type="text" style="width:7%" [(ngModel)]="item.h5" disabled>
+            <input type="text" style="width:6%" [(ngModel)]="item.h6" disabled>
+            <input type="text" style="width:9%" [(ngModel)]="item.h7" disabled>
+            <input type="text" style="width:23%" [(ngModel)]="item.h8" disabled>
+           
+            
+    </div>
+   </div>
+    <div  *ngFor="let item of data;let i=index">
+       
+        <div class="row-data">
+            <input type="text" style="width:6%" [(ngModel)]="item.SNO" disabled>
+            <input type="text"  style="width:7%" [(ngModel)]="item.SERVICENO" disabled>
+            <input type="text" style="width:7%" [(ngModel)]="item.sacNo" disabled>
+            <input type="text" style="width:35%" [(ngModel)]="item.JOBDESCRIPTION" disabled>
+            <input type="text" style="width:7%" [(ngModel)]="item.QTY" disabled>
+            <input type="text" style="width:6%" [(ngModel)]="item.UNIT" disabled>
+            <input type="text" style="width:9%" [(ngModel)]="item.SORRATE" disabled>
+            <input type="text" style="width:23%" [(ngModel)]="item.AMOUNT
+            " disabled>
+           
+        </div>
+           
+           
+            
+    </div><br>
+    <span>
+         <a class="row-link green" (click)=" generateAmount()">Genterate Amount</a><button (click)="saveAndView()" class="btn btn-success">Save & View</button>
+    </span>
+   
+    
+<br>
+    
+<div class="footer-data">
+    <div class="parent">
+        <div class="child"><b>TOTAL AMOUNT</b></div>
+        <div class="child">{{totalAmount | currency:'INR'}}</div>
+        <div class="child"></div>
+        <div class="child"></div>
+    </div>
+    <div class="parent">
+        <div class="child"><b>CGST {{cgst}}%</b><a class="row-link red" (click)="changeCGST()">Change</a></div>
+        <div class="child">{{gstAmount | currency:'INR'}}</div>
+        <div class="child"></div>
+        <div class="child"></div>
+    </div>
+    <div class="parent">
+        <div class="child"><b>SGST {{sgst}}%</b><a  class="row-link red" (click)=" changeSGST()">Change</a></div>
+        <div class="child">{{sgstAmount | currency:'INR'}}</div>
+        <div class="child"></div>
+        <div class="child"></div>
+    </div>
+    <div class="parent">
+        <div class="child"><b>GRAND TOTAL</b></div>
+        <div class="child">{{combineAmount | currency:'INR'}}</div>
+        <div class="child"></div>
+        <div class="child"></div>
+    </div>
+ </div>
+</nb-card>
+<ng-template #dialogcgst let-data let-ref="dialogRef">
+    <nb-card  style="width:500px">
+      <nb-card-header>Change CGST Number</nb-card-header>
+      <nb-card-body>
+        <input nbInput type="text" [(ngModel)]="cgst">
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton status="warning" (click)="ref.close()">Change</button>&nbsp; &nbsp;<button nbButton status="basic" (click)="ref.close()">Cancel</button>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+  <ng-template #dialogsgst let-data let-ref="dialogRef">
+    <nb-card  style="width:500px">
+      <nb-card-header>Change SGST Number</nb-card-header>
+      <nb-card-body>
+        <input nbInput type="text" [(ngModel)]="sgst">
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton status="warning" (click)="ref.close()">Change</button>&nbsp; &nbsp;<button nbButton status="basic" (click)="ref.close()">Cancel</button>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+
+  
+<ng-template #dialogsorName let-data let-ref="dialogRef">
+  <nb-card  style="width:500px">
+    <nb-card-header>Save Bill</nb-card-header>
+    <nb-card-body>
+      <input nbInput type="text" [(ngModel)]="billName">
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton status="warning" (click)="save()">Save</button>&nbsp; &nbsp;<button nbButton status="basic" (click)="ref.close()">Cancel</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

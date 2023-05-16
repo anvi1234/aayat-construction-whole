@@ -1,0 +1,242 @@
+// @import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+@import '../../styles/themes';
+
+@include nb-install-component() {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+    width: calc(#{nb-theme(sidebar-width)} - #{nb-theme(header-padding)});
+  }
+
+  nb-action {
+    height: auto;
+    display: flex;
+    align-content: center;
+  }
+  .welcome-box1{
+    position: relative;
+    right:-30px;
+    top:2px
+  }
+  nb-user {
+    cursor: pointer;
+  }
+
+  ::ng-deep nb-search button {
+    padding: 0!important;
+  }
+ 
+  .wave {
+    animation-name: wave-animation;  /* Refers to the name of your @keyframes element below */
+    animation-duration: 2.5s;        /* Change to speed up or slow down */
+    animation-iteration-count: infinite;  /* Never stop waving :) */
+    transform-origin: 70% 70%;       /* Pivot around the bottom-left palm */
+    display: inline-block;
+  }
+  
+  @keyframes wave-animation {
+      0% { transform: rotate( 0.0deg) }
+     10% { transform: rotate(14.0deg) }  /* The following five values can be played with to make the waving more or less extreme */
+     20% { transform: rotate(-8.0deg) }
+     30% { transform: rotate(14.0deg) }
+     40% { transform: rotate(-4.0deg) }
+     50% { transform: rotate(10.0deg) }
+     60% { transform: rotate( 0.0deg) }  /* Reset for the last half to pause */
+    100% { transform: rotate( 0.0deg) }
+  }
+  
+  
+  
+  .header-container {
+    display: flex;
+    align-items: center;
+    width: auto;
+
+    .sidebar-toggle {
+      @include nb-ltr(padding-right, 1.25rem);
+      @include nb-rtl(padding-left, 1.25rem);
+      text-decoration: none;
+      color: nb-theme(text-hint-color);
+      nb-icon {
+        font-size: 1.75rem;
+      }
+    }
+   
+    .logo {
+     
+      color:white;
+      font-size: 1.75rem;
+      @include nb-ltr(border-left, 1px solid nb-theme(divider-color));
+      @include nb-rtl(border-right, 1px solid nb-theme(divider-color));
+      white-space: nowrap;
+      text-decoration: none;
+      img{
+          /* height: 79%; */
+         
+          width: 40%;
+          position: relative;
+          bottom: 12px;
+          right: 16px;
+  
+      }
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    .control-item {
+      display: none;
+    }
+    .user-action {
+      border: none;
+      padding: 0;
+    }
+  }
+
+  @include media-breakpoint-down(is) {
+    nb-select {
+      display: none;
+    }
+  }
+}
+
+
+@media screen and (max-width: 786px)  {
+  .sidebar-toggle{
+    display: none;
+  }
+  
+  .welcome-box{
+    
+      font-size: 12px;
+      color: black;
+      position: absolute;
+      right: 6px;
+  
+    i{
+      font-size: 12px;
+    }
+    li{
+      font-size: 10px;
+
+    }
+    li a {
+       
+        display: block;
+        color: #232121;
+        text-align: center;
+        padding: 10px 6px;
+        text-decoration: none;
+        /* position: relative; */
+        /* left: -6px; */
+    }
+    .designation-btn {
+      width: auto;
+      border: none;
+      font-size: 12px;
+      font-weight: 600;
+      background: #a5d2ea;
+      color: #095179;
+  }
+    
+  }
+ 
+  .logo {
+     
+    color:white;
+    font-size: 1.75rem;
+    @include nb-ltr(border-left, 1px solid nb-theme(divider-color));
+    @include nb-rtl(border-right, 1px solid nb-theme(divider-color));
+    white-space: nowrap;
+    text-decoration: none;
+    img{
+        /* height: 79%; */
+       
+        width: 60%;
+        position: relative;
+        bottom: 18px;
+        right: 41px;
+
+    }
+  }
+}
+.hm-gradient {
+  background-image: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
+}
+.navbar .dropdown-menu a:hover {
+  color: #616161 !important;
+}
+.darken-grey-text {
+  color: #2E2E2E;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: rgb(35, 33, 33);
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: transparent;
+}
+
+.active {
+  background-color: #04AA6D;
+}
+  .designation-btn {
+    width: auto;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    background: #a5d2ea;
+    color: #095179;
+}
+.dropbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+
+
+.dropdown-content {
+
+  background-color: white;
+  min-width: 160px;
+  position: absolute;
+  right: 0px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #3e8e41;}

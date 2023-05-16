@@ -1,0 +1,90 @@
+<nb-card>
+    <nb-card-header>
+    
+       
+   
+    <div class="container"><span class="card-heading">
+      Attendence
+    </span><button class="header-button" (click)="gotoAddattendence()" nbButton status="primary"><span class="add-icon">+</span></button> </div>
+   
+    </nb-card-header>
+ 
+    <!-- <nb-card-body>
+      <div >
+        <ng2-smart-table [settings]="attendence" [source]="source" (custom)="onCustomEvent($event,dialogdelete )" >
+        </ng2-smart-table>
+      </div>
+      
+    </nb-card-body> -->
+
+    <nb-card-body>
+      <!-- <nav>
+        <input class="form-control" type="text" name="siteName" [(ngModel)]="siteName" (ngModelChange)="Search()"
+        placeholder="Enter Site's Name to search">
+      </nav> -->
+    <br>
+    <div class="container scroll" >
+     
+      <table  class="rwd-table">
+        <thead>
+          <tr>
+            <th id="action">Action</th>
+           
+            <th>Site's Name</th> 
+            <th>Location</th> 
+            <th>Date</th>
+            <th>Status</th>
+           </tr>
+        </thead>
+      
+           
+            <tbody  id="siteTableBody">
+              <tr *ngFor="let item of attendecneGridData | paginate:{itemsPerPage:10,currentPage:p} ; let i = index">
+                <td data-label="Action" id="action">
+                  <div>
+                    <span>
+                      <button class="del"  (click)="delete(i,'delete',item)" data-toggle="tooltip" data-placement="top" title="Remove">
+                        <img src="../../../assets/icon/delete.png">
+                        <!-- <i   [ngStyle]="(styleOne && byIndexingChangeColor == i  ) ?  {'color': 'red','font-size':'22px'} : {'color': 'grey','font-size':'22px'} " title="Delete"  data-toggle="tooltip" class="fa">&#xf014;</i> -->
+                      </button>
+                      </span>
+                     
+                     
+                    
+                 
+              </div>
+                </td>
+                <td id="start" data-label="Site's Name" >{{item.siteName | titlecase}}</td>
+                <td data-label="Location"> {{item.location | titlecase}}  </td>
+                <td data-label="Date">{{item.date}}</td>
+                <td data-label="Status">
+                  
+                 
+                    <button *ngIf="item.approvalStatus === 'Approved' " style="background-color:green;color:white">Approved</button>
+               
+             
+                    <button *ngIf="item.approvalStatus === 'Not-Approved' " style="background-color:red;color:white">Not-Approved</button>
+           
+                  
+                 </td>
+                  </tr>
+        </tbody><br>
+   
+    </table>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+      </nb-card-body>
+  </nb-card>
+
+  <ng-template #dialogdelete let-data let-ref="dialogRef">
+    <nb-card  style="width:500px">
+      <nb-card-header>Delete User</nb-card-header>
+      <nb-card-body>
+       Are You Sure You Want To Delete This User?
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton status="warning" (click)="  removeAttendecne()">Delete</button>&nbsp; &nbsp;<button nbButton status="basic" (click)="ref.close()">Cancel</button>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+  

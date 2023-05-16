@@ -1,0 +1,115 @@
+<div class="row">
+    <div class="col-md-12">
+      <nb-card>
+        <nb-card-header><span   [routerLink] = "['/task']"  class="card-heading">{{dialogTitle}}</span>
+       
+        </nb-card-header>
+        <nb-card-body>
+          <form enctype="multipart/form-data">
+            <div class="form-group row">
+              <label for="siteName"  class="label col-sm-2 col-form-label">Site Name</label>
+              <div class="col-sm-4">
+                <nb-select  *ngIf= "!isShow" placeholder="Site Name" [(ngModel)]="TaskFormModel.siteName" [ngModelOptions]="{standalone: true}"   required>
+                 
+                  <nb-option  *ngFor="let site of siteName" [value]="site.siteName">{{site.siteName}}</nb-option>
+              
+               </nb-select>
+               <input *ngIf= "isShow"  type="text" nbInput fullWidth id="supervisorName" [(ngModel)]="TaskFormModel.siteName" [ngModelOptions]="{standalone: true}" required disabled>
+                <!-- <span *ngIf="error.fullName" class="required">*Required</span> -->
+              </div>
+              <label for="siteLoc"   class="label  col-sm-2 col-form-label">Site Location</label>
+              <div class="col-sm-4">
+                <nb-select *ngIf= "!isShow" placeholder="Site Location" [(ngModel)]="TaskFormModel.location" [ngModelOptions]="{standalone: true}"   required>
+                 
+                  <nb-option  *ngFor="let site of siteLocation" [value]="site.location">{{site.location}}</nb-option>
+              
+               </nb-select>
+               <input *ngIf= "isShow"  type="text" nbInput fullWidth id="supervisorName" [(ngModel)]="TaskFormModel.location" [ngModelOptions]="{standalone: true}" required disabled>
+                <!-- <input type="text" nbInput fullWidth  [(ngModel)]="TaskFormModel.location" id="work" [ngModelOptions]="{standalone: true}" > -->
+                <!-- <span *ngIf="error.designation" class="required">*Required</span>   -->
+            </div>
+            </div>
+            <div class="form-group row">
+              <label for="siteName"  class="label col-sm-2 col-form-label">Task Name</label>
+              <div class="col-sm-4">
+                <input type="text" nbInput fullWidth  [(ngModel)]="TaskFormModel.taskName" id="work" [ngModelOptions]="{standalone: true}" >
+                <!-- <span *ngIf="error.designation" class="required">*Required</span>   -->
+            </div>
+            <label for="siteLoc"   class="label  col-sm-2 col-form-label">Start Date</label>
+              <div class="col-sm-4">
+                <input type="date" [(ngModel)]="TaskFormModel.startDate" [ngModelOptions]="{standalone: true}" required>
+                  </div>
+            </div>
+            <div class="form-group row">
+                <label for="siteName"  class="label col-sm-2 col-form-label">End Date</label>
+                <div class="col-sm-4">
+                  <input type="date"  [(ngModel)]="TaskFormModel.endDate" [ngModelOptions]="{standalone: true}" required>
+                   
+                  <!-- <span *ngIf="error.designation" class="required">*Required</span>   -->
+              </div>
+              <label for="siteLoc"   class="label  col-sm-2 col-form-label">Progress</label>
+                <div class="col-sm-4">
+                    <input type="text" nbInput fullWidth placeholder="0%" [(ngModel)]="TaskFormModel.progressStatus" id="work" [ngModelOptions]="{standalone: true}" >
+                    <!-- <span *ngIf="error.email" class="required">*Required</span> -->
+                    </div>
+               
+              </div>
+              <div class="form-group row">
+                <label for="siteName"  class="label col-sm-2 col-form-label">Add Photos <span class="required1">Please add At least one photo</span></label>
+                <div class="col-sm-4">
+                  <input type="file" nbInput fullWidth  (change)="onFileChange($event)" id="work" multiple >
+                  <!-- <span *ngIf="error.designation" class="required">*Required</span>   -->
+              </div>
+              
+              
+                  
+                  <label for="siteName"  class="label col-sm-2 col-form-label">Total Labour</label>
+                  <div class="col-sm-4">
+                  <input type="text" nbInput fullWidth  [(ngModel)]="TaskFormModel.totalLabour" id="work" [ngModelOptions]="{standalone: true}" disabled>
+                  <!-- <span *ngIf="error.designation" class="required">*Required</span>   -->
+            
+                    </div>
+               
+              </div>
+              <table class="table table-striped table-bordered">    
+                <thead>    
+                    <tr>    
+                        <th style="width:20%">Labour Name</th>
+                        <th style="width:20%">Contact No</th> 
+                        <th style="width:20%">Charge</th>  
+                        <th style="width:20%">Action</th>  
+                       
+                    </tr>    
+                </thead>    
+                <tbody>    
+                     <tr *ngFor="let dynamic of dynamicArray; let i = index;">       
+                        <td data-label="Labour Name">    
+                          <input nbInput [(ngModel)]="dynamicArray[i].name" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>   
+                       
+                        </td> 
+                        
+                        <td  data-label="Contact No">    
+                          <input nbInput [(ngModel)]="dynamicArray[i].contact" class="form-control" type="number" [ngModelOptions]="{standalone: true}"required>   
+                        </td> 
+                        <td data-label="Charge">    
+                          <input nbInput [(ngModel)]="dynamicArray[i].charge" class="form-control" type="number" [ngModelOptions]="{standalone: true}"required>   
+                        </td>    
+                       
+                        <td > 
+                            <i (click)="deleteRow(i)"  *ngIf="i!=0" class="fa fa-trash fa-2x deleteicon"></i>    
+                        </td>     
+                    </tr>    
+                   
+                </tbody>    
+            </table>  
+            <button class="fa fa-plus fa-2x addicon" (click)="addRow()">Add Labour</button>
+            <div class="form-group row">
+              <div class="col-sm-4 offset-sm-4 text-center">
+                <button type="submit" nbButton status="primary" (click)="saveData()">{{clickTitle}}</button>
+              </div>
+            </div>
+          </form>
+        </nb-card-body>
+      </nb-card>
+   </div>
+  </div>

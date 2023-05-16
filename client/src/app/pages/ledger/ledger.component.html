@@ -1,0 +1,83 @@
+<div class="card" style="text-align:center">
+    <h5><b>"M/S Aayat Construction</b> </h5>
+      <p>Premchak Urf Umargunj,(Ballia) U.P 277001</p>
+       <p>  Mob:  9918142959,8299659467 </p>
+       <p>GSTIN: 09BDKPK6991A2Z9</p>
+        <p>L E D G E R</p>
+        <div> (From  <input type="date" style="width:10%"  [(ngModel)]="fromDate"> TO   <input type="date" style="width:10%"   [(ngModel)]="toDate" >)</div>
+      <br>
+        <div>  ACCOUNT: <input type="text" style="width:80%"  [(ngModel)]="accountName"></div>
+      
+</div>
+<br>
+
+<div class="header-data">
+    <input type="text" style="width:10%"  value = "Date" disabled>
+    <input type="text"  style="width:10%" value = "Type" disabled>
+    <input type="text" style="width:35%" value = "Particulars" disabled>
+    <input type="text" style="width:10%"  value = "BillNo" disabled>
+    <input type="text" style="width:10%"  value = "Debit(dr)" disabled>
+    <input type="text" style="width:10%"  value = "Credit(cr)" disabled>
+    <input type="text" style="width:15%"  value = "Balance" disabled>
+    
+</div>
+<ng-container *ngFor="let item of data;let i = index">
+    <div class="row-data">
+        <input type="text" style="width:10%" [(ngModel)]= "item.date" >
+        <input type="text"  style="width:10%" [(ngModel)]= "item.type">
+        <input type="text" style="width:35%" [(ngModel)]= "item.particulars">
+        <input type="text" style="width:10%" [(ngModel)]= "item.billNo">
+        <input type="text" style="width:10%" [(ngModel)]= "item.debit" (change)="change(i,$event,'debit')">
+        <input type="text" style="width:10%" [(ngModel)]= "item.credit" (change)="change(i,$event,'credit')">
+        <input type="text" style="width:13%" [(ngModel)]= "item.balance" (change)="change(i,$event,'balance')">
+        <span (click)="deleteRow(i)" style="font-size:24px">-</span>
+    </div>
+    
+</ng-container>
+<div class="row-data">
+    <input type="text" style="width:10%"  >
+    <input type="text"  style="width:10%" >
+    <input type="text" style="width:35%" value="Total">
+    <input type="text" style="width:10%" >
+    <input type="text" style="width:10%" [(ngModel)]= "totalDebit" >
+    <input type="text" style="width:10%" [(ngModel)]= "totalCredit" >
+    <input type="text" style="width:15%" >
+    
+</div>
+<div class="row-data">
+    <input type="text" style="width:10%" value="Updated" >
+    <input type="text"  style="width:10%" >
+    <input type="text" style="width:35%" value= "Closing Balance">
+    <input type="text" style="width:10%" >
+    <input type="text" style="width:10%"  >
+    <input type="text" style="width:10%" [(ngModel)]= "closingBal" >
+    <input type="text" style="width:15%" >
+   
+</div>
+<div class="row-data">
+    <input type="text" style="width:10%"  >
+    <input type="text"  style="width:10%" >
+    <input type="text" style="width:35%" value= "Grand Total">
+    <input type="text" style="width:10%" >
+    <input type="text" style="width:10%" [(ngModel)]= "grandDebit" >
+    <input type="text" style="width:10%" [(ngModel)]= "grandCredit" >
+    <input type="text" style="width:15%" >
+  
+</div>
+<span>
+    <a class="row-link red" (click)="addRow()">Add</a> &nbsp;&nbsp;<button (click)=" saveandnext()" class="btn btn-success">Save</button>
+    <!-- <button (click)="saveandNext()" class="btn btn-success">Save & Next</button><button (click)="saveandNext()" *ngIf="!isSelect" class="btn btn-success">Update & Next</button> -->
+</span>
+<ng-template #dialogsorName let-data let-ref="dialogRef">
+    <nb-card  style="width:500px">
+      <nb-card-header *ngIf="!isEdit">Save Ledger</nb-card-header>
+      <nb-card-header *ngIf="isEdit">Update Ledger</nb-card-header>
+      <nb-card-body>
+        <input nbInput type="text" [(ngModel)]="accountName" >
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton status="warning"   *ngIf="!isEdit"(click)="save()">Save</button>&nbsp; &nbsp;<button nbButton status="basic" (click)="ref.close()">Cancel</button>
+        <button nbButton   *ngIf="isEdit" status="warning" (click)="update()">Update</button>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>

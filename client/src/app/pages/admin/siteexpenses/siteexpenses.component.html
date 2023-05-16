@@ -1,0 +1,55 @@
+<nb-card>
+    <nb-card-header>
+    
+       
+   
+    <span class="card-heading">
+       Site Expenses
+       </span>
+    <!-- </span><button class="header-button" (click)="gotoAddExpenses()" nbButton status="primary">Add Expenses</button></div> -->
+  
+    </nb-card-header>
+  
+    <nb-card-body>
+      <ng2-smart-table [settings]="settings" [source]="source" (custom)="onCustomEvent($event,dialog,dialog1,dialog2)">
+      </ng2-smart-table>
+    </nb-card-body>
+  </nb-card>
+  <ng-template #dialog let-data let-ref="dialogRef">
+    <nb-card  style="width:950px">
+      <nb-card-header>View Expenses</nb-card-header>
+      <nb-card-body>
+        <ng2-smart-table [settings]="expenseColumn" [source]="expenseSource" >
+        </ng2-smart-table>
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton status="warning" (click)="ref.close()">Cancel</button>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+  <ng-template #dialog1 let-data let-ref="dialogRef">
+    <nb-card  style="width:400px">
+      <nb-card-header> <span class="card-heading">Approve Expenses</span></nb-card-header>
+      <nb-card-body>
+        Are You Sure You Want To Approve This Expenses?
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton status="success" (click)="approvedData()">Approved</button>&nbsp;&nbsp;&nbsp;
+        <button nbButton status="basic" (click)="ref.close()">Cancel</button>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+  <ng-template #dialog2 let-data let-ref="dialogRef">
+    <nb-card  style="width:400px">
+      <nb-card-header> <span class="card-heading">Approve Expenses</span></nb-card-header>
+      <nb-card-body>
+        Are You Sure You Want To Reject This Expenses?
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton status="warning" (click)="rejected()">Rejected</button>&nbsp;&nbsp;&nbsp;
+        <button nbButton status="basic" (click)="ref.close()">Cancel</button>
+      </nb-card-footer>
+    </nb-card>
+  </ng-template>
+  
+ 
