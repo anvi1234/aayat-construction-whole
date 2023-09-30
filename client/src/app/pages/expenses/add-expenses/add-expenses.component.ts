@@ -74,29 +74,11 @@ export class AddExpensesComponent implements OnInit {
            })
          this.ExpensesFormModel.superVisorName = data[0]?.fullName
         })
-
-    // if(localStorage.getItem('designation') ==="ADMIN"){
-    //   this.isShow = true;
-    //   this.siteNameValue = localStorage.getItem('siteName')
-    //   this.locationValue = localStorage.getItem('location')
-    //   this.ExpensesFormModel.location = this.locationValue 
-    //   this.ExpensesFormModel.siteName =  this.siteNameValue
-    // }
-    // this.siteService.selectedData.subscribe((e: any) => {
-    //   if (e) {
-    //     this.isShow = true;
-    //     this.ExpensesFormModel.location = e.location;
-    //     this.ExpensesFormModel.siteName = e.siteName;
-     
-    //   } else {
-    //     this.isShow = false
-    //   }
-    // })
      this.getSite();
     this.fetchId = this.route.snapshot.paramMap.get('id');
     if (this.fetchId) {
       this.dialogTiltle = "Edit Expenses",
-        this.clickTitle = "Update",
+      this.clickTitle = "Update",
         this.isTotalAmount = true
       this.getExpenseByID(this.fetchId);
     }
@@ -111,7 +93,15 @@ export class AddExpensesComponent implements OnInit {
   addRow() {
     if(this.dynamicArray.length === 1 && (this.dynamicArray[0].productItem === '' || !
     this.dynamicArray[0].amount)){
-    this.isRequired = true
+ alert("Please Add At Least One Item");
+    }
+
+    else if(this.dynamicArray.length >1){
+      let lastIndex = this.dynamicArray.length - 1;
+        let lastIndexData = this.dynamicArray[lastIndex]
+        if(!lastIndexData.productItem && !lastIndexData.amount){
+          alert("Please fill empty amount");
+        }
     }
     else{
       this.isRequired = false
@@ -149,13 +139,18 @@ export class AddExpensesComponent implements OnInit {
     if (this.dynamicArray.length == 1) {
       this.dynamicArray.filter((e) => {
         if (e.productItem == "") {
-          this.productDetails = true;
-        }
-        else {
-          this.productDetails = false;
+          alert("Please Add At Least One Item");
         }
         return e;
       })
+    }
+    else if(this.dynamicArray.length >1){
+      let lastIndex = this.dynamicArray.length - 1;
+        let lastIndexData = this.dynamicArray[lastIndex]
+        if(!lastIndexData.productItem && !lastIndexData.amount){
+          alert("Please fill empty amount");
+        }
+        return;
     }
     this.error = ExpensesValidation(this.ExpensesFormModel, "")
     if (

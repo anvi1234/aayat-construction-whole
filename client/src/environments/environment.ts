@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'https://aayatbackend-8bs2.vercel.app/api/v1',
+  apiBaseUrl: 'http://localhost:3000/api/v1',
   firebase: {
     
     apiKey: "AIzaSyCEk-Dm6MHQyn6hYv06gZL-o1xUxeTZxac",

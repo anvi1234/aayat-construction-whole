@@ -8,6 +8,10 @@
     font-size: 15px;
     text-shadow: 2px 2px 4px #000000;
   }
+  .overviewcard__icon , .overviewcard__info{
+    font-size: 18px;
+    font-weight: 800;
+  }
   .main-cards {
     display: flex;
     
@@ -66,8 +70,7 @@
    
 .dashboard-rwd-table {
  position: relative;
-  min-width: 300px;
-  max-width: 100%;
+ width: 100%;
   border-collapse: collapse;
 }
 
@@ -242,3 +245,9 @@ h3:after {
     background-color: green;
   }
 
+.search-box{
+  width: 30%;
+  position: absolute;
+  top: -8%;
+  right: 7%;
+}

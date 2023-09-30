@@ -44,10 +44,21 @@ export class AttendenceComponent implements OnInit {
 
    ) {
     setInterval(() => {
-      this.todaysDataTime  = this.today.toDateString() +' ' + (new Date().getHours() + ':' + new Date().getMinutes() + ':'+  new Date().getSeconds())}, 1);
+      this.todaysDataTime  = this.formatAMPM(new Date)}, 1);
     };
    
-
+     formatAMPM(date) {
+      var hours = date.getHours();
+      var minutes = date.getMinutes();
+      var second = date.getSeconds();
+      var ampm = hours >= 12 ? 'pm' : 'am';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // the hour '0' should be '12'
+      minutes = minutes < 10 ? '0'+minutes : minutes;
+      second = second<10 ? '0'+second :  second;
+      var strTime =  hours + ':' + minutes + ':' +second+ '' + ampm;
+      return strTime;
+    }
     
 
   ngOnInit(): void {
@@ -242,4 +253,15 @@ export class AttendenceComponent implements OnInit {
      
     })
   }
+
+  siteNameChange(data:any){
+    let value =   this.siteName.filter((e:any)=>{
+          if(e.siteName === data){
+            return e
+          }
+     });
+
+     this.EAttendenceFormModel.uniqueSiteId = value[0].uniqueSiteId
+     this.EAttendenceFormModel.location = value[0].location
+}
 }

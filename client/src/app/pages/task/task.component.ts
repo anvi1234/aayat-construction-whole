@@ -229,16 +229,10 @@ export class TaskComponent {
           this.siteNameForHeader = localStorage.getItem('routingSiteName')
           this.locationNameForHeader = localStorage.getItem('routinglocation')
           this.gridData = data.filter((e: any) => {
-            return e.siteName === localStorage.getItem('routingSiteName') && e.location === localStorage.getItem('routinglocation')
+            return e.uniqueSiteId === localStorage.getItem("siteKeyId")
           })
-        }
 
-        if (localStorage.getItem('siteName') || localStorage.getItem('location')) {
-          this.siteNameForHeader = localStorage.getItem('siteName')
-          this.locationNameForHeader = localStorage.getItem('location')
-          this.gridData = data.filter((e: any) => {
-            return e.siteName === localStorage.getItem('siteName') && e.location === localStorage.getItem('location')
-          })
+          console.log("griddata",this.gridData)
         }
         resolve(data)
 
@@ -507,7 +501,7 @@ export class TaskComponent {
   }
 
   viewImage(data:any){
-    console.log("gggggggggggggg",data["avatar"])
+  
     this.dialogService.open(this.viewCompanyModal, { context: 'this is some additional data passed to dialog' });
     this.urlOFFirebae = []
     data["avatar"].forEach((data: any) => {

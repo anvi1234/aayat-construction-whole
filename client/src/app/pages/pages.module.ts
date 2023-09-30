@@ -49,7 +49,10 @@ import { AddLedgerComponent } from './ledger/add-ledger/add-ledger.component';
 import { ViewLedgerComponent } from './ledger/view-ledger/view-ledger.component';
 
 import { LoaderComponent } from './loader/loader.component';
-
+import { CustomDatePipe } from '../pipe/custom-date.pipe';
+import { AttendenceDashboardComponent } from './attendence-dashboard/attendence-dashboard.component';
+import { ChartComponent } from '../chart/chart.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   imports: [
@@ -69,6 +72,7 @@ import { LoaderComponent } from './loader/loader.component';
     FullCalendarModule,
     PdfViewerModule,
     NgxPrintModule,
+    ChartsModule,
     NbDialogModule.forChild(),
   
     
@@ -107,7 +111,10 @@ import { LoaderComponent } from './loader/loader.component';
     AddLedgerComponent,
     ViewLedgerComponent,
     LoaderComponent,
-  
+    CustomDatePipe,
+    ChartComponent,
+    AttendenceDashboardComponent,
+   
   ],
   exports:[SanitizeURLPipe],
   providers: [ExpensesService],

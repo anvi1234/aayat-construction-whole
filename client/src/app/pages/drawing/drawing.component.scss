@@ -21,10 +21,7 @@ nb-checkbox {
     margin-bottom: 1rem;
   
   }
-  nb-select{
-    width:100%;
-    margin-bottom: 1rem;
-  }
+ 
 
   #dateBox{
     width:100%
@@ -57,20 +54,20 @@ nb-checkbox {
  
  }
 
- .col-sm-2,.col-sm-6,.col-sm-3{
-  float: left;
-  margin:5px;
-}
+ 
 
-@media screen and (max-width: 786px) {
+ @media screen and (max-width: 786px){
   input{
     height: 42px;
     width: 68% !important;
   }
-  select{
-    width: 200px;
-  }
+ 
 }
+
+button{
+  text-transform: capitalize;
+}
+
 
 .parent {
   display: flex;
@@ -88,4 +85,18 @@ nb-checkbox {
 }
 .select-size{
   max-width: 60%;
+}
+div > button{
+  float: right;
+  position: relative;
+  top: 4px;
+  background-color: green;
+}
+.container{
+  position: relative;
+  top: 4em;
+}
+.col-sm-3, .col-md-3, .col-xs-3{
+  position: relative;
+    bottom: 5px;
 }

@@ -23,16 +23,21 @@ ng2-st-tbody-custom a.ng2-smart-action.ng2-smart-action-custom-custom {
     top:20px;
     text-align: center;
 }
+.header-button{
+  width: 100%;
+  cursor: pointer;
+  height: 40px;
+}
 
 .card-heading{
   font-size: 26px;
   color:white
 }
-.header-button{
-  position: relative;
-  left:70%;
+// .header-button{
+//   position: relative;
+//   left:70%;
   
-}
+// }
 ::ng-deep nb-layout-column {
   height: 80vw;
 }
@@ -336,7 +341,9 @@ nb-layout-header nav{
 }
 
 @media screen and (max-width: 786px) {
-  
+  .col{
+    margin: 4px;
+  }
   .dashboardtable ,.scroll::-webkit-scrollbar {
     display: none;
   }
@@ -369,7 +376,24 @@ nb-select.appearance-outline.size-medium .select-button {
   padding-right: var(--select-icon-offset);
   height: 28px;
   padding: 3px;
+  border: 1px solid black;
 }
+nb-select  .placeholder {
+  color: black !important;
+}
+nb-select.appearance-outline.status-basic .select-button {
+  border-color: none;
+  color: none;
+  height: 40px;
+}
+.header-button{
+  width: 100%;
+  position: relative;
+  height: 40px;
+  text-transform: capitalize;
+  cursor: pointer;
+}
+
 .card-heading{
   font-size: 18px;
 }
@@ -389,10 +413,10 @@ nb-card{
   font-size:10px
 }
 
-  .header-button {
-    position: relative;
-    left: 37px;
-}
+//   .header-button {
+//     position: relative;
+//     left: 37px;
+// }
 
 ng2-smart-table .ng2-smart-actions a.ng2-smart-action {
   display: flex;
@@ -503,4 +527,34 @@ nb-layout.window-mode .layout nb-layout-header {
   .tab-text{
     font-size: 10px;
    }
+}
+
+nb-select ::ng-deep {
+  .select-button {
+    min-width: 0;
+  }
+}
+
+nb-select.size-medium:not(.full-width) {
+  max-width: 100% !important;
+}
+
+nb-select.appearance-outline.status-basic .select-button {
+  border-color: none;
+  color: none;
+  height: 40px;
+}
+nb-select.appearance-outline.size-medium .select-button {
+  padding-right: var(--select-icon-offset);
+}
+nb-select  .placeholder {
+  color: black !important;
+  opacity: 1;
+}
+.placeholder{
+  opacity: 1;
+}
+#header-btn{
+  text-transform: capitalize;
+  height: 40px;
 }

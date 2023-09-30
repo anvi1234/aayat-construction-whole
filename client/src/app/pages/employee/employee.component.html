@@ -1,19 +1,18 @@
 <nb-card>
   <app-loader></app-loader>
-    <nb-card-header>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-sm-9">
+        <span class="card-heading">
+          User
+       </span>
+      </div>
+      <div class="col-sm-3">
+        <button class="header-button" id="header-btn" (click)="gotoAddEmployee()"  nbButton status="primary">Add User</button>
+      </div>
+    </div>
+</nb-card-header>
     
-       
-   
-    <div ><span class="card-heading">
-      User
-    </span><button class="header-button" (click)="  gotoAddEmployee()" nbButton status="primary"><span class="add-icon">+</span></button></div>
-  
-    </nb-card-header>
-  
-    <!-- <nb-card-body>
-      <ng2-smart-table [settings]="settings" [source]="source" (custom)="onCustomEvent($event,dialogdelete,dialogviewAttendence )">
-      </ng2-smart-table>
-    </nb-card-body> -->
     <nb-card-body>
       <nav>
         <input class="form-control" type="text" name="siteName" [(ngModel)]="siteName" (ngModelChange)="Search()"
@@ -108,12 +107,9 @@
       padding-bottom: 2px;"><span class="calendder-card-heading">View Attendence</span>&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" class="leave-btn" nbButton hero status="success" style="font-size:12px" (click)="recordCheck()">View Record</button></nb-card-header>
       <nb-card-body>
         <div  class="container" id='calendar'>
-        <full-calendar  [options]="calendarOptions"
-       
-        ></full-calendar>
+        <full-calendar  [options]="calendarOptions" ></full-calendar>
       </div>
-      </nb-card-body>
-     
+      </nb-card-body> 
     </nb-card>
   </ng-template>
  
@@ -123,7 +119,6 @@
       <nb-card-header>Employee Attendence Record&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        <button  nbButton status="basic" (click)="paysilip()">PaySlip</button>
       </nb-card-header>
-     
       <nb-card-body>
         <div style="text-align:center">Year : {{currentYear}}</div>
         <table class="new-rwd-table">
@@ -132,8 +127,7 @@
           </tr>
         
           <tr>
-            <td *ngFor="let item of monthCountArray">{{item}}</td>
-           
+            <td *ngFor="let item of monthCountArray">{{item}}</td>      
             </tr>
         </table>
         
@@ -157,21 +151,6 @@
     </nb-card>
   </ng-template>
 
-  <ng-template #payslip let-data let-ref="dialogRef">
-    <nb-card   class="imageClass">
-      <nb-card-header><span class="card-heading">Select Month</span></nb-card-header>
-      <nb-card-body>
-        <nb-select placeholder="Site Location" [(ngModel)]="month" [ngModelOptions]="{standalone: true}" (selectedChange)="selectedMonth($event)"  required>
-                 
-          <nb-option  *ngFor="let site of AttendecneMonth" [value]="site">{{site}}</nb-option>
-      
-       </nb-select>
-      </nb-card-body>
-      <nb-card-footer>
-        <button nbButton status="basic" (click)="ref.close()">Cancel</button>
-      </nb-card-footer>
-    </nb-card>
-  </ng-template>
   <ng-template #payslipValue let-data let-ref="dialogRef">
     <nb-card  >
       <nb-card-body>

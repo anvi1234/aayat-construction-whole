@@ -6,6 +6,7 @@ import { Employee } from 'src/app/model/employee.model';
 import { EmployeeValidation } from 'src/validator/employee';
 import { EmployeeService } from 'src/app/shared/employee.service';
 import { SiteRegService } from 'src/app/shared/site-reg.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 
 
@@ -24,16 +25,25 @@ export class AddEmployeeComponent implements OnInit{
   public siteName :any;
   public siteLocation :any
   public EmployeeFormModel:Employee = new Employee()
+  public Designation = [
+    {id:1,name:"Admin"},
+    {id:2,name:"Supervisor"},
+    {id:3,name:"Mechanics"},
+    {id:4,name:"Electrician"},
+    {id:5,name:"Plumber"},
+    {id:6,name:"Driver"},
+    {id:7,name:"Office Staff"},
+
+  ]
   error = EmployeeValidation(this.EmployeeFormModel, "init")
     public fetchId:any;
-   
   constructor(private employeeService: EmployeeService,
     private route: ActivatedRoute,
     private toastrService: NbToastrService,
     private siteService:  SiteRegService,
     private router:Router){
-    
-   }
+}
+
   ngOnInit(): void {  
     this.fetchId = this.route.snapshot.paramMap.get('id');
     this.getSite()
@@ -42,13 +52,13 @@ export class AddEmployeeComponent implements OnInit{
       this.clickTitle = "Update",
       this.passwordShow = false,
       this.error.password = false
-      this.getExpenseByID(this.fetchId);
+      this.getEmployeeByID(this.fetchId);
     }
    
  }
 
  saveData(type:any){
-  
+      this.EmployeeFormModel.designation = String(this.getEmployeeDesID(this.EmployeeFormModel.designation))
     this.error = EmployeeValidation(this.EmployeeFormModel, "")
     if(
         !this.error.siteName &&
@@ -59,15 +69,21 @@ export class AddEmployeeComponent implements OnInit{
         !this.error.adharNo &&
         !this.error.address &&
         !this.error.email &&
-        !this.error.password
+        !this.error.password &&
+        !this.error.adharNoLength &&
+        !this.error.mobileNoLength
        ){
      if(type=="Save"){
         this.saveData1()
     }
     if(type=="Update"){
-        this.updateExpenses(this.fetchId)
+        this.updateEmployeeByID(this.fetchId)
     }
 }
+  }
+
+  getDesignationid(name:any){
+
   }
 
   saveData1(){
@@ -84,13 +100,28 @@ export class AddEmployeeComponent implements OnInit{
   }
 
 
-  getExpenseByID(id:any){
+  getEmployeeByID(id:any){
       this.employeeService.getEmployeeById(id).subscribe(data => {
         this.EmployeeFormModel = data.user;
+        this.EmployeeFormModel.designation = this.getEmployeeDes(data.user.designation);
      });
     }
+
+    getEmployeeDes(desId:any){
+       let nameValue = this.Designation.filter((e:any)=>{
+         return e.id == desId;
+        })
+        return nameValue[0].name
+    }
+
+    getEmployeeDesID(desName:any){
+       let idValue = this.Designation.filter((e:any)=>{
+         return e.name === desName;
+        })
+        return idValue[0].id
+    }
   
-    updateExpenses(id:any){
+    updateEmployeeByID(id:any){
       this.employeeService.updateEmployee(id,this.EmployeeFormModel)
       .subscribe(res => {
        this.showToast('success','User Updated Successfully');

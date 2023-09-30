@@ -6,6 +6,7 @@ export class Task {
     siteName: any;
     location: any;
     totalLabour:any;
+    uniqueSiteId:any;
     progressStatus:string;
     laboursArray:Array<Arraylabours>;
     constructor(){

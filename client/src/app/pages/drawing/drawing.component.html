@@ -1,53 +1,50 @@
+<app-loader></app-loader>
 <nb-card>
-    <nb-card-header><span class="card-heading">
-     Drawing
-   </span><button *ngIf="designation === 'ADMIN'" class="header-button" (click)="addDrawing()"   nbButton status="primary"><span class="add-icon">+</span></button> </nb-card-header>
-    <nb-card-body>
-      <div class="parent">
-        <div class="child label-size">
-          Drawing :
+    <nb-card-header>
+      <div class="row">
+        <div class="col col-sm-2 col-md-2 col-xs-2">
+          <span class="card-heading">
+            Drawing
+          </span>
         </div>
-        <div class="child2">
-          
-            <app-loader></app-loader>
-            <select placeholder="Site Name" [(ngModel)]="siteName" [ngModelOptions]="{standalone: true}"  (change)=" drawingTypeChange($event)">
-                <option  *ngFor="let item of drawingData" [value]="item._id">{{item.name | titlecase}}</option>
-          </select>
-       
+        <div class="col col-sm-7 col-md-7 col-xs-7 ">
+          <nb-select style="width:100%" placeholder="Choose Your Drawing" [(ngModel)]="siteName" [ngModelOptions]="{standalone: true}"  (selectedChange)="drawingTypeChange($event)">
+            <nb-option  *ngFor="let item of drawingData" [value]="item._id">{{item.name | titlecase}}</nb-option>
+      </nb-select>   
         </div>
-        <div class="child">
-          <button class="btn btn-success" *ngIf="isExport" (click)="download()">Export</button>
-        </div>
-        <div class="child">
-          <button class="btn btn-danger" *ngIf="isExport && designation === 'ADMIN'" (click)="delete()">Delete</button>
+        <div class="col col-sm-3 col-md-3 col-xs-3">
+         
+          <button class="header-button" id="header-btn" (click)="addDrawing()"   nbButton status="primary">Add Drawing</button> 
         </div>
       </div>
-  
-    
-    <br>
-    <div class="container">
-      <div class="pdf-container">
-        <pdf-viewer
-          [src]="imageURRRl"
-          [rotation]="0"
-          [original-size]="false"
-          [show-all]="true"
-          [fit-to-page]="false"
-          [zoom]="1"
-          [zoom-scale]="'page-width'"
-          [stick-to-page]="false"
-          [render-text]="true"
-          [external-link-target]="'blank'"
-          [autoresize]="true"
-          [show-borders]="false"
-          style="width: 100%; height: 600px;"
-        ></pdf-viewer>
-      </div>
-   
-  </div>
-      </nb-card-body>
+    </nb-card-header>
       </nb-card>
-
+      <div>
+        <button  id="header-btn" (click)="addDrawing()"   nbButton status="success">Export pdf</button> 
+      </div>
+      
+        <div class="container">
+          <div class="pdf-container">
+            <pdf-viewer
+              [src]="imageURRRl"
+              [rotation]="0"
+              [original-size]="false"
+              [show-all]="true"
+              [fit-to-page]="false"
+              [zoom]="1"
+              [zoom-scale]="'page-width'"
+              [stick-to-page]="false"
+              [render-text]="true"
+              [external-link-target]="'blank'"
+              [autoresize]="true"
+              [show-borders]="false"
+              style="width: 100%; height: 100%;"
+            ></pdf-viewer>
+          </div>
+       
+      </div>
+    
+ 
       <ng-template  #dialogdrawing let-data let-ref="dialogRef">
         <nb-card style="width:500px">
           <nb-card-header>Add Drawing</nb-card-header>

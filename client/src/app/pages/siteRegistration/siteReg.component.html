@@ -1,23 +1,3 @@
-
-
-
-<!-- <nb-card >
-    <nb-card-header>
-    <div ><span class="card-heading">
-      Site Registration
-    </span><button class="header-button"  nbButton status="primary"><span class="add-icon">+</span></button></div>
-  
-    </nb-card-header>
-  
-    <nb-card-body>
-      <div class="ng-table">
-        <ng2-smart-table [settings]="settings" [source]="source"   (custom)="onCustomEvent($event,dialogdelete,dialogviewImage)">
-        </ng2-smart-table>
-       <ng2-smart-table [settings]="settings" [source]="source"  (userRowSelect)="onUserRowSelect($event)" (custom)="onCustomEvent($event,dialogdelete,dialogviewImage)">
-      </ng2-smart-table> s
-  </div>
-  </nb-card-body>
-  </nb-card> -->
  
   <ng-template #dialogdelete let-data let-ref="dialogRef">
     <nb-card  style="width:500px">
@@ -51,23 +31,6 @@
                 
               </div>
             </div>
-        
-         
-         
-          <!-- <h6>Uploaded Date : {{item.uploaded|date}}</h6>
-         
-          <div class="col-sm-2"   *ngFor = "let img of item.fireBaseUrl">
-            
-            <div *ngIf= "getExtensionOfFile(img)=='mp4'">
-              <video [src]="img" controls>
-                Your browser does not support HTML5 video.
-            </video>
-              
-            </div> 
-            <div *ngIf= "getExtensionOfFile(img) !='mp4'">
-              <img [src]="img">
-            </div>
-          </div> -->
         </div>
      
       </nb-card-body>
@@ -81,9 +44,23 @@
 
 <nb-card>
   <app-loader></app-loader>
-  <nb-card-header><span class="card-heading">
-    Site Registration
- </span><button class="header-button" (click)="gotoAddEmployee()" nbButton status="primary"><span class="add-icon">+</span></button> </nb-card-header>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-sm-9">
+        <span class="card-heading">
+          Site Registration
+       </span>
+      </div>
+      <div class="col-sm-3">
+        <button class="header-button" id="header-btn" (click)="gotoAddEmployee()" nbButton status="primary">Add Site</button>
+      </div>
+    </div>
+    
+
+</nb-card-header>
+
+
+
   <nb-card-body>
     <nav>
       <input class="form-control" type="text" name="siteName" [(ngModel)]="siteName" (ngModelChange)="Search()"

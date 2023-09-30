@@ -1,4 +1,5 @@
 
+
     <div class="row">
       <div class="col-md-12">
         <div>
@@ -7,7 +8,7 @@
        
         <nb-card *ngIf="leaveShow">
           <nb-card-header><span [routerLink]="['/transaction']" class="card-heading">Attendence</span>
-            <span  class="card-heading" style="float: right;">{{todaysDataTime}}</span>
+            <span  class="card-date-time" style="float: right;">{{today | customDate }} {{todaysDataTime}}</span>
           </nb-card-header>
         
           <nb-card-body>
@@ -16,7 +17,7 @@
              <div class="form-group row">
                <label for="siteName"  class="label col-sm-2 col-form-label">Site Name</label>
                <div class="col-sm-4">
-                 <nb-select  *ngIf= "!isShow"  placeholder="Site Name" [(ngModel)]="EAttendenceFormModel.siteName" [ngModelOptions]="{standalone: true}" required>
+                 <nb-select  *ngIf= "!isShow"  placeholder="Site Name" [(ngModel)]="EAttendenceFormModel.siteName" [ngModelOptions]="{standalone: true}" (selectedChange)="siteNameChange($event)" required>
                   
                    <nb-option  *ngFor="let site of siteName" [value]="site.siteName">{{site.siteName}}</nb-option>
                
@@ -26,8 +27,8 @@
                </div>
                <label for="siteLoc"   class="label  col-sm-2 col-form-label">Site Location</label>
                <div class="col-sm-4">
-                 <nb-select *ngIf= "!isShow"  placeholder="Site Location"  [(ngModel)]="EAttendenceFormModel.location" [ngModelOptions]="{standalone: true}" required>
-                   <nb-option  *ngFor="let site of siteLocation"  [value]="site.location">{{site.location}}</nb-option>
+                 <nb-select  disabled *ngIf= "!isShow"  placeholder="Site Location"  [(ngModel)]="EAttendenceFormModel.location" [ngModelOptions]="{standalone: true}" required>
+                   <nb-option *ngFor="let site of siteLocation"  [value]="site.location">{{site.location}}</nb-option>
                  </nb-select>
                  <input *ngIf= "isShow"  type="text" nbInput fullWidth id="supervisorName" [(ngModel)]="EAttendenceFormModel.location" [ngModelOptions]="{standalone: true}" required disabled>
                  <span *ngIf="error.location" class="required">*Required</span>
@@ -63,7 +64,7 @@
    
           <nb-card *ngIf="!leaveShow">
             <nb-card-header><span [routerLink]="['/transaction']" class="card-heading">Leave</span>
-              <span  class="card-heading" style="float: right;">{{todaysDataTime}}</span>
+              <span  class="card-date-time" style="float: right;">{{today | customDate }}{{todaysDataTime}}</span>
             </nb-card-header>
           
             <nb-card-body>

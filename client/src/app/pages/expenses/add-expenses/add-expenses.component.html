@@ -12,9 +12,7 @@
                 <nb-select *ngIf= "!isShow" placeholder="Site Name" [(ngModel)]="ExpensesFormModel.siteName" [ngModelOptions]="{standalone: true}"  (selectedChange)=" siteTypeChange($event)" required>
                  
                     <nb-option  *ngFor="let site of siteName" [value]="site.siteName">{{site.siteName}}</nb-option>
-                
-                  
-                  
+   
                   </nb-select>
                   <input *ngIf= "isShow"  type="text" nbInput fullWidth id="supervisorName" [(ngModel)]="ExpensesFormModel.siteName" [ngModelOptions]="{standalone: true}" required disabled>
                   <span *ngIf="error.siteName" class="required">*Required</span>

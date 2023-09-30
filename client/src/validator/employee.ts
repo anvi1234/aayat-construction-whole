@@ -20,7 +20,6 @@ export let EmployeeValidation = (data: Employee, type:any) => {
     if (!data.mobileNo) {
         error.mobileNo = true
     }
-
     if (!data.address) {
         error.address = true
     }
@@ -30,6 +29,16 @@ export let EmployeeValidation = (data: Employee, type:any) => {
     if (!data.adharNo) {
         error.adharNo = true
     }
+
+    if(String(data.adharNo).length > 0 && String(data.adharNo).length <12){
+        // console.log("negregee")
+        error.adharNoLength = true
+    }
+    if(String(data.mobileNo).length > 0 && String(data.mobileNo).length <12){
+        // console.log("negregee")
+        error.mobileNoLength = true
+    }
+   
     if (!data.password) {
         error.password = true
     }

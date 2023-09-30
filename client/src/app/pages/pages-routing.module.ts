@@ -32,6 +32,7 @@ import { SorIstRegSiteComponent } from './sor/sor-ist-reg-site/sor-ist-reg-site.
 import { LedgerComponent } from './ledger/ledger.component';
 import { AddLedgerComponent } from './ledger/add-ledger/add-ledger.component';
 import { ViewLedgerComponent } from './ledger/view-ledger/view-ledger.component';
+import { AttendenceDashboardComponent } from './attendence-dashboard/attendence-dashboard.component';
 
 
 const routes: Routes = [{
@@ -156,12 +157,16 @@ const routes: Routes = [{
   component:AttemdemceListComponent
 },
 {
+  path:"attendence-dashboard/:id",
+  component: AttendenceDashboardComponent
+},
+{
   path:"mobile-view",
   component:MobileViewComponent
 },
 {
   path:"pay-slip",
-  component:  PayslipComponent
+  component: PayslipComponent
 },
 {
   path:"sor",
@@ -207,6 +212,7 @@ const routes: Routes = [{
   path:"view-ledger",
   component:ViewLedgerComponent
 },
+
 
   ]
 }];

@@ -3,6 +3,7 @@
      width: 150px;
     }
   }
+
   .transactHeading {
     background-color: lightgrey;
     width: 100%;
@@ -13,19 +14,6 @@
     margin: 10px;
   }
   
-  #amt{
-    width:20px
-  }
-  #customers #quant{
-    width:100px
-  }
-  #product{
-    width:250px
-  }
-  input {
-    width: calc(100% - 12px); /* IE 9,10 , Chrome, Firefox */
-    width: -webkit-calc(100% - 12px); /*For safari 6.0*/
-}
 
   @media only screen and (max-width: 600px) {
     
@@ -43,15 +31,7 @@
         flex-wrap: nowrap;
       }
     }
-    #amt{
-      width:20px
-    }
-    #customers #quant{
-      width:100px
-    }
-    #product{
-      width:250px
-    }
+  
     
   }
 
@@ -119,21 +99,7 @@
       flex-wrap: nowrap;
     }
   }
-
-  @media screen and (max-width: 786px) {
-
-    #customers th{
-      width:20px
-    }
-    #amt{
-      width:20px
-    }
-    #customers #quant{
-      width:100px
-    }
-    #product{
-      width:250px
-    }
+  @media screen and (max-width: 786px) { 
     span{
       font-size: 13px;
     }
@@ -166,16 +132,7 @@
       position: relative;
       right: 31px;
     }
-    #amt{
-      width:20px
-    }
-    #customers #quant{
-      width:100px
-    }
-    #product{
-      width:300px
-    }
-
+   
   
   #customers {
     font-family: Arial, Helvetica, sans-serif;
@@ -188,22 +145,10 @@
   }
   #customers td, #customers th {
     border: 1px solid #ddd;
+    width: fit-content;
     padding: 0px;
   }
-  .itemclass input[type="text"]{
-    width:100px;
-    border: none;
-  }
 
-  .quantityclass input[type="text"]{
-    width: 50px;
-    border: none;
-  }
-
-  input[type="number"]{
-    width:70px;
-    border: none;
-  }
   .action-icon{
     position: relative;
     left:10px;
@@ -220,6 +165,15 @@
     
   }
   
+  input{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
   #customers td, #customers th {
     border: 1px solid #ddd;
     padding: 8px;
@@ -232,6 +186,7 @@
   #customers th {
     padding-top: 12px;
     padding-bottom: 12px;
+    width: fit-content;
     text-align: left;
     background-color:  rgba(9,81,121,1);
     color: white;
@@ -265,6 +220,8 @@
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
+    // margin-bottom: 5px;
+  
   }
   
   .expenses-grid td, th {
@@ -284,3 +241,32 @@
     position: absolute;
     right: 0;
   }
+  #newtable button{
+    background-color: transparent;
+    border:none;
+    img{
+      height:20px;
+      width:20px
+    }
+  }
+  #newtable button:hover img {
+    -webkit-transform: scale(1.8);
+    transform: scale(1.8);
+  }
+  #header-btn button{
+    font-size: 12px;
+    float: right;
+    margin: 10px;
+  }
+  .add-row button{
+    font-size: 12px;
+  }
+
+  .totalExpense{
+      border: 1px solid black;
+  }
+  #bottom-tr td{
+    background-color: #edb1ac;
+    border: none;
+  }
+ 

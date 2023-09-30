@@ -20,3 +20,22 @@ export class SiteDetails {
       this.uniqueSiteId = ""
     }
   }
+
+  export class SiteError{
+   
+    siteName:boolean;
+    location:boolean;
+    billNo:boolean;
+    closingdate:boolean;
+    work:boolean;
+    status:boolean;
+    constructor(status:any){
+     
+        this.siteName = status,
+        this.location = status,
+        this.billNo = status,
+        this.closingdate = status,
+        this.work = status
+      
+    }
+}

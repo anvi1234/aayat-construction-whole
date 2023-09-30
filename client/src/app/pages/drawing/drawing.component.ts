@@ -24,7 +24,7 @@ import * as fileSaver from 'file-saver';
 })
 export class DrawingComponent implements OnInit {
   siteName: any;
-  imageURRRl: any;
+  imageURRRl: any ;
   deleteID: any;
   isExport: boolean = false;
   designation = localStorage.getItem('designation');
@@ -91,9 +91,10 @@ export class DrawingComponent implements OnInit {
   }
 
   drawingTypeChange(data: any) {
-    this.deleteID = data.target.value;
+    console.log("datatt",data)
+    this.deleteID = data;
     this.imageURRRl = ""
-    this.galleryService.getdrawingId(data.target.value).subscribe((e) => {
+    this.galleryService.getdrawingId(data).subscribe((e) => {
       this.isExport = true;
       const storage = getStorage();
       const starsRef = ref(storage, e.file.fireBaseUrl);
@@ -101,7 +102,10 @@ export class DrawingComponent implements OnInit {
         this.imageURRRl = url;
       });
     });
+
+    console.log("this.ima",  this.imageURRRl)
   }
+
   download() {
     fileSaver.saveAs(this.imageURRRl);
   }

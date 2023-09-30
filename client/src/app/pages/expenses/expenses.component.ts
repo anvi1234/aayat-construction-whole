@@ -26,7 +26,7 @@ export class ExpensesComponent implements OnInit {
   public calender: any
   public calenderHide: boolean = true;
   public totalAmount: any;
-  public TotalTransactionAmount: any;
+  public TotalTransactionAmount: any =0 ;
   public amountAfterChange:any =[]
   public totalExpeses: any
   public siteNameValue: any = "";
@@ -52,163 +52,15 @@ export class ExpensesComponent implements OnInit {
   @ViewChild('dialogdelete') editCompanyModal: TemplateRef<any>;
   private editCompanyDialogRef: NbDialogRef<TemplateRef<any>>;
   public ExpensesFormModel: ExpensesModel = new ExpensesModel()
-  public settings = {
-
-    actions: {
-      position: "left",
-      // edit: {
-      //     name: 'editAction',
-      //     title: '<i class="nb-edit"></i>'
-      // },
-      custom: [
-
-        {
-          name: 'editAction',
-          title: '<i class="nb-edit" title="Edit" data-placement="top"  data-toggle="tooltip"></i>'
-        },
-        {
-          name: 'viewAction',
-          title: '<i class="nb-lightbulb" title="view" data-placement="top"  data-toggle="tooltip"></i>'
-        },
-        {
-          name: 'deleteAction',
-          title: '<i class="nb-trash" title="Delete" data-placement="top"  data-toggle="tooltip"></i>'
-        }
-      ],
-      add: false,
-      edit: false,
-      delete: false
-    },
-
-    pager: {
-      display: true,
-      perPage: 15,
-    },
-    columns: {
-      siteName: {
-        title: 'Site Name',
-        type: 'html',
-        editable: 'false',
-        filter: true,
-      },
-
-      location: {
-        title: 'Site Location',
-        type: 'html',
-        editable: 'false',
-        filter: true,
-      },
-
-      superVisorName: {
-        title: 'Super Visor Name',
-        type: 'html',
-        editable: 'false',
-        filter: true,
-      },
-      expensesType: {
-        title: 'Expenses Type',
-        type: 'html',
-        editable: 'false',
-        filter: true,
-      },
-
-      totalAmount: {
-        title: 'Total Amount',
-        type: 'html',
-        editable: 'false',
-        filter: true,
-      },
-      expenseAmount: {
-        title: 'Total Expenses Amount',
-        type: 'html',
-        editable: 'false',
-        filter: true,
-      },
-      siteAmount: {
-        title: 'Site Remaining Amount',
-        type: 'html',
-        editable: 'false',
-        filter: true,
-      },
-
-      expenseDate: {
-        title: 'Date',
-        type: 'html',
-        editable: 'false',
-        filter: true,
-        width: '100px'
-      },
-      approvedNameBy: {
-        title: 'Approved By',
-        type: 'html',
-        editable: 'false',
-        filter: true,
-      },
-      status: {
-        title: 'Status',
-        type: 'html',
-        editable: 'false',
-        filter: true,
-      },
-      partyDetailsName: {
-        title: 'Party Name',
-        type: 'html',
-        editable: 'false',
-        filter: true,
-      },
-      partyDetailsAccount: {
-        title: 'Party Account Detail',
-        type: 'html',
-        editable: 'false',
-        filter: true,
-      },
-    }
-  }
-
-  public expenseColumn = {
-    hideSubHeader: true,
-
-    actions: {
-      position: "left",
-      // edit: {
-      //     name: 'editAction',
-      //     title: '<i class="nb-edit"></i>'
-      // },
-
-      add: false,
-      edit: false,
-      delete: false
-    },
-
-    pager: {
-      display: true,
-      perPage: 15,
-    },
-    columns: {
-      productItem: {
-        title: 'Product',
-        type: 'html',
-        editable: 'false',
-        filter: true,
-      },
-
-      quantity: {
-        title: 'Quantity',
-        type: 'html',
-        editable: 'false',
-        filter: true,
-      },
-      amount: {
-        title: 'Amount',
-        type: 'html',
-        editable: 'false',
-        filter: true,
-      },
-    }
-  }
+ 
   source: LocalDataSource = new LocalDataSource();
   expenseSource: LocalDataSource = new LocalDataSource();
-  constructor(private expensesService: ExpensesService,
+  transData: any;
+  expenseData: any;
+  isEdit: boolean = false;
+  tempData: any;
+  delIndex: any;
+  constructor(public expensesService: ExpensesService,
     private dialogService: NbDialogService,
     private employeeService: EmployeeService,
     private router: Router,
@@ -225,42 +77,40 @@ export class ExpensesComponent implements OnInit {
   ngOnInit() {
     this.expensesService.selectedSiteAmoount.next(0)
     this.fetchId = this.route.snapshot.paramMap.get('id');
-    this.expensesService.totalExpenseSubject.subscribe((res: any) => {
+    this.getTransactionByUkey()
+    this.getExpensesDataByUkey()
+   
+   
+  }
+
+  getExpensesDataByUkey(){
+    this.expensesService.getExpensesByUkey(localStorage.getItem("siteKeyId")).subscribe((res:any)=>{
       if (res) {
-        this.gridData = res;
-        let data = res.filter((e) => {
-          return (e.uniqueSiteId === this.fetchId && e.expensesType === "Daily Expenses")
+        this.tempData = res.data;
+        this.gridData =  res.data.map((expense:any)=>{
+          expense.expenses.map((d:any)=>{
+           d["isEdit"] = true;
+           })
+ 
+           return expense
+         });
+        this.expenseData = this.gridData
+        let data = this.gridData.filter((e) => {
+          return (e.expensesType === "Daily Expenses")
        })
         this.amountAfterChange = data.map((y) => {
           y["expenseDate"] = y.date;
           y["approvedNameBy"] = this.getApproved(y.approvedBy);
           return y;
         }).sort((dateA: any, dateB: any) => new Date(dateB.date).valueOf() - new Date(dateA.date).valueOf())
+
+        this.getTransactionByQuesry()
+       
       }
     })
-
-    
-
   }
 
   ngAfterViewInit() {
-
-    // this.expensesService.totalExpenseSubject.subscribe((res:any)=>{
-
-    //   this.gridData = res.map((y: any) => {
-    //     // y["expenseDate"] = dateFormatingValue(y.date);
-    //     y["expenseDate"] = y.date;
-    //     y["approvedNameBy"] = this.getApproved(y.approvedBy);
-    //     return y;
-    //   }).sort((dateA:any, dateB:any) => new Date(dateB.date).valueOf() -  new Date(dateA.date).valueOf())
-    //   this.gridValueWithAmount = this.gridData.filter((y: any) => {
-    //     return (y.uniqueSiteId == String(localStorage.getItem("siteKeyId")) && y.expensesType === "Daily Expenses")
-    // })
-
-    // console.log("sjhgfsjdfsd", this.gridValueWithAmount)
-    // this.cd.detectChanges();
-
-    // })
   }
 
   open(dialog: TemplateRef<any>) {
@@ -300,33 +150,31 @@ export class ExpensesComponent implements OnInit {
     this.dialogService.open(dialogamount, { context: 'this is some additional data passed to dialog' });
   }
 
-
-
   fetchNews(data: any) {
     if (data.tabTitle === "Daily Expenses") {
       this.amountAfterChange = this.gridData.filter((y: any) => {
-        return (y.uniqueSiteId == localStorage.getItem("siteKeyId") && y.expensesType === "Daily Expenses")
+        return (y.expensesType === "Daily Expenses")
 
       })
-      this.getTransactionByQuesry(localStorage.getItem("siteKeyId"));
+      this.getTransactionByQuesry();
       this.tabType = "Daily Expenses"
     }
     if (data.tabTitle === "Material On Site") {
 
       this.amountAfterChange = this.gridData.filter((y: any) => {
-        return (y.uniqueSiteId == localStorage.getItem("siteKeyId") && y.expensesType === "Material On Site")
+        return (y.expensesType === "Material On Site")
 
       })
-      this.getTransactionByQuesry(localStorage.getItem("siteKeyId"));
+      this.getTransactionByQuesry();
       this.tabType = "Material On Site"
 
     }
     if (data.tabTitle === "Material Out Site") {
       this.amountAfterChange = this.gridData.filter((y: any) => {
-        return (y.uniqueSiteId == localStorage.getItem("siteKeyId") && y.expensesType === "Material Out Site")
+        return (y.expensesType === "Material Out Site")
 
       })
-      this.getTransactionByQuesry(localStorage.getItem("siteKeyId"));
+      this.getTransactionByQuesry();
       this.tabType = "Material Out Site"
     }
   }
@@ -343,6 +191,7 @@ export class ExpensesComponent implements OnInit {
       DATA = document.getElementById('htmlDataMOutS');
     }
 
+
     html2canvas(DATA).then((canvas) => {
       let fileWidth = 208;
       let fileHeight = (canvas.height * fileWidth) / canvas.width;
@@ -356,122 +205,95 @@ export class ExpensesComponent implements OnInit {
 
   }
 
-  getTransactionByQuesry(id: any) {
-    this.TotalTransactionAmount = 0
-    this.transactService.TransactionData.subscribe((res: any) => {
-      let data = res.filter((e) => {
-        return e.uniqueSiteId == id;
-      })
-      let aTransaction = 0
-      let MOSTransaction = 0
-      let MOutSTransaction = 0
-      let DETransaction = 0
-      data.forEach((d: any) => {
-
-        if (d.transactionType === "Material On Site") {
-          MOSTransaction = Number(d.totalAmount) + Number(MOSTransaction)
-        }
-        if (d.transactionType === "Material Out Site") {
-          MOutSTransaction = Number(d.totalAmount) + Number(MOutSTransaction)
-        }
-        if (d.transactionType === "Daily Expenses") {
-          DETransaction = Number(d.totalAmount) + Number(DETransaction)
-        }
-
-      });
-
-      this.transactionobj = {
-        "dailyExpense": DETransaction,
-        "MOSExpense": MOSTransaction,
-        "MOutSExpense": MOutSTransaction,
-      }
-      this.expensesService.totalExpenseSubject.subscribe((res: any) => {
-        if (res) {
-          let expenseData = res.filter((e) => {
-            return e.uniqueSiteId == id;
-          })
-          let aTotalxpense = 0
-          let MOSExpenses = 0
-          let MOutExpenses = 0
-          let DEExpenses = 0
-          expenseData.forEach((g: any) => {
-            if (g.expensesType === "Material On Site") {
-              MOSExpenses = Number(g.expenseAmount) + Number(MOSExpenses)
-            }
-            if (g.expensesType === "Material Out Site") {
-              MOutExpenses = Number(g.expenseAmount) + Number(MOutExpenses)
-            }
-            if (g.expensesType === "Daily Expenses") {
-              DEExpenses = Number(g.expenseAmount) + Number(DEExpenses)
-            }
-          })
-
-          this.totalExpenses = aTotalxpense
-
-          let DEsiteAmount = Number(DETransaction) - Number(DEExpenses)
-          let MOSsiteAmount = Number(MOSTransaction) - Number(MOSExpenses)
-          let MOutsiteAmount = Number(MOutSTransaction) - Number(MOutExpenses)
-          let data = {
-            "dailiyExpensesSiteAmount": DEsiteAmount,
-            "MOSExpensesSiteAmount": MOSsiteAmount,
-            "MOutSExpensesSiteAmount": MOutsiteAmount
-          }
-          
-          this.expensesService.selectedSiteAmoount.next(data);
-        }
-
-      })
-
+  getTransactionByUkey(){
+   this.transactService.gettransactionByUkey(localStorage.getItem("siteKeyId")).subscribe((res: any) => {
+   if(res){
+    this.transData = res.data;
+   res.data.forEach((d:any)=>{
+    this.TotalTransactionAmount =  this.TotalTransactionAmount + d.totalAmount;
     })
-
+   }
+  });
   }
+
+  getTransactionByQuesry() {
+    let MOSTransaction = 0
+    let MOutSTransaction = 0
+    let DETransaction = 0
+   this.transData?.forEach((d: any) => {
+
+      if (d.transactionType === "Material On Site") {
+        MOSTransaction = Number(d.totalAmount) + Number(MOSTransaction)
+      }
+      if (d.transactionType === "Material Out Site") {
+        MOutSTransaction = Number(d.totalAmount) + Number(MOutSTransaction)
+      }
+      if (d.transactionType === "Daily Expenses") {
+        DETransaction = Number(d.totalAmount) + Number(DETransaction)
+      }
+    })
+    this.transactionobj = {
+      "dailyExpense": DETransaction,
+      "MOSExpense": MOSTransaction,
+      "MOutSExpense": MOutSTransaction,
+    }
+    let aTotalxpense = 0
+    let MOSExpenses = 0
+    let MOutExpenses = 0
+    let DEExpenses = 0
+    this.expenseData?.forEach((g: any) => {
+      if (g.expensesType === "Material On Site") {
+        MOSExpenses = Number(g.expenseAmount) + Number(MOSExpenses)
+      }
+      if (g.expensesType === "Material Out Site") {
+        MOutExpenses = Number(g.expenseAmount) + Number(MOutExpenses)
+      }
+      if (g.expensesType === "Daily Expenses") {
+        DEExpenses = Number(g.expenseAmount) + Number(DEExpenses)
+      }
+    })
+    this.totalExpenses = aTotalxpense
+
+    let DEsiteAmount = Number(DETransaction) - Number(DEExpenses)
+    let MOSsiteAmount = Number(MOSTransaction) - Number(MOSExpenses)
+    let MOutsiteAmount = Number(MOutSTransaction) - Number(MOutExpenses)
+    let data = {
+      "dailiyExpensesSiteAmount": DEsiteAmount,
+      "MOSExpensesSiteAmount": MOSsiteAmount,
+      "MOutSExpensesSiteAmount": MOutsiteAmount
+    } 
+    this.expensesService.selectedSiteAmoount.next(data);
+   }
+
+  
 
   cancel() {
     this.editData = false;
   }
 
+
   enableEditMethod(e: any, i: any) {
     this.editData = true;
     this.enableEditIndex = i;
-    console.log(i, e, "event");
   }
 
   enableCalenderMethod(e: any, i: any) {
     this.editData = true;
     this.enableEditIndex = i;
-    console.log(i, e);
   }
 
 
   saveData(data: any) {
     this.editData = false;
-    data.expenseAmount = this.totalExpenses
-    let value = this.gridValueWithAmount.filter((filteredData: any) => {
-      if (new Date(filteredData.date) >= new Date(data.date)
-        // && new Date(filteredData.date).getMonth()>=new Date(data.date).getMonth()
-        //  && new Date(filteredData.date).getDate() >= new Date(data.date).getDate()
-      ) {
-        return filteredData;
-      }
-    })
-
-
-    let updatedData = value.reverse().map((y: any, i: number) => {
-      y["totalAmount"] = ((i === 0) ? data.totalAmount : value[i - 1].siteAmount);
-      y["siteAmount"] = y.totalAmount - y.expenseAmount
-      return y
-    })
-
-    this.expensesService.updateMultipleExpenses(updatedData)
-
-      .subscribe(res => {
+    this.expensesService.updateExpenses(data._id,data).subscribe(res => {
         this.showToast('success', 'Expenses Updated Successfully');
         this.editData = false;
       })
   }
 
-  delete(data: any) {
+  delete(data: any,index?:any) {
     this.GLOBALID = data._id;
+    this.delIndex = index;
     this.editCompanyDialogRef = this.dialogService.open(this.editCompanyModal, { context: 'this is some additional data passed to dialog' });
     this.editCompanyDialogRef.onBackdropClick.subscribe((result: any) => {
 
@@ -482,6 +304,7 @@ export class ExpensesComponent implements OnInit {
     this.expensesService.deleteEmployee(this.GLOBALID).subscribe((data) => {
       this.showToast('success', 'Expenses Deleted Successfully');
       // this.getExpenses()
+      this.amountAfterChange.splice(this.delIndex,1);
       this.editData = false;
       this.fetchId = this.route.snapshot.paramMap.get('id');
       this.editCompanyDialogRef.close();
@@ -490,36 +313,38 @@ export class ExpensesComponent implements OnInit {
 
   }
 
-  addRow(index: any, data: any) {
-
-    this.ExpensesFormModel.expenseAmount = 0
-    this.newDynamic = { productItem: "", amount: "", quantity: "" };
-    this.gridValueWithAmount[index].expenses.push(this.newDynamic);
-    this.editData = true;
-    this.enableEditIndex = index;
-
+  addRow(data: any) {
+    let lastIndex = data.expenses.length-1;
+    let lastIndexItem = data.expenses[lastIndex]
+    if(!lastIndexItem.productItem && !lastIndexItem.quantity){
+      alert("Please add empty data");
+    }
+    else{
+  this.ExpensesFormModel.expenseAmount = 0
+    this.newDynamic = { productItem: "", amount: "", quantity: "",isEdit:false };
+    data.expenses.push(this.newDynamic);
+    this.isEdit= true;
+    }
+    
   }
 
   onBlurEvent(data: any, index: any) {
+    this.amountAfterChange[index].expenseAmount = 0;
     this.totalExpenses = 0
-
-    this.gridValueWithAmount[index].expenses.forEach((e: any) => {
-      this.totalExpenses = Number(e.amount) + Number(this.totalExpenses);
-
-
-      this.siteAmount = data.totalAmount - this.totalExpenses;
-
+    data.expenses.forEach((e: any) => {
+    this.amountAfterChange[index].expenseAmount = Number(e.amount) + Number(this.amountAfterChange[index].expenseAmount);
+    this.siteAmount = this.amountAfterChange[index].totalAmount -  this.amountAfterChange[index].expenseAmount;
     })
   }
+  
 
   remove(index: any, data: any) {
-    this.totalExpenses = 0
-    if (this.gridValueWithAmount[index].expenses.length == 1) {
-      // this.toastr.error("Can't delete the row when there is only one row", 'Warning');  
+    this.totalExpenses = 0;
+    if (data.expenses.length == 1) {
       return false;
     } else {
-      this.gridValueWithAmount[index].expenses.splice(index, 1);
-      this.gridValueWithAmount[index].expenses.forEach((e: any) => {
+      data.expenses.splice(index, 1);
+      data.expenses.forEach((e: any) => {
         this.totalExpenses = Number(e.amount) + Number(this.totalExpenses);
         this.siteAmount = data.totalAmount - this.totalExpenses;
       })
@@ -528,17 +353,13 @@ export class ExpensesComponent implements OnInit {
   }
 
   updateCalednder(e: any, i: any) {
-
     this.calenderHide = false;
     this.enableCalenderIndex = i;
-    console.log(i, e);
   }
 
 
   handler(data: any) {
-
     data.date = new Date(this.calender);
-
     this.expensesService.updateExpenses(data._id, data)
       .subscribe(res => {
         this.showToast('success', 'Expenses Updated Successfully');
@@ -546,20 +367,23 @@ export class ExpensesComponent implements OnInit {
         this.calenderHide = true;
       })
   }
+
   cancelCalender() {
     this.calenderHide = true
   }
-
 
   checkValueSIgn(value) {
     return Math.sign(value)
   }
 
-  removeRow(index, item) {
+  removeRow(index, data:any) {
     // item.expenses
+    data.expenses.splice(index, 1);
 
-    console.log("item", item, index)
-    // this.data.splice(index, 1);
+  }
 
+  editBox(index:any,data:any){
+    data.expenses[index].isEdit = false
+    this.isEdit = true
   }
 }

@@ -1,14 +1,17 @@
 <nb-card>
-    <nb-card-header>
-    
-       
+  <nb-card-header>
+    <div class="row">
+      <div class="col-sm-9">
+        <span class="card-heading">
+          Site Transactions
+       </span>
+      </div>
+      <div class="col-sm-3">
+        <button class="header-button" id="header-btn" (click)="gotoAddTransaction()"  nbButton status="primary">Add Transaction</button>
+      </div>
+    </div>
+</nb-card-header>
    
-    <div ><span class="card-heading">
-       Site Transactionss
-    </span><button class="header-button" (click)="gotoAddTransaction()" nbButton status="primary"><span class="add-icon">+</span></button></div>
-  
-    </nb-card-header>
-  
     <!-- <nb-card-body>
       <ng2-smart-table [settings]="settings" [source]="source" (custom)="onCustomEvent($event,dialogdelete )">
       </ng2-smart-table>

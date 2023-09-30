@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,6 +30,10 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { DropzoneDirective } from './dropzone.directive';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { LoaderInterceptor } from './interceptor/loader.interceptor';
+import { NgApexchartsModule } from "ng-apexcharts";
+
+
+
 
 
 initializeApp(environment.firebase);
@@ -46,6 +50,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   declarations: [
     AppComponent,
     DropzoneDirective,
+   
+  
    
    ],
   imports: [
@@ -66,6 +72,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     NbTooltipModule,
     NbFormFieldModule,
     FullCalendarModule,
+    NgApexchartsModule,
     IonicModule.forRoot(),
     NbDialogModule.forRoot(),
     NbToastrModule.forRoot(
@@ -79,6 +86,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     AngularFireDatabaseModule,
     AngularFireAuthModule,
   ],
+
  
   providers: [ {
     provide: HTTP_INTERCEPTORS,
@@ -86,6 +94,9 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     multi: true,
  }, ExpensesService,GalleryService,EmployeeService,AuthenticationService, AuthGuard,TransactionService,SiteRegService,MessageService ],
   bootstrap: [AppComponent],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ],
  
 })
 export class AppModule { }

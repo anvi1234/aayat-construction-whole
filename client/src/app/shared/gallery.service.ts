@@ -126,6 +126,7 @@ import { finalize, tap } from 'rxjs/operators';
           location: task.location,
           startDate:task.startDate,
           endDate:task.endDate,
+          uniqueSiteId:task.uniqueSiteId,
           progressStatus: task.progressStatus,
           avatar: firebaseArr
         }

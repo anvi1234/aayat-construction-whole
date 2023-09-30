@@ -8,12 +8,16 @@ import { SiteRegService } from 'src/app/shared/site-reg.service';
 import { dateFormatingValue } from 'src/util/dataformating';
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import * as fileSaver from 'file-saver';
+interface Item {
+  [key: string]: any;
+}
 
 @Component({
   selector: 'app-site',
   templateUrl: '/siteReg.component.html',
   styleUrls: ['/siteReg.component.scss']
 })
+
 export class SiteRegComponent implements OnInit {
   public isActive: boolean = false
   public gridData: any = []
@@ -128,6 +132,7 @@ export class SiteRegComponent implements OnInit {
 
 
   source: LocalDataSource = new LocalDataSource();
+  filteredData: any;
 
   constructor(private siteService: SiteRegService,
     private dialogService: NbDialogService,
@@ -227,8 +232,7 @@ export class SiteRegComponent implements OnInit {
       })
 
       this.gridData = [...active, ...closed]
-
-      console.log("gridData",this.gridData)
+      this.filteredData = this.gridData
       this.siteService.dataForFilter.next(this.gridData)
       this.source.load(this.gridData);
     })
@@ -305,21 +309,15 @@ export class SiteRegComponent implements OnInit {
   }
 
   Search() {
-    if (this.siteName == ""
-
-    ) {
-      this.ngOnInit()
-    }
-    else {
-      this.gridData = this.gridData.filter((res: any) => {
-        return res.siteName.toLocaleLowerCase() === this.siteName.toLocaleLowerCase()
-      })
-    }
+   this.gridData =  this.filteredData.filter(item =>
+      Object.keys(item).some(key => 
+        item[key].toString().toLowerCase().includes(this.siteName.toLowerCase())
+      )
+    );
   }
 
   
   changeWithAction(i: any, type: any, data: any) {
-    console.log("dat",data)
     if (type === "edit") {
       this.router.navigate([`edit-site/${data._id}`])
       localStorage.setItem('routingSiteName', data.siteName);

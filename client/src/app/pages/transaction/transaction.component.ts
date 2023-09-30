@@ -258,7 +258,7 @@ export class TransactionComponent {
   }
 
   getTransaction() {
-    this.transactionService.TransactionData.subscribe((res: any) => {
+    this.transactionService.getTransaction().subscribe((res: any) => {
       let data = res.filter((e) => {
         return e.uniqueSiteId == localStorage.getItem("siteKeyId");
       })

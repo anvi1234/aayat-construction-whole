@@ -27,9 +27,7 @@ export class TransactionService {
 
   // Get all employees
   getTransaction() {
-    return this.http.get(`${this.baseUri}/transaction/gettransaction`).subscribe((res:any)=>{
-      this.TransactionData.next(res)
-    });
+    return this.http.get(`${this.baseUri}/transaction/gettransaction`)
   }
 
   // Get employee
@@ -82,8 +80,7 @@ export class TransactionService {
      
     )
   }
-  gettotaltransactionByQuery(data:any) {
-    console.log("------",data)  
+  gettotaltransactionByQuery(data:any) { 
     let url = `${this.baseUri}/transaction/gettotaltransactionByQuery`;      
     // const parameters = data.map( e =>{
     //   return {sitename:e.siteName,location:e.location}
@@ -93,5 +90,15 @@ export class TransactionService {
     return this.http.post(url,  parameters).pipe(catchError(this.errorMgmt));       
    
    
+  }
+ 
+  gettransactionByUkey(id:any){
+    let url = `${this.baseUri}/transaction/gettransactionByUId/${id}`;
+    return this.http.get(url, {headers: this.headers}).pipe(
+      map((res:any) => {
+        return res;
+      }),
+      catchError(this.errorMgmt)
+    )
   }
 }

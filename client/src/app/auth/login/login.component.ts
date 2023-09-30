@@ -121,9 +121,10 @@ export class LoginComponent {
           
        }
         else{
-          if(localStorage.getItem("designation") !="ADMIN"){
+          if(localStorage.getItem("designation") !="1"){
             localStorage.setItem("siteName",data.user.siteName);
             localStorage.setItem("location",data.user.location);
+            
            this.router.navigateByUrl("/mobile-view")
           }
           else{

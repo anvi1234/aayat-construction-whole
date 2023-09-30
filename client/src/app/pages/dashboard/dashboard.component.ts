@@ -1,8 +1,21 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { EmployeeService } from 'src/app/shared/employee.service';
 import { ExpensesService } from 'src/app/shared/expenses.service';
 import { SiteRegService } from 'src/app/shared/site-reg.service';
 import { TransactionService } from 'src/app/shared/transaction.service';
+import { ChartComponent } from "ng-apexcharts";
+import {
+  ApexNonAxisChartSeries,
+  ApexResponsive,
+  ApexChart
+} from "ng-apexcharts";
+
+export type ChartOptions = {
+  series: ApexNonAxisChartSeries;
+  chart: ApexChart;
+  responsive: ApexResponsive[];
+  labels: any;
+};
 
 @Component({
   selector: 'app-dashboard',
@@ -18,6 +31,8 @@ export class DashboardComponent {
   public transctionAMM: any;
   public totalSite: any;
   public totalEmployee: any;
+  public transData :any;
+  public expenseData:any;
   public expensSUbscription;
   public transSUbscription;
   wholeDataOfProject: any[] = [];
@@ -27,6 +42,8 @@ export class DashboardComponent {
   totalEx = 0;
   siteDetails: any;
   todaysDataTime = '';
+  filteredSite: any;
+  
 
   constructor(
     private siteService: SiteRegService,
@@ -34,6 +51,7 @@ export class DashboardComponent {
     private transactionSer: TransactionService,
     private empSer: EmployeeService
   ) {
+  
     setInterval(() => {
       this.todaysDataTime =
         this.today.toDateString() +
@@ -51,109 +69,81 @@ export class DashboardComponent {
       this.getEmployee(),
       this.getExpenses(),
       this.getTransaction(),
+      this.getSite(),
+     
+     
     ]).then((data: any) => {
-      this.transactionSer.sitesWholeData.subscribe((value:any)=>{
-        this.wholeDataOfProject = []
-        if( value ){
-          this.wholeDataOfProject = value  
-        }
-  //       else{
-  //         data[0].forEach((e:any)=>
-  //         {
-  //           this.getTransactionByQuery(e);
-  //           this.wholeDataOfProject = this.transArray.map((item, i) =>
-  //    Object.assign({}, item, this.expenseArray[i])
-  //  );
-  //  let active = this.wholeDataOfProject.filter((e)=>{
-  //    return e.status === "Active"
-  //   })
-  //   let closed = this.wholeDataOfProject.filter((e)=>{
-  //    return e.status === "Closed"
-  //   })
-    
-  //   this.wholeDataOfProject = [...active,...closed];
-
-  //  this.transactionSer.sitesWholeData.next(this.wholeDataOfProject);
-  //         })
-  //       }
+      this.getTransactionByQuery()
+      // console.log("dattttt")
+      // this.getTransactionByQuery()
       })
-  });
-
-  this.expenseSerrvice.totalSiteSubject.subscribe((res)=>{
-    console.log("ressite",res)
-
-  })
-  this.expenseSerrvice.totalTransSUbject.subscribe((res)=>{
-    console.log("transressite",res)
-
-  })
-  this.expenseSerrvice.totalExpenseSubject.subscribe((res)=>{
-    console.log("exeressite",res)
-
-  })
   }
 
   ngOnDestroy(){
    
   }
   
-
-
   getEmployee() {
     return new Promise((resolve, reject) => {
-      this.empSer.getEmployee().subscribe((res: any) => {
-        this.totalEmployee = res.length;
+      this.empSer.getEmployee().subscribe((res: any) => {  
+        this.totalEmployee = res.length;   
         resolve(this.totalEmployee);
       });
     });
   }
 
   getTransaction() {
-    // return new Promise((resolve, reject) => {
-    //   this.transactionSer.getTransaction().subscribe((res: any) => {
-    //     res.forEach((amount: any) => {
-    //       this.totalTrans = this.totalTrans + amount.totalAmount;
-    //     });
-    //     resolve(res);
-    //   });
-    // });
+    return new Promise((resolve, reject) => {
+      this.totalTrans = 0;
+     this.transactionSer.getTransaction().subscribe((res:any)=>{
+      if(res){
+        this.transData = res;
+        res.forEach((amount:any)=>{
+          this.totalTrans = this.totalTrans + amount.totalAmount;
+        })
+      }
+      resolve(res);
+     });   
+  });
   }
 
   getExpenses() {
-    // return new Promise((resolve, reject) => {
-    //   this.expenseSerrvice.getExpenses().subscribe((res: any) => {
-    //     res.forEach((amount: any) => {
-    //       this.totalEx = this.totalEx + amount.expenseAmount;
-    //     });
-    //     resolve(res);
-    //   });
-    // });
+    return new Promise((resolve, reject) => {
+      this.totalEx = 0
+      this.expenseSerrvice.getExpenses().subscribe((res: any) => {
+        this.expenseData = res;
+        res?.forEach((amount: any) => {
+          this.totalEx = this.totalEx + amount.expenseAmount;
+        });
+        resolve(res);
+      });
+    });
   }
 
-  getTransactionByQuery(data:any) {
-    return new Promise((resolve,reject)=>{
-      this.transactionSer.gettotaltransactionByQuery(data).subscribe((e:any)=>{
-        console.log("transaction",e.data)
-        this.transArray.push(e.data)
-          resolve(e);
-      })
-    }).then((e)=>{
-      return new Promise((resolve,reject)=>{
-        this.expenseSerrvice.getTotalExpensesByQuery(data).subscribe((e:any)=>{
-          console.log("expenses",e.data)
-          this.expenseArray.push(e.data)
-            resolve(e);
-        })
+  getSite() {
+    return new Promise((resolve, reject) => {
+      this.siteService.getSite().subscribe((res: any) => {
+        this.siteDetails = res;
+        this.filteredSite = res;
+        this.totalSite = res.length;
+        resolve(res);
+      });
+    });
+  }
 
-    }).then((data)=>{
-     
-      
-
-   
-   
- })
- 
-  })
+  getTransactionByQuery() {
+        this.siteDetails?.forEach((e:any)=>{
+          this.expenseData?.forEach((expense:any)=>{
+            if(expense.uniqueSiteId.includes(e.uniqueSiteId)){
+              e["expenseAmount"] = (e.expenseAmount ? e.expenseAmount : 0) + expense.expenseAmount
+            }
+          })
+          this.transData?.forEach((trans:any)=>{
+            if(trans.uniqueSiteId.includes(e.uniqueSiteId)){
+              e["transAmount"] =  (e.transAmount ? e.transAmount : 0) + trans.totalAmount
+            }
+          })
+       })     
 }
 
 
@@ -169,19 +159,13 @@ Search1(){
      })
    }
  }
- Search2(){
-  if(this.siteName2 == ""
-   
-   ){
-     this.ngOnInit()
-   }
-   else{
-     this.siteDetails = this.siteDetails.filter((res:any)=>{
-          return res.siteName.toLocaleLowerCase().match(this.siteName2.toLocaleLowerCase())
-     })
-   }
- }
 
-  
+ Search2(){
+  this.siteDetails =  this.filteredSite.filter(item =>
+  Object.keys(item).some(key => 
+    item[key].toString().toLowerCase().includes(this.siteName2.toLowerCase())
+  )
+);
+  }
   
 }

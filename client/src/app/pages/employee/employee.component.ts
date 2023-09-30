@@ -26,6 +26,16 @@ export class EmployeeComponent implements OnInit{
   public siteName :any
   public NoOfDayPresent :any;
   currentDate = new Date();
+  public Designation = [
+    {id:1,name:"Admin"},
+    {id:2,name:"Supervisor"},
+    {id:3,name:"Mechanics"},
+    {id:4,name:"Electrician"},
+    {id:5,name:"Plumber"},
+    {id:6,name:"Driver"},
+    {id:7,name:"Office Staff"},
+
+  ]
   totalpayment:any = {}
   public employeeData :any = []
   public month:any
@@ -212,6 +222,7 @@ export class EmployeeComponent implements OnInit{
  
      source: LocalDataSource = new LocalDataSource();
      attendencesource: LocalDataSource = new LocalDataSource();
+  filteredData: any;
       constructor(private employeeService:EmployeeService,
         private dialogService: NbDialogService,
         private router : Router,
@@ -223,11 +234,11 @@ export class EmployeeComponent implements OnInit{
       }
       @HostListener('window:popstate', ['$event'])
           onPopState(event) {
-           this.ViewAttendecnDialogRef.close()
-           this.ViewRecordDialogRef.close()
-           this.approvedAttendecneDialogRef.close()
-           this.paySlipDialogRef.close()
-           this.paySlipValueDialogRef.close()
+           this.ViewAttendecnDialogRef?.close()
+           this.ViewRecordDialogRef?.close()
+           this.approvedAttendecneDialogRef?.close()
+           this.paySlipDialogRef?.close()
+           this.paySlipValueDialogRef?.close()
             //Here you can handle your modal
           }
 
@@ -318,7 +329,6 @@ export class EmployeeComponent implements OnInit{
     }
   }
   removeClass(el:any, className:any) {
-    console.log("bbbbbbbbbbb",el)
     if (el.classList) {
       el.classList.remove(className);
     } else {
@@ -327,7 +337,6 @@ export class EmployeeComponent implements OnInit{
   };
   
    addClass(el:any, className:any) {
-    console.log("==================",el)
     if (el.classList) {
       el.classList.add(className);
     } else {
@@ -339,24 +348,29 @@ export class EmployeeComponent implements OnInit{
       if(this.fetchId){
         this.employeeService.getEmployeeById(this.fetchId).subscribe((e:any)=>{
          this.specificEmp.push(e["user"])
-          console.log("gggggggbbb",this.specificEmp)
+         this.filteredData = this.specificEmp
           this.gridData =  this.specificEmp
-          
-        // this.source.load(this.gridData);
         })
       }
 
       else{
         this.employeeService.getEmployee().subscribe((e:any)=>{
-          this.gridData= e.map((y:any)=>{
-             
+          this.gridData= e.map((y:any)=>{ 
+            y.designation =  this.getEmployeeDes(y.designation);
               return y;
           })
-          // this.source.load(this.gridData);
+          this.filteredData = this.gridData;
         })
       }
       
     }
+
+    getEmployeeDes(desId:any){
+      let nameValue = this.Designation.filter((e:any)=>{
+        return e.id == desId;
+       })
+       return nameValue[0].name
+   }
    open(dialog: TemplateRef<any>) {
       this.dialogService.open(dialog, { context: 'this is some additional data passed to dialog' });
     }
@@ -506,8 +520,7 @@ recordCheck(){
 })
  }
 
- paysilip(){
-  
+ paysilip(){ 
  this.ViewRecordDialogRef.close()
   this.paySlipDialogRef = this.dialogService.open(this.paySlipModal, { context: 'this is some additional data passed to dialog' });
   this.paySlipDialogRef.onBackdropClick.subscribe((result:any) => {
@@ -574,16 +587,11 @@ public Download(): void {
 }
 
 Search(){
-  if(this.siteName == ""
-   
-   ){
-     this.ngOnInit()
-   }
-   else{
-     this.gridData = this.gridData.filter((res:any)=>{
-          return res.fullName.toLocaleLowerCase().match(this.siteName.toLocaleLowerCase())
-     })
-   }
+  this.gridData =  this.filteredData.filter(item =>
+    Object.keys(item).some(key => 
+      item[key].toString().toLowerCase().includes(this.siteName.toLowerCase())
+    )
+  );
  }
 
  delete(i:any,type:any,data:any){
@@ -595,14 +603,13 @@ Search(){
   }
   if(type === "view")
   {
-    this.GLOBALID = data._id
-    this.attendecneGridData = []
-    this.ViewAttendecnDialogRef = this.dialogService.open(this.ViewAttendecneModal, { context: 'this is some additional data passed to dialog' });
-    this.ViewAttendecnDialogRef.onBackdropClick.subscribe((result:any) => {
+    this.router.navigateByUrl(`/attendence-dashboard/${data._id}`)
+    // this.GLOBALID = data._id
+    // this.attendecneGridData = []
+    // this.ViewAttendecnDialogRef = this.dialogService.open(this.ViewAttendecneModal, { context: 'this is some additional data passed to dialog' });
+    // this.ViewAttendecnDialogRef.onBackdropClick.subscribe((result:any) => {
       
-    });
-  
-    this.getAttendecneByID(data._id)
+    // });
   }
   if(type === "delete")
   {

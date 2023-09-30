@@ -89,7 +89,7 @@ source: LocalDataSource = new LocalDataSource();
 
     getAttendecneByID(id:any){
       this.empService.getAttendById(id).subscribe((e:any)=>{
-        let data = e.user;
+        let data = e.attendance;
         this.attendecneGridData = data.map((y:any)=>{
      
        if(y.date){

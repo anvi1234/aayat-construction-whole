@@ -39,7 +39,12 @@
               </div>
               <label for="siteLoc"   class="label  col-sm-2 col-form-label">Designation</label>
               <div class="col-sm-4">
-                <input type="text" nbInput fullWidth  [(ngModel)]="EmployeeFormModel.designation" id="work" [ngModelOptions]="{standalone: true}" >
+                <nb-select placeholder="Designation" [(ngModel)]="EmployeeFormModel.designation" [ngModelOptions]="{standalone: true}"   required>
+                 
+                  <nb-option  *ngFor="let item of Designation" [value]="item.name">{{item.name}}</nb-option>
+              
+               </nb-select>
+                <!-- <input type="text" nbInput fullWidth  [(ngModel)]="EmployeeFormModel.designation" id="work" [ngModelOptions]="{standalone: true}" > -->
                 <span *ngIf="error.designation" class="required">*Required</span>  
             </div>
             </div>
@@ -51,15 +56,17 @@
                   </div>
               <label for="siteLoc"   class="label  col-sm-2 col-form-label">Adhar No</label>
               <div class="col-sm-4">
-                <input type="text" nbInput fullWidth id="siteLoc" [(ngModel)]="EmployeeFormModel.adharNo" [ngModelOptions]="{standalone: true}" required>
+                <input type="number" maxlength="12" nbInput fullWidth id="siteLoc" [(ngModel)]="EmployeeFormModel.adharNo" [ngModelOptions]="{standalone: true}" required>
                 <span *ngIf="error.adharNo" class="required">*Required</span>
+                <span *ngIf="error.adharNoLength" class="required">Maxlength of AdharNo should be 12</span>
               </div>
             </div>
             <div class="form-group row">
               <label for="work" class="label col-sm-2 col-form-label">Phone Number</label>
               <div class="col-sm-4">
-                <input type="text" nbInput fullWidth  [(ngModel)]="EmployeeFormModel.mobileNo" id="work" [ngModelOptions]="{standalone: true}" required>
+                <input type="number" nbInput fullWidth  [(ngModel)]="EmployeeFormModel.mobileNo" id="work" maxlength="10" [ngModelOptions]="{standalone: true}" required>
                 <span *ngIf="error.mobileNo" class="required">*Required</span>
+                <span *ngIf="error.mobileNoLength" class="required">Maxlength of Phone Number should be 10</span>
               </div>
               <label for="supervisorName" class="label col-sm-2 col-form-label">Address</label>
               <div class="col-sm-4">
@@ -75,7 +82,7 @@
               </div>
               <label class="col-sm-2 label">Basic Pay</label>
               <div class="col-sm-4">
-                <input type="text" nbInput fullWidth id="supervisorName" [(ngModel)]="EmployeeFormModel.basicPay" [ngModelOptions]="{standalone: true}" required>
+                <input type="number" nbInput fullWidth id="supervisorName" [(ngModel)]="EmployeeFormModel.basicPay" [ngModelOptions]="{standalone: true}" required>
               </div>
             </div>
             <div class="form-group row">
@@ -86,7 +93,7 @@
               </div>
               <label class="col-sm-2 label">Account No.</label>
               <div class="col-sm-4">
-                <input type="text" nbInput fullWidth id="supervisorName" [(ngModel)]="EmployeeFormModel.accNo" [ngModelOptions]="{standalone: true}" required>
+                <input type="number" nbInput fullWidth id="supervisorName" minlength="9" maxlength="18" [(ngModel)]="EmployeeFormModel.accNo" [ngModelOptions]="{standalone: true}" required>
               </div>
             </div>
             <div class="form-group row">

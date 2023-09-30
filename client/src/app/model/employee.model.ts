@@ -20,7 +20,7 @@ export class Employee{
         this.fullName = "",
         this.mobileNo="",
         this.adharNo="",
-        this.designation="",
+        this.designation= "",
         this.address="",
         this.email="",
         this.password=""
@@ -39,7 +39,7 @@ export class Attendence{
       endDate:any;
       status:string;
       color:string
-
+      uniqueSiteId:String;
     constructor(){
         this. _id = "",
         this. siteName="",
@@ -47,6 +47,7 @@ export class Attendence{
         this.employeeName = "",
         this.status = "",
         this. color = ""
+        this.uniqueSiteId = ""
       
 
     }   
@@ -63,6 +64,8 @@ export class EmployeeError{
     address:boolean;
     email:boolean;
     password:boolean;
+    adharNoLength:boolean;
+    mobileNoLength:boolean;
     constructor(status:any){
         this.fullName = status,
         this.siteName = status,
@@ -72,9 +75,13 @@ export class EmployeeError{
         this.designation=status,
         this.address=status,
         this.email=status,
-        this.password=status
+        this.password=status,
+        this.adharNoLength=status;
+        this.mobileNoLength = status;
     }
 }
+
+
 
 export class AttendenceError{
    

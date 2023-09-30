@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NbComponentStatus, NbToastrService } from '@nebular/theme';
+import { NbComponentStatus, NbGlobalLogicalPosition, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
 import { SiteDetails } from 'src/app/model/site.model';
 import { SiteRegService } from 'src/app/shared/site-reg.service';
 
@@ -18,6 +18,8 @@ export class AddSiteRegComponent implements OnInit {
   public clickTitle = 'Save';
   public fetchId: any;
   public dialogTiltle = 'Add Site';
+  physicalPositions = NbGlobalPhysicalPosition;
+  logicalPositions = NbGlobalLogicalPosition;
   public siteName = [
     { name: 'Company Operator(CC)', value: 'Company Operator(CC)' },
     { name: 'Dealer Operator(DC)', value: 'Dealer Operator(DC)' },

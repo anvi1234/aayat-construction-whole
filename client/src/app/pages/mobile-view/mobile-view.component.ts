@@ -33,20 +33,21 @@ export class MobileViewComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    if (localStorage.getItem('designation') === 'ADMIN') {
+    if (localStorage.getItem('designation') === '1') {
       this.adminToggle = true;
       this.otherToggle = false;
       this.supToggle = false;
     } else if (
-      localStorage.getItem('designation') === 'SUPERVISIOR' ||
-      localStorage.getItem('designation') === 'ELECTRICIAN'
+      localStorage.getItem('designation') === '2' ||
+      localStorage.getItem('designation') === '3' || localStorage.getItem('designation') === '4'
+     || localStorage.getItem('designation') === '5'
     ) {
       this.adminToggle = false;
       this.otherToggle = false;
       this.supToggle = true;
     } else if (
-      localStorage.getItem('designation') === 'DRIVER' ||
-      localStorage.getItem('designation') === 'OFFICE  ASSISTENT'
+      localStorage.getItem('designation') === '6' ||
+      localStorage.getItem('designation') === '7'
     ) {
       this.adminToggle = false;
       this.otherToggle = true;

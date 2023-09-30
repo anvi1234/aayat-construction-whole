@@ -16,6 +16,8 @@ export class ExpensesService {
   totalSiteSubject = new BehaviorSubject(null)
   baseUri:string = environment.apiBaseUrl;
   headers = new HttpHeaders().set('Content-Type', 'application/json');
+  expense: number;
+
 
   constructor(private http: HttpClient) { 
     this.getExpenses() 
@@ -32,14 +34,22 @@ export class ExpensesService {
 
   // Get all employees
   getExpenses() {
-    this.http.get(`${this.baseUri}/expense/getExpenses`).subscribe((res:any)=>{
-      this.totalExpenseSubject.next(res);
-    });
+    return this.http.get(`${this.baseUri}/expense/getExpenses`);
   }
 
   // Get employee
   getExpensesById(id:any): Observable<any> {
     let url = `${this.baseUri}/expense/getExpensesById/${id}`;
+    return this.http.get(url, {headers: this.headers}).pipe(
+      map((res:any) => {
+        return res;
+      }),
+      catchError(this.errorMgmt)
+    )
+  }
+
+  getExpensesByUkey(id:any): Observable<any> {
+    let url = `${this.baseUri}/expense/getexpensesBUId/${id}`;
     return this.http.get(url, {headers: this.headers}).pipe(
       map((res:any) => {
         return res;
@@ -110,6 +120,19 @@ export class ExpensesService {
     let url = `${this.baseUri}/expense/gettotalexpensesByQuery`;
     const parameters = {sitename:data.siteName,location:data.location,status:data.status}
     return this.http.post(url,  parameters).pipe(catchError(this.errorMgmt));       
+  }
+
+  totalExpenses(data:any){
+    let expense = 0
+    data.forEach((d:any)=>{
+      expense = expense + d.expenseAmount
+    })
+    this.expense = expense;
+   return expense;
+  }
+
+  getSiteAmount(transAmount:any){
+  return transAmount - this.expense
   }
 }
  

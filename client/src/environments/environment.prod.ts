@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   // apiBaseUrl:'https://www.aayat-construction.in/api/v1',
-   apiBaseUrl:'https://backendconstruction.vercel.app/api/v1',
+   apiBaseUrl:'http://localhost:3000/api/v1',
   firebase: {
     
     apiKey: "AIzaSyCEk-Dm6MHQyn6hYv06gZL-o1xUxeTZxac",

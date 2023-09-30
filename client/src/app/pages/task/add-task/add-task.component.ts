@@ -104,6 +104,10 @@ import { SiteRegService } from 'src/app/shared/site-reg.service';
         }
       
         else{
+           this.dynamicArray = this.dynamicArray.filter((e)=>{
+            return e.name != ""
+          })
+          this.TaskFormModel.uniqueSiteId = String(localStorage.getItem('siteKeyId'))
          
           this.galleryService.addTask(this.TaskFormModel , this.dynamicArray,this.model['files']).subscribe(e=>{
             if(e){
@@ -139,7 +143,6 @@ import { SiteRegService } from 'src/app/shared/site-reg.service';
       this.newDynamic = { name: "", contact: "" ,charge:"",work:[]};
       this.dynamicArray.push(this.newDynamic);
       this.TaskFormModel.totalLabour = Number((this.dynamicArray.length)-1)
-      console.log("bbbbbbb", )
       return true;
     }
   
