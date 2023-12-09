@@ -12,7 +12,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PagesRoutingModule } from './pages-routing.module';
 import { NbCardModule, NbIconModule, NbInputModule, NbTreeGridModule,NbSelectModule } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ExpensesService } from '../shared/expenses.service';
 import { AdminSiteExpensesComponent } from './admin/siteexpenses/siteexpenses.component';
 import { AddEmployeeComponent } from './employee/add-employee/add-exployee.component';
@@ -62,6 +62,7 @@ import { ChartsModule } from 'ng2-charts';
     PagesRoutingModule,
     NbEvaIconsModule,
     FormsModule,
+    ReactiveFormsModule,
     NbCardModule, NbIconModule, NbInputModule, NbTreeGridModule, NbDatepickerModule,
     Ng2SmartTableModule,
     NbSelectModule,

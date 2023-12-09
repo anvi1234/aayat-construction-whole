@@ -77,8 +77,9 @@ export class ExpensesComponent implements OnInit {
   ngOnInit() {
     this.expensesService.selectedSiteAmoount.next(0)
     this.fetchId = this.route.snapshot.paramMap.get('id');
-    this.getTransactionByUkey()
     this.getExpensesDataByUkey()
+    this.getTransactionByUkey()
+   
    
    
   }
@@ -98,13 +99,13 @@ export class ExpensesComponent implements OnInit {
         let data = this.gridData.filter((e) => {
           return (e.expensesType === "Daily Expenses")
        })
-        this.amountAfterChange = data.map((y) => {
+        this.amountAfterChange = data.map((y:any) => {
           y["expenseDate"] = y.date;
           y["approvedNameBy"] = this.getApproved(y.approvedBy);
           return y;
         }).sort((dateA: any, dateB: any) => new Date(dateB.date).valueOf() - new Date(dateA.date).valueOf())
 
-        this.getTransactionByQuesry()
+     
        
       }
     })
@@ -212,6 +213,7 @@ export class ExpensesComponent implements OnInit {
    res.data.forEach((d:any)=>{
     this.TotalTransactionAmount =  this.TotalTransactionAmount + d.totalAmount;
     })
+    this.getTransactionByQuesry();
    }
   });
   }
@@ -220,8 +222,8 @@ export class ExpensesComponent implements OnInit {
     let MOSTransaction = 0
     let MOutSTransaction = 0
     let DETransaction = 0
-   this.transData?.forEach((d: any) => {
-
+    if(this.transData?.length>0)
+   this.transData.forEach((d: any) => {
       if (d.transactionType === "Material On Site") {
         MOSTransaction = Number(d.totalAmount) + Number(MOSTransaction)
       }
@@ -232,6 +234,7 @@ export class ExpensesComponent implements OnInit {
         DETransaction = Number(d.totalAmount) + Number(DETransaction)
       }
     })
+
     this.transactionobj = {
       "dailyExpense": DETransaction,
       "MOSExpense": MOSTransaction,
@@ -285,10 +288,23 @@ export class ExpensesComponent implements OnInit {
 
   saveData(data: any) {
     this.editData = false;
-    this.expensesService.updateExpenses(data._id,data).subscribe(res => {
+    let lastIndex = data.expenses.length-1;
+    let lastIndexItem = data.expenses[lastIndex];
+    if(!lastIndexItem.productItem && !lastIndexItem.quantity){
+      alert("Please add empty data");
+      return;
+    }
+    else{
+      this.expensesService.updateExpenses(data._id,data).subscribe(res => {
         this.showToast('success', 'Expenses Updated Successfully');
+         data.expenses.map((d:any)=>{
+          d["isEdit"] = true;
+          return;
+          })
         this.editData = false;
       })
+    }
+    
   }
 
   delete(data: any,index?:any) {
@@ -315,12 +331,14 @@ export class ExpensesComponent implements OnInit {
 
   addRow(data: any) {
     let lastIndex = data.expenses.length-1;
-    let lastIndexItem = data.expenses[lastIndex]
+    let lastIndexItem = data.expenses[lastIndex];
+
     if(!lastIndexItem.productItem && !lastIndexItem.quantity){
       alert("Please add empty data");
     }
+
     else{
-  this.ExpensesFormModel.expenseAmount = 0
+    this.ExpensesFormModel.expenseAmount = 0
     this.newDynamic = { productItem: "", amount: "", quantity: "",isEdit:false };
     data.expenses.push(this.newDynamic);
     this.isEdit= true;
@@ -344,6 +362,7 @@ export class ExpensesComponent implements OnInit {
       return false;
     } else {
       data.expenses.splice(index, 1);
+      this.isEdit = true;
       data.expenses.forEach((e: any) => {
         this.totalExpenses = Number(e.amount) + Number(this.totalExpenses);
         this.siteAmount = data.totalAmount - this.totalExpenses;
@@ -383,7 +402,7 @@ export class ExpensesComponent implements OnInit {
   }
 
   editBox(index:any,data:any){
-    data.expenses[index].isEdit = false
-    this.isEdit = true
+    data.expenses[index].isEdit = !data.expenses[index].isEdit
+    this.isEdit = !this.isEdit
   }
 }

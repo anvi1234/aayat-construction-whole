@@ -54,23 +54,24 @@
               </div>
             <div *ngFor ="let item of  amountAfterChange;index as i" class="mt-2">
               <div class="row">
-                <div class="col-sm-8">
+                <div class="col-sm-4">
                   <span class="duration-class"><b>Duration:</b>&nbsp;{{item.date|date}}&nbsp;&nbsp; <i style="font-size:18px" (click) = "updateCalednder($event,i)" *ngIf="calenderHide" class="fa">&#xf073;</i> &nbsp;&nbsp;&nbsp;<input type="date" *ngIf="!calenderHide && enableCalenderIndex == i" [(ngModel)]="calender" (change)="handler(item)"> &nbsp; &nbsp; &nbsp;<span><i *ngIf="!calenderHide && enableCalenderIndex == i" style="color:red;" (click)="cancelCalender()" class="fa fa-close" ></i></span> </span>
                 </div>
-                <div class="col-sm-2" id="header-btn">
-                  <button class="btn btn-danger" (click)="delete(item,i)">Delete Expense</button>
-                </div>
-                <div class="col-sm-2" id="header-btn">
-                  <button class="btn btn-primary" (click)="saveData(item)" *ngIf="isEdit">Update Expense</button>
-                </div>
-                <div class="col-sm-12">
+                <div class="col-sm-4">
                   <span class="duration-class"><b>SuperVisor : </b>{{item.superVisorName}}</span>
            
                 </div>
-              </div>
-         
+                <div class="col-sm-2" id="header-btn1">
+                  <button class="btn btn-danger" (click)="delete(item,i)">Delete Expense</button>
+                </div>
+                <div class="col-sm-2" id="header-btn1">
+                  <button class="btn btn-primary" (click)="saveData(item)" *ngIf="isEdit">Update Expense</button>
+                </div>
+               
+              </div> 
              <br>
-          <div class="row">
+
+          <div class="row grid-row">
             <div class="col-sm-2 add-row" >
               <button class="btn btn-success" (click)="addRow(item)">Add Row</button>
             </div>
@@ -78,16 +79,16 @@
               <table id="customers">
                 <tr>
                   <th id="product">Product Item</th>
-                  <th id="amt">Amount</th>
+                  <th id="amt">Amount (₹)</th>
                   <th id="quant">Quantity</th>
                   <th>Action</th>
      
                 </tr>
                 <tr *ngFor ="let data of item.expenses;let j = index">
                   <td>
-                    <input type="text"  [(ngModel)]="data.productItem"   [disabled]="data.isEdit"></td>
-                  <td > <input type="number" [(ngModel)]="data.amount" (blur)="onBlurEvent(item,i)"  [disabled]="data.isEdit"></td>
-                  <td><input type="text" [(ngModel)]="data.quantity"  [disabled]="data.isEdit"></td>
+                    <input type="text"  [ngClass]="!data.isEdit ? 'input-border' : 'input-not-border'"  [(ngModel)]="data.productItem"   [disabled]="data.isEdit"></td>
+                  <td > <input type="number" [(ngModel)]="data.amount" [ngClass]="!data.isEdit ? 'input-border' : 'input-not-border'" (blur)="onBlurEvent(item,i)"  [disabled]="data.isEdit"></td>
+                  <td><input type="text" [(ngModel)]="data.quantity" [ngClass]="!data.isEdit ? 'input-border' : 'input-not-border'" [disabled]="data.isEdit"></td>
                   <td id="newtable">
                     <button class="del" (click)="remove(j,item)"  data-toggle="tooltip" data-placement="top" title="Remove">
                       <img src="../../../assets/icon/delete.png">
@@ -131,6 +132,7 @@
                     <th>Total Expenses</th>
                     <th>Site Amount</th>
                   </tr>
+              
                   <tr>
                     <td>{{TotalTransactionAmount | currency:'INR'}}</td>
                     <td>{{transactionobj?.MOSExpense  | currency:'INR'}}</td>
@@ -144,23 +146,24 @@
               <div *ngFor ="let item of amountAfterChange;index as i" class="mt-2" >
                 
                 <div class="row" >
-                  <div class="col-sm-8">
+                  <div class="col-sm-4">
                     <span class="duration-class"><b>Duration:</b>&nbsp;{{item.date|date}}&nbsp;&nbsp; <i style="font-size:18px" (click) = "updateCalednder($event,i)" *ngIf="calenderHide" class="fa">&#xf073;</i> &nbsp;&nbsp;&nbsp;<input type="date" *ngIf="!calenderHide && enableCalenderIndex == i" [(ngModel)]="calender" (change)="handler(item)"> &nbsp;<span><i *ngIf="!calenderHide && enableCalenderIndex == i" style="color:red;" (click)="cancelCalender()" class="fa fa-close" ></i></span> </span>
                   </div>
-                  <div class="col-sm-2" id="header-btn">
-                    <button class="btn btn-danger" (click)="delete(item,i)">Delete Expense</button>
-                  </div>
-                  <div class="col-sm-2" id="header-btn">
-                    <button class="btn btn-primary" (click)="saveData(item)" *ngIf="isEdit">Update Expense</button>
-                  </div>
-                  <div class="col-sm-12">
+                  <div class="col-sm-4">
                     <span class="duration-class"><b>SuperVisor : </b>{{item.superVisorName}}</span>
              
                   </div>
+                  <div class="col-sm-2" id="header-btn1">
+                    <button class="btn btn-danger" (click)="delete(item,i)">Delete Expense</button>
+                  </div>
+                  <div class="col-sm-2" id="header-btn1">
+                    <button class="btn btn-primary" (click)="saveData(item)" *ngIf="isEdit">Update Expense</button>
+                  </div>
+                 
                 </div>
          
             <br>
-            <div class="row">
+            <div class="row grid-row">
               <div class="col-sm-2 add-row" >
                 <button class="btn btn-success" (click)="addRow(item)">Add Row</button>
               </div>
@@ -232,22 +235,26 @@
               <div *ngFor ="let item of  amountAfterChange;index as i" class="mt-2">
                 
                 <div class="row">
-                  <div class="col-sm-8">
+                  <div class="col-sm-4">
                     <span class="duration-class"><b>Duration:</b>&nbsp;{{item.date|date}}&nbsp;&nbsp; <i style="font-size:18px" (click) = "updateCalednder($event,i)" *ngIf="calenderHide" class="fa">&#xf073;</i> &nbsp;&nbsp;&nbsp;<input type="date" *ngIf="!calenderHide && enableCalenderIndex == i" [(ngModel)]="calender" (change)="handler(item)"> &nbsp;<span><i *ngIf="!calenderHide && enableCalenderIndex == i" style="color:red;" (click)="cancelCalender()" class="fa fa-close" ></i></span> </span>
                   </div>
-                  <div class="col-sm-2" id="header-btn">
-                    <button class="btn btn-danger" (click)="delete(item,i)">Delete Expense</button>
-                  </div>
-                  <div class="col-sm-2" id="header-btn">
-                    <button class="btn btn-primary" (click)="saveData(item)" *ngIf="isEdit">Update Expense</button>
-                  </div>
-                  <div class="col-sm-12">
+                  <div class="col-sm-4">
                     <span class="duration-class"><b>SuperVisor : </b>{{item.superVisorName}}</span>
              
                   </div>
+                  <div class="col-sm-2" id="header-btn1">
+                    <button class="btn btn-danger" (click)="delete(item,i)">Delete Expense</button>
+                  </div>
+                  <div class="col-sm-2" id="header-btn1">
+                    <button class="btn btn-primary" (click)="saveData(item)" *ngIf="isEdit">Update Expense</button>
+                  </div>
+                 
                 </div>
           <br>
-            <div class="row">
+            <div class="row grid-row">
+              <div class="col-sm-2 add-row" >
+                <button class="btn btn-success" (click)="addRow(item)">Add Row</button>
+              </div>
               <div class="col-sm-12 table ">
                 <table id="customers">
                   <tr>

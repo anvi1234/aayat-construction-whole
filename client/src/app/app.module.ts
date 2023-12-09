@@ -34,8 +34,6 @@ import { NgApexchartsModule } from "ng-apexcharts";
 
 
 
-
-
 initializeApp(environment.firebase);
 
 // import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
@@ -50,6 +48,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   declarations: [
     AppComponent,
     DropzoneDirective,
+   
    
   
    

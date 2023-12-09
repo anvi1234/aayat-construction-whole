@@ -5,175 +5,174 @@
         ><span class="card-heading">{{ dialogTiltle }}</span>
       </nb-card-header>
       <nb-card-body>
-        <form>
-          <div class="form-group row">
-            <label for="siteName" class="label col-sm-2 col-form-label"
-              >Site Name</label
-            >
-            <div class="col-sm-4">
-              <nb-select
-                *ngIf="!isOther"
-                placeholder="Site Name"
-                [(ngModel)]="SiteFormModel.siteName"
-                (selectedChange)="siteValueChange($event)"
-                [ngModelOptions]="{ standalone: true }"
-                required
-              >
-                <nb-option *ngFor="let site of siteName" [value]="site.value">{{
-                  site.name
-                }}</nb-option>
-              </nb-select>
-              <input
-                *ngIf="isOther"
-                type="text"
-                nbInput
-                fullWidth
-                id="siteName"
-                [(ngModel)]="SiteFormModel.siteName"
-                [ngModelOptions]="{ standalone: true }"
-                required
-              />
-              <!-- <span *ngIf="error.siteName" class="required">*Required</span> -->
-            </div>
-            <label for="siteLoc" class="label col-sm-2 col-form-label"
-              >Site Location</label
-            >
-            <div class="col-sm-4">
-              <input
-                type="text"
-                nbInput
-                fullWidth
-                id="siteLoc"
-                [(ngModel)]="SiteFormModel.location"
-                [ngModelOptions]="{ standalone: true }"
-                required
-              />
-              <!-- <span *ngIf="error.location" class="required">*Required</span> -->
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="work" class="label col-sm-2 col-form-label"
-              >P.O Number</label
-            >
-            <div class="col-sm-4">
-              <input
-                type="text"
-                nbInput
-                fullWidth
-                [(ngModel)]="SiteFormModel.poNo"
-                id="work"
-                [ngModelOptions]="{ standalone: true }"
-                required
-              />
-              <!-- <span *ngIf="error.work" class="required">*Required</span> -->
-            </div>
-            <label for="supervisorName" class="label col-sm-2 col-form-label"
-              >Bill No.</label
-            >
-            <div class="col-sm-4">
-              <input
-                type="text"
-                nbInput
-                fullWidth
-                [(ngModel)]="SiteFormModel.billNo"
-                id="work"
-                [ngModelOptions]="{ standalone: true }"
-                required
-              />
+        <div class="container">
+          <div class="row">
+            <div class="container">
+              <form [formGroup]="siteRegisterationForm" #form="ngForm" (ngSubmit)="saveData(clickTitle)">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="siteName">Site Name <span class="requiredcolor">*</span></label>
+                      <select   *ngIf="!isOther" class="form-control"
+                      formControlName="siteName"
+                       [ngClass]="{ 'is-invalid': submitted && f['siteName'].errors }"  placeholder="" id="siteName" (change)="siteValueChange($event)">
+                        <option selected>Select Site Name</option>
+                        <option *ngFor="let site of siteName" [value]="site.value">{{site.name}}</option>
+                      </select>
+                      <input *ngIf="isOther" type="text"
+                      formControlName="siteName"
+                      [ngClass]="{ 'is-invalid': submitted && f['siteName'].errors }"
+                       class="form-control" placeholder="" id="siteName">
+                      <div *ngIf="submitted && f['siteName'].errors" class="invalid-feedback">
+                        <div *ngIf="f['siteName'].errors['required']">Site Name is required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--  col-md-6   -->
+            
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="last">Location <span class="requiredcolor">*</span></label>
+                      <input type="text" class="form-control" placeholder="" formControlName="location"
+                      [ngClass]="{ 'is-invalid': submitted && f['location'].errors }"
+                      id="location">
+                      <div *ngIf="submitted && f['location'].errors" class="invalid-feedback">
+                        <div *ngIf="f['location'].errors['required']">Location is required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--  col-md-6   -->
+                </div>
+            
+            
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="poNo">P.O Number</label>
+                      <input type="text" formControlName="poNo" class="form-control" placeholder="" id="poNo">
+                    </div>
+            
+            
+                  </div>
+                  <!--  col-md-6   -->
+            
+                  <div class="col-md-6">
+            
+                    <div class="form-group">
+                      <label for="billNo">Bill No <span class="requiredcolor">*</span></label>
+                      <input type="text"
+                      formControlName="billNo"
+                      [ngClass]="{ 'is-invalid': submitted && f['billNo'].errors }"
+                      class="form-control" id="billNo" placeholder="Bill No">
+                      <div *ngIf="submitted && f['billNo'].errors" class="invalid-feedback">
+                        <div *ngIf="f['billNo'].errors['required']">Bill No is required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--  col-md-6   -->
+                </div>
+                <!--  row   -->
+            
+            
+                <div class="row">
+                  <div class="col-md-6">
+                   
+            
+                    <div class="form-group">
+                      <label for="status">Status <span class="requiredcolor">*</span></label>
+                      <select 
+                       formControlName="status"
+                      [ngClass]="{ 'is-invalid': submitted && f['status'].errors }" class="form-control" 
+                      
+                      placeholder="" id="status">
+                        <option selected>Select Status</option>
+                        <option value="Active">Active</option>
+                        <option value="Hold">Hold</option>
+                        <option value="Closed">Closed</option>
+                       
+                      </select>
+                      <div *ngIf="submitted && f['status'].errors" class="invalid-feedback">
+                        <div *ngIf="f['status'].errors['required']">Status is required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--  col-md-6   -->
+            
+                  <div class="col-md-6">
+            
+                    <div class="form-group">
+                      <label for="work">Work<span class="requiredcolor">*</span></label>
+                      <input type="text" 
+                      formControlName="work"
+                      [ngClass]="{ 'is-invalid': submitted && f['work'].errors }"
+                      class="form-control" id="work" placeholder="">
+                      <div *ngIf="submitted && f['work'].errors" class="invalid-feedback">
+                        <div *ngIf="f['work'].errors['required']">Work is required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--  col-md-6   -->
+                </div>
+                <!--  row   -->
+            
+            
+                <div class="row">
+                  <div class="col-md-6">
+            
+                    <div class="form-group">
+                      <label for="date">Date Of registration<span class="requiredcolor">*</span> </label>
+                      <input type="date" 
+                      formControlName="date"
+                      [ngClass]="{ 'is-invalid': submitted && f['date'].errors }"
+                      class="form-control" id="date" placeholder="">
+                      <div *ngIf="submitted && f['date'].errors" class="invalid-feedback">
+                        <div *ngIf="f['date'].errors['required']">Date Of registration is required</div>
+                      </div>
 
-              <!-- <span *ngIf="error.superVisorName" class="required">*Required</span> -->
+                    </div>
+                  </div>
+                  <!--  col-md-6   -->
+            
+                  <div class="col-md-6">
+            
+                    <div class="form-group">
+                      <label for="cdate">Closing Date</label>
+                      <input type="date" class="form-control" formControlName="closingdate" id="cdate" placeholder="email">
+                    </div>
+                  </div>
+                  <!--  col-md-6   -->
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+            
+                    <div class="form-group">
+                      <label for="contact">Dealer's Contact No</label>
+                      <input type="number" class="form-control" maxlength="10" formControlName="number" id="contact" placeholder="">
+                    </div>
+                  </div>
+                  <!--  col-md-6   -->
+            
+                  <div class="col-md-6">
+            
+                  
+                  </div>
+                  <!--  col-md-6   -->
+                </div>
+            
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
             </div>
           </div>
-          <div class="form-group row">
-            <label for="work" class="label col-sm-2 col-form-label"
-              >Status</label
-            >
-            <div class="col-sm-4">
-              <nb-select
-                placeholder="Site Status"
-                [(ngModel)]="SiteFormModel.status"
-                [ngModelOptions]="{ standalone: true }"
-                required
-              >
-                <nb-option value="Active">Active</nb-option>
-                <nb-option value="Hold">Hold</nb-option>
-                <nb-option value="Closed">Closed</nb-option>
-              </nb-select>
-            </div>
-            <label for="work" class="label col-sm-2 col-form-label">Work</label>
-            <div class="col-sm-4">
-              <input
-                type="text"
-                nbInput
-                fullWidth
-                [(ngModel)]="SiteFormModel.work"
-                id="work"
-                [ngModelOptions]="{ standalone: true }"
-                required
-              />
-            </div>
-
-            <div class="col-sm-4"></div>
+          <div class="row spacer">
           </div>
-          <div class="form-group row">
-            <label for="work" class="label col-sm-2 col-form-label"
-              >Date Of Registration</label
-            >
-            <div class="col-sm-4">
-              <input
-                type="date"
-                [(ngModel)]="SiteFormModel.date"
-                [ngModelOptions]="{ standalone: true }"
-                required
-              />
-            </div>
-
-            <label for="work" class="label col-sm-2 col-form-label"
-              >Closed Date</label
-            >
-            <div class="col-sm-4">
-              <input
-                type="date"
-                [(ngModel)]="SiteFormModel.closingdate"
-                [ngModelOptions]="{ standalone: true }"
-                required
-              />
+          <div class="row">
+            <div class="col-md-12">
+              <pre class="output">
+                <!--    Ye olde output goes here via JS.     -->
+              </pre>
             </div>
           </div>
-          <div class="form-group row">
-            <label for="work" class="label col-sm-2 col-form-label"
-              >Dealer's Contact Number</label
-            >
-            <div class="col-sm-4">
-              <input
-                type="text"
-                nbInput
-                fullWidth
-                [(ngModel)]="SiteFormModel.number"
-                id="work"
-                [ngModelOptions]="{ standalone: true }"
-                maxlength="10"
-              />
-            </div>
-            <div class="col-sm-4">
-             
-            </div>
-
-            <div class="col-sm-4"></div>
-          </div>
-          <div class="form-group row">
-            <div class="col-sm-4 offset-sm-4 text-center">
-              <button
-                type="submit"
-                nbButton
-                status="primary"
-                (click)="saveData(clickTitle)"
-              >
-                {{ clickTitle }}
-              </button>
-            </div>
-          </div>
-        </form>
+        </div>
       </nb-card-body>
     </nb-card>
   </div>

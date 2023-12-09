@@ -249,7 +249,7 @@
                         <div class="card-header">Active Users
                             <div class="btn-actions-pane-right">
                                 <div role="group" class="btn-group-sm btn-group">
-                                    <select  class="active btn btn-focus" (change)="monthChange($event)" >
+                                    <select  class="active btn btn-focus" (change)="monthChangeForGrid($event)" >
                                         <option value="" selected disable>Month</option>
                                         <option  *ngFor="let item of month"  [value]= "item.id" >{{item.name}}</option>
                                       </select>
@@ -267,7 +267,7 @@
                                     <th>Action</th>
                                   
                                   </tr>
-                                  <tr *ngFor="let item of allData">
+                                  <tr *ngFor="let item of tempData">
                                     <td data-th="Site Name">
                                       {{item?.siteName | titlecase}}
                                     </td>

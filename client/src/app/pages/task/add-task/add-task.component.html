@@ -5,110 +5,201 @@
        
         </nb-card-header>
         <nb-card-body>
-          <form enctype="multipart/form-data">
-            <div class="form-group row">
-              <label for="siteName"  class="label col-sm-2 col-form-label">Site Name</label>
-              <div class="col-sm-4">
-                <nb-select  *ngIf= "!isShow" placeholder="Site Name" [(ngModel)]="TaskFormModel.siteName" [ngModelOptions]="{standalone: true}"   required>
-                 
-                  <nb-option  *ngFor="let site of siteName" [value]="site.siteName">{{site.siteName}}</nb-option>
+          <div class="container">
+            <div class="row">
+              <div class="container">
+                <form [formGroup]="taskForm" #form="ngForm">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="siteName">Site Name <span class="requiredcolor">*</span></label>
+                        <input type="text"
+                        formControlName="siteName"
+                        [ngClass]="{ 'is-invalid': submitted && f['siteName'].errors }"
+                         class="form-control" placeholder="" id="siteName">
+                        <div *ngIf="submitted && f['siteName'].errors" class="invalid-feedback">
+                          <div *ngIf="f['siteName'].errors['required']">Site Name is required</div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--  col-md-6   -->
               
-               </nb-select>
-               <input *ngIf= "isShow"  type="text" nbInput fullWidth id="supervisorName" [(ngModel)]="TaskFormModel.siteName" [ngModelOptions]="{standalone: true}" required disabled>
-                <!-- <span *ngIf="error.fullName" class="required">*Required</span> -->
-              </div>
-              <label for="siteLoc"   class="label  col-sm-2 col-form-label">Site Location</label>
-              <div class="col-sm-4">
-                <nb-select *ngIf= "!isShow" placeholder="Site Location" [(ngModel)]="TaskFormModel.location" [ngModelOptions]="{standalone: true}"   required>
-                 
-                  <nb-option  *ngFor="let site of siteLocation" [value]="site.location">{{site.location}}</nb-option>
-              
-               </nb-select>
-               <input *ngIf= "isShow"  type="text" nbInput fullWidth id="supervisorName" [(ngModel)]="TaskFormModel.location" [ngModelOptions]="{standalone: true}" required disabled>
-                <!-- <input type="text" nbInput fullWidth  [(ngModel)]="TaskFormModel.location" id="work" [ngModelOptions]="{standalone: true}" > -->
-                <!-- <span *ngIf="error.designation" class="required">*Required</span>   -->
-            </div>
-            </div>
-            <div class="form-group row">
-              <label for="siteName"  class="label col-sm-2 col-form-label">Task Name</label>
-              <div class="col-sm-4">
-                <input type="text" nbInput fullWidth  [(ngModel)]="TaskFormModel.taskName" id="work" [ngModelOptions]="{standalone: true}" >
-                <!-- <span *ngIf="error.designation" class="required">*Required</span>   -->
-            </div>
-            <label for="siteLoc"   class="label  col-sm-2 col-form-label">Start Date</label>
-              <div class="col-sm-4">
-                <input type="date" [(ngModel)]="TaskFormModel.startDate" [ngModelOptions]="{standalone: true}" required>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="last">Location <span class="requiredcolor">*</span></label>
+                        <input type="text" class="form-control" placeholder="" formControlName="location"
+                        [ngClass]="{ 'is-invalid': submitted && f['location'].errors }"
+                        id="location">
+                        <div *ngIf="submitted && f['location'].errors" class="invalid-feedback">
+                          <div *ngIf="f['location'].errors['required']">Location is required</div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--  col-md-6   -->
                   </div>
-            </div>
-            <div class="form-group row">
-                <label for="siteName"  class="label col-sm-2 col-form-label">End Date</label>
-                <div class="col-sm-4">
-                  <input type="date"  [(ngModel)]="TaskFormModel.endDate" [ngModelOptions]="{standalone: true}" required>
-                   
-                  <!-- <span *ngIf="error.designation" class="required">*Required</span>   -->
-              </div>
-              <label for="siteLoc"   class="label  col-sm-2 col-form-label">Progress</label>
-                <div class="col-sm-4">
-                    <input type="text" nbInput fullWidth placeholder="0%" [(ngModel)]="TaskFormModel.progressStatus" id="work" [ngModelOptions]="{standalone: true}" >
-                    <!-- <span *ngIf="error.email" class="required">*Required</span> -->
-                    </div>
-               
-              </div>
-              <div class="form-group row">
-                <label for="siteName"  class="label col-sm-2 col-form-label">Add Photos <span class="required1">Please add At least one photo</span></label>
-                <div class="col-sm-4">
-                  <input type="file" nbInput fullWidth  (change)="onFileChange($event)" id="work" multiple >
-                  <!-- <span *ngIf="error.designation" class="required">*Required</span>   -->
-              </div>
               
               
-                  
-                  <label for="siteName"  class="label col-sm-2 col-form-label">Total Labour</label>
-                  <div class="col-sm-4">
-                  <input type="text" nbInput fullWidth  [(ngModel)]="TaskFormModel.totalLabour" id="work" [ngModelOptions]="{standalone: true}" disabled>
-                  <!-- <span *ngIf="error.designation" class="required">*Required</span>   -->
-            
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="poNo">Task Name</label>
+                        <input type="text" formControlName="taskName" class="form-control" 
+                        [ngClass]="{ 'is-invalid': submitted && f['taskName'].errors }"
+                        placeholder="" id="poNo">
+                        <div *ngIf="submitted && f['taskName'].errors" class="invalid-feedback">
+                          <div *ngIf="f['taskName'].errors['required']">Task Name is required</div>
+                        </div>
+                      </div>
+              
+              
                     </div>
+                    <!--  col-md-6   -->
+              
+                    <div class="col-md-6">
+              
+                      <div class="form-group">
+                        <label for="billNo">Start Date <span class="requiredcolor">*</span></label>
+                        <input type="date"
+                        formControlName="startDate"
+                        [ngClass]="{ 'is-invalid': submitted && f['startDate'].errors }"
+                        class="form-control" id="billNo" placeholder="">
+                        <div *ngIf="submitted && f['startDate'].errors" class="invalid-feedback">
+                          <div *ngIf="f['startDate'].errors['required']">Start Date is required</div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--  col-md-6   -->
+                  </div>
+                  <!--  row   -->
+              
+              
+                  <div class="row">
+                    <div class="col-md-6">
+                     
+              
+                      <div class="form-group">
+                        <label for="status">End Date</label>
+                        <input type="date"
+                        formControlName="endDate"
+                        class="form-control" id="billNo" placeholder="">
+                      </div>
+                    </div>
+                    <!--  col-md-6   -->
+              
+                    <div class="col-md-6">
+              
+                      <div class="form-group">
+                        <label for="work">Progress Status<span class="requiredcolor">*</span></label>
+                        <input type="text" 
+                        formControlName="progressStatus"
+                        [ngClass]="{ 'is-invalid': submitted && f['progressStatus'].errors }"
+                        class="form-control" id="work" placeholder="">
+                        <div *ngIf="submitted && f['progressStatus'].errors" class="invalid-feedback">
+                          <div *ngIf="f['progressStatus'].errors['required']">Progress Status is required</div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--  col-md-6   -->
+                  </div>
+                  <!--  row   -->
+              
+              
+                  <div class="row">
+                    <div class="col-md-6">
+              
+                      <div class="form-group">
+                        <label for="date">Upload Image<span class="requiredcolor">*</span> </label>
+                        <input type="file" 
+                        formControlName="imageUrl"
+                        (change)="onFileChange($event)" 
+                        [ngClass]="{ 'is-invalid': submitted && f['imageUrl'].errors }"
+                        class="form-control" id="date" placeholder="">
+                        <div *ngIf="submitted && f['imageUrl'].errors" class="invalid-feedback">
+                          <div *ngIf="f['imageUrl'].errors['required']">Please Upload Image</div>
+                        </div>
+  
+                      </div>
+                    </div>
+                    <!--  col-md-6   -->
+              
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="cdate">Total Labour</label>
+                        <input type="number" class="form-control" formControlName="totalLabour" id="cdate" placeholder="">
+                      </div>
+                    </div>
+                    <!--  col-md-6   -->
+                  </div>
+                  <button class="btn btn-success" style="float: right;" (click)="addLabourRow()">Add Row</button>
+                  <br>
+                  <table class="table table-bordered">
+		              <thead>
+
+                    <th>Labour's Name<span class="requiredcolor">*</span></th>
+                    <th>Labour's Contact No<span class="requiredcolor">*</span></th>
+                    <th>Labour's Charge<span class="requiredcolor">*</span></th>
+                    <th>Action</th>
+</thead>
+<tbody formArrayName="laboursArray">
+  <tr *ngFor="let t of labour.controls; let i=index;let l=last" [formGroupName]="i">
+      <td>
+        <input type="text" 
+        required
+        formControlName="name"
+        
+        id="contact" placeholder="">
+        <div class="feedback" *ngIf="getNameControl(i,'name')?.invalid && getNameControl(i,'name')?.touched">
+          <div *ngIf="getNameControl(i,'name')?.hasError('required')">
+           Labour's Name is required.
+          </div>
+          </div>
+      </td>
+      <td>
+        <input type="text" formControlName="contact" id="contact" placeholder="">
+        <div *ngIf="getNameControl(i,'contact')?.invalid && getNameControl(i,'contact')?.touched" class="feedback">
+          <div *ngIf="getNameControl(i,'contact')?.hasError('required')">
+           Labour's Phone No is required.
+          </div>
+          <div *ngIf="getNameControl(i,'contact')?.hasError('numericAllow')">Please add only numeric Value.</div>
+           <div *ngIf="getNameControl(i,'contact')?.hasError('invalidPhoneNumber')">Please, Enter 10 digit Mobile Number.</div>  
+          </div>
+      </td>
+      <td>
+        <input type="number" formControlName="charge" id="contact" placeholder="">
+        <div *ngIf="getNameControl(i,'charge')?.invalid && getNameControl(i,'charge')?.touched" class="feedback">
+          <div *ngIf="getNameControl(i,'charge')?.hasError('required')">
+           Labour's Charge is required.
+          </div>
+          </div>
+      </td>
+      <td id="newtable" class="flex" >
+        <span *ngIf="i>0">
+          <button class="del"  (click)="remove(i)" data-toggle="tooltip" id="contact" data-placement="top" title="Remove">
+            <img src="../../../assets/icon/delete.png">
+            <!-- <i   [ngStyle]="(styleOne && byIndexingChangeColor == i  ) ?  {'color': 'red','font-size':'22px'} : {'color': 'grey','font-size':'22px'} " title="Delete"  data-toggle="tooltip" class="fa">&#xf014;</i> -->
+          </button>
+        </span>
+      </td>
+  </tr>
+</tbody>
+ </table>
                
-              </div>
-              <table class="table table-striped table-bordered">    
-                <thead>    
-                    <tr>    
-                        <th style="width:20%">Labour Name</th>
-                        <th style="width:20%">Contact No</th> 
-                        <th style="width:20%">Charge</th>  
-                        <th style="width:20%">Action</th>  
-                       
-                    </tr>    
-                </thead>    
-                <tbody>    
-                     <tr *ngFor="let dynamic of dynamicArray; let i = index;">       
-                        <td data-label="Labour Name">    
-                          <input nbInput [(ngModel)]="dynamicArray[i].name" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>   
-                       
-                        </td> 
-                        
-                        <td  data-label="Contact No">    
-                          <input nbInput [(ngModel)]="dynamicArray[i].contact" class="form-control" type="number" [ngModelOptions]="{standalone: true}"required>   
-                        </td> 
-                        <td data-label="Charge">    
-                          <input nbInput [(ngModel)]="dynamicArray[i].charge" class="form-control" type="number" [ngModelOptions]="{standalone: true}"required>   
-                        </td>    
-                       
-                        <td > 
-                            <i (click)="deleteRow(i)"  *ngIf="i!=0" class="fa fa-trash fa-2x deleteicon"></i>    
-                        </td>     
-                    </tr>    
-                   
-                </tbody>    
-            </table>  
-            <button class="fa fa-plus fa-2x addicon" (click)="addRow()">Add Labour</button>
-            <div class="form-group row">
-              <div class="col-sm-4 offset-sm-4 text-center">
-                <button type="submit" nbButton status="primary" (click)="saveData()">{{clickTitle}}</button>
+                 
+              
+                  <button type="submit" class="btn btn-primary" (click)="saveData()">Submit</button>
+                </form>
               </div>
             </div>
-          </form>
+            <div class="row spacer">
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <pre class="output">
+                  <!--    Ye olde output goes here via JS.     -->
+                </pre>
+              </div>
+            </div>
+          </div>
         </nb-card-body>
       </nb-card>
    </div>

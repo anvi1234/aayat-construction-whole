@@ -17,9 +17,13 @@ export let SiteValidation = (data:  SiteDetails, type:any) => {
         if (!data.work) {
             error.work = true
         }
-        if (!data.closingdate) {
-            error.closingdate = true
+        if (!data.date) {
+            error.date = true
         }
+        if (!data.status) {
+            error.status = true
+        }
+       
        
  
    return error;

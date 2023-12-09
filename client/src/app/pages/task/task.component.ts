@@ -164,6 +164,7 @@ export class TaskComponent {
 
 
   source: LocalDataSource = new LocalDataSource();
+  isEdit: boolean;
   constructor(
     private dialogService: NbDialogService,
     private galleryService: GalleryService,
@@ -181,14 +182,7 @@ export class TaskComponent {
     this.getTaskDataValue()
 
   }
-  //   onDeleteConfirm(event): void {
-  //     if (window.confirm('Are you sure you want to delete?')) {
-  //       event.confirm.resolve();
-  //     } else {
-  //       event.confirm.reject();
-  //     }
-  //   }
-
+ 
   onCustomEvent(e: any, dialogview: TemplateRef<any>, dialogdelete: TemplateRef<any>) {
     if (e.action == "editAction") {
       this.GLOBALID = e.data._id;
@@ -211,13 +205,13 @@ export class TaskComponent {
   getTaskDataValue() {
     return new Promise((resolve, reject) => {
       this.galleryService.getTask().subscribe((e: any) => {
-
         let data = e.reverse()
         data = e.map((y: any) => {
           y["startdate"] = this.dateFormating(y.startDate);
           y["enddate"] = this.dateFormating(y.endDate);
           y.laboursArray.map((d:any)=>{
             d["actionBtn"] = true;
+            d["isEdit"] = true;
             return d;
           })
           return y;
@@ -231,8 +225,6 @@ export class TaskComponent {
           this.gridData = data.filter((e: any) => {
             return e.uniqueSiteId === localStorage.getItem("siteKeyId")
           })
-
-          console.log("griddata",this.gridData)
         }
         resolve(data)
 
@@ -243,6 +235,10 @@ export class TaskComponent {
 
 
   getWorkerPayment(data: any) {
+    this.totaalPaymentOfWorker = 0;
+    this.totalPaymentPaid =0;
+    this.totalPaymentPending =0;
+
     data.forEach((e: any) => {
       this.totaalPaymentOfWorker = Number(this.totaalPaymentOfWorker) + Number(e.amountPerDay)
     })
@@ -284,6 +280,7 @@ export class TaskComponent {
     else
       return "0" + n
   }
+
   dateFormating(da: any) {
     let df = new Date(da);
     return `${this.pading(df.getDate())}-${this.monthDayList[df.getMonth()].short}-${df.getFullYear()}`
@@ -339,8 +336,6 @@ export class TaskComponent {
   }
 
   viewCaledner(index1: any,index2:any, item: any, wholeItem: any) {
-
-    console.log("datattttttttt",index1,index2)
     this.selectedLabourWorkForUpdate = item
     this.gridData[index1].laboursArray[index2].actionBtn = false
     this.GalleryFormModel = wholeItem
@@ -352,6 +347,7 @@ export class TaskComponent {
   removeCalender(index1: any,index2:any, item: any, wholeItem: any){
     this.gridData[index1].laboursArray[index2].actionBtn = true
   }
+
   handleDateClick(arg: any) {
     this.selectedDate = new Date(arg.target.value)
     this.ViewRecordDialogRef = this.dialogService.open(this.ViewRecordModal, { context: 'this is some additional data passed to dialog' });
@@ -362,7 +358,6 @@ export class TaskComponent {
   enableEditMethod(e: any, i: any, item: any) {
     this.editData = true;
     this.enableEditIndex = i;
-    console.log(i, item);
   }
 
   submitWork() {
@@ -433,27 +428,46 @@ export class TaskComponent {
   }
 
   saveData(data: any) {
+    let lastIndex = data.laboursArray.length-1;
+    let lastIndexItem = data.laboursArray[lastIndex];
+
+    if(!lastIndexItem.name && !lastIndexItem.charge && !lastIndexItem.contact){
+      alert("Please add labour's name,phoneno and charge");
+    }
+
+    else{
     this.galleryService.updateTask(data, data._id).subscribe(e => {
       if (e) {
+        this.showToast('success', 'Task Updated Successfully');
         this.getTaskDataValue()
         this.editData = false
       }
     })
   }
+  }
 
 
-  submitPayment() {
-    var ResulProduct = this.totalWork.filter((e: any) => {
-      var date = new Date(e.date);
-      if (date >= new Date(this.fromDate) && date <= new Date(this.toDate)) {
+  submitPayment() { 
+    let toDate:any;
+    let fromDate = new Date(this.fromDate).toLocaleDateString("en-US");
+    if(this.toDate){
+      toDate = new Date(this.toDate).toLocaleDateString("en-US");
+    }
+    else{
+       toDate = fromDate
+    }
+   
+    var ResulProduct = this.totalWork.map((e: any) => {
+      let date =  new Date(e.date).toLocaleDateString("en-US");
+      if(date >= fromDate && date <= toDate){
         e["payment"] = "Paid"
-      };
+      }
       return e;
     })
     this.updatedWork.work = ResulProduct
     let dataMaodel: any = this.GalleryFormModel.laboursArray.filter((item: any) => item._id !== this.updatedWork._id);
     dataMaodel.push(this.updatedWork)
-    this.GalleryFormModel.laboursArray = dataMaodel
+    this.GalleryFormModel.laboursArray = dataMaodel;
     this.galleryService.updateTask(this.GalleryFormModel, this.GLOBALID).subscribe(e => {
       if (e) {
         this.showToast('success', 'Task Updated Successfully');
@@ -473,18 +487,25 @@ export class TaskComponent {
     });
   }
 
-  addRow(index: any, data: any) {
-    this.newDynamic = { name: "", contact: "", charge: "", work: [] };
-    this.gridData[index].laboursArray.push(this.newDynamic);
-    this.editData = true;
-    this.enableEditIndex = index;
+  addRow(data: any) {
+    let lastIndex = data.laboursArray.length-1;
+    let lastIndexItem = data.laboursArray[lastIndex];
 
+    if(!lastIndexItem.name && !lastIndexItem.charge && !lastIndexItem.contact){
+      alert("Please add labour's name,phoneno and charge");
+    }
+    else{
+    this.newDynamic = { name: "", contact: "", charge: "", work: [],isEdit:false };
+    data.laboursArray.push(this.newDynamic);
+    this.isEdit = true;
+    
+    }
+   
   }
 
   updateCalednder(e: any, i: any) {
     this.calenderHide = false;
     this.enableCalenderIndex = i;
-    console.log(i, e);
   }
 
   handler(data: any) {
@@ -520,5 +541,20 @@ export class TaskComponent {
   getExtensionOfFile(data:any){
     const[fname,lastname] = data.split('?');
  return fname.slice((Math.max(0, fname.lastIndexOf(".")) || Infinity) + 1);
+}
+
+editBox(data:any,index:any){
+  data.laboursArray[index].isEdit = !data.laboursArray[index].isEdit;
+  this.isEdit = !this.isEdit
+}
+
+remove(index: any, data: any) {
+  if (data.laboursArray.length == 1) {
+    return false;
+  } else {
+    data.laboursArray.splice(index, 1);
+    this.isEdit = true;
+    return true;
+  }
 }
 }

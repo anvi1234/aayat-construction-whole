@@ -259,7 +259,9 @@ color:white
 #newtable .green{
   background-color: green;
 }
-
+#newtable .orange{
+  background-color: orange;
+}
 .tooltip {
   position: relative;
   display: inline-block;
@@ -282,4 +284,7 @@ color:white
 
 .tooltip:hover .tooltiptext {
   visibility: visible;
+}
+.orange{
+  background-color: orange;
 }

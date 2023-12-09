@@ -30,9 +30,7 @@
 .leave-btn{
     float: right;
 }
-.span{
-    font-size: 12px;
-}
+
 
 #table-heading{
     text-align: center;
@@ -242,4 +240,81 @@ video{
   width: 305px;
   align-items: center;
 }
+
+#header-btn1 button{
+  font-size: 12px;
+  float: right;
+  margin: 10px;
+}
+
+}
+#header-btn1 button{
+  font-size: 12px;
+  float: right;
+  margin: 10px;
+}
+
+
+#newtable button{
+  background-color: transparent;
+  border:none;
+  img{
+    height:25px;
+    width:25px;
+    margin-left: 4px;
+    
+  }
+}
+#newtable button:hover img {
+	-webkit-transform: scale(1.8);
+	transform: scale(1.8);
+}
+.duration-class{
+  font-size: 13px;
+}
+
+
+.input-border{
+  border:default;
+  padding:12px 20px;
+}
+
+.input-not-border{
+border:none;
+}
+input{
+  width: 100%;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.add-row button{
+  font-size: 12px;
+}
+
+.image-upload{
+  label {
+    display: block;
+    
+    
+  }
+  
+  .date-control {
+    margin-top: -1em;
+    opacity: 0;
+  }
+  
+  input[type="date"] {
+    position: absolute;
+    top: 20px;
+    left: 22px;
+    right: 0;
+    bottom: 0;
+    width: 21px;
+    padding: -21%;
+    /* height: 28px; */
+    color: transparent;
+    background: transparent;
+  }
 }

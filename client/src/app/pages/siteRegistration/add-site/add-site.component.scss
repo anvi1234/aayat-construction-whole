@@ -14,32 +14,17 @@ nb-checkbox {
     padding-bottom: 0;
   }
   
-  input{
-    margin-bottom: 1rem;
-    width: 100%;
-    padding: 0.4375rem 1rem;
-    border: none;
-    border-radius: 0.25rem;
-  }
-  
-  nb-select{
-    width:100%;
-    margin-bottom: 1rem;
-  }
+ 
+nb-card{
+  background-color: white;
+}
+.requiredcolor{
+  color: red;
+}
+label{
+  font-size: 14px;
+}
 
-  #dateBox{
-    width:100%
-  }
-
-
-  th{
-    color:#8f9bb3
-  }
-
-  .icon{
-    color:white;
-    font-size: 25px;
-  }
-  nb-card{
-    background-color: transparent;
-  }
+.invalid-feedback{
+  font-size: 12px;
+}

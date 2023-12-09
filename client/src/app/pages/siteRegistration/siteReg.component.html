@@ -6,7 +6,7 @@
        Are You Sure You Want To Delete This User?
       </nb-card-body>
       <nb-card-footer>
-        <button nbButton status="warning" (click)="  removeEmployee()">Delete</button>&nbsp; &nbsp;<button nbButton status="basic" (click)="styleOne=true &&  ref.close()">Cancel</button>
+        <button nbButton status="warning" (click)=" removeEmployee()">Delete</button>&nbsp; &nbsp;<button nbButton status="basic" (click)="styleOne=true &&  ref.close()">Cancel</button>
       </nb-card-footer>
     </nb-card>
   </ng-template>
@@ -35,7 +35,7 @@
      
       </nb-card-body>
       <nb-card-footer>
-        <button nbButton status="warning"  (click)="style4=true &&  ref.close()">Cancel</button>
+        <button nbButton status="warning"  (click)="style=true &&  ref.close()">Cancel</button>
       </nb-card-footer>
     </nb-card>
   </ng-template>
@@ -89,11 +89,11 @@
             <tr *ngFor="let item of gridData | paginate:{itemsPerPage:10,currentPage:p} ; let i = index">
               <td data-label="Action">
                 <div>
-                <button class="del"  (click)="changeWithAction(i,'delete',item)" data-toggle="tooltip" data-placement="top" title="Remove">
+                <!-- <button class="del"  (click)="changeWithAction(i,'delete',item)" data-toggle="tooltip" data-placement="top" title="Remove">
                   <img src="../../../assets/icon/delete.png">
-                  <!-- <i   [ngStyle]="(styleOne && byIndexingChangeColor == i  ) ?  {'color': 'red','font-size':'22px'} : {'color': 'grey','font-size':'22px'} " title="Delete"  data-toggle="tooltip" class="fa">&#xf014;</i> -->
+             
                 </button>
-              
+               -->
               <button class="money"  (click)="changeWithAction(i,'trans',item)" data-toggle="tooltip" data-placement="top" title="Transaction">
                 <img src="../../../assets/icon/trans.png">
                 <!-- <i class="fa fa-money money"  [ngStyle]="(style3 && byIndexingChangeColor == i  ) ? {'color': '#08F917'} : {'color': 'grey'}" title="Transaction"  data-toggle="tooltip" style="font-size:24px;" aria-hidden="true"></i> -->
@@ -123,6 +123,9 @@
                 <div *ngIf="item.status === 'Active' ">
                 <button class="pillbutton green">Active</button>
             </div>
+            <div *ngIf="item.status === 'Hold' ">
+              <button class="pillbutton orange">Hold</button>
+          </div>
             <div *ngIf="item.status === 'Closed'">
                 <button class="pillbutton red">Closed</button>
             </div></td>
@@ -136,5 +139,10 @@
   <pagination-controls (pageChange)="p = $event"></pagination-controls>
   </table>
 </div>
+
+
     </nb-card-body>
+
     </nb-card>
+
+

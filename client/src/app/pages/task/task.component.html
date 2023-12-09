@@ -1,52 +1,134 @@
 
 <nb-card>
-  <nb-card-header>
-  
-     
- 
-  <div ><span class="card-heading">
-    Task
-  </span><button class="header-button" (click)="addTask()" nbButton status="primary"><span class="add-icon">+</span></button></div>
 
-  </nb-card-header>
-   <nb-card-body>
-    <h4>{{siteNameForHeader}} - {{locationNameForHeader}}</h4>
-<div  *ngFor = "let item of gridData;index as i">
-    <span class="date-value"><b>Start Date:</b>&nbsp;{{item.startDate |date}}&nbsp;<b>End Date:</b>&nbsp;{{item.endDate |date}}&nbsp;<i (click) = "updateCalednder($event,i)" *ngIf="calenderHide" class="fa">&#xf073;</i><input type="date" *ngIf="!calenderHide"  [(ngModel)]="calenderFrom" (change)="handler(item)"></span>
-  <div class="taskName"><b>Task Name : </b>&nbsp;{{item.taskName}} </div><br>
-  <span class="action-icon">
-    <a class="table-row-action edit-action" *ngIf="!editData " (click)="enableEditMethod($event,i,item)">
-       <i class="fa fa-pencil" uib-tooltip="Edit" tooltip-trigger="mouseenter" tooltip-append-to-body="true" tooltip-placement="left"></i>
-       
-     </a>  &nbsp;   &nbsp;   &nbsp;
-     <a *ngIf="!editData " (click)="delete(item)"><i class="fa fa-trash" uib-tooltip="delete" style="color:red;" tooltip-trigger="mouseenter" tooltip-append-to-body="true" tooltip-placement="left"></i></a>
-     <i *ngIf="editData && enableEditIndex == i" style="color:red" (click)="editData=false" class="fa fa-close" ng-click="cancel()"></i>
-  &nbsp;   &nbsp;   &nbsp;   <i *ngIf="editData && enableEditIndex == i" style="color:green;" id="saveBtn" class="fa fa-check"  (click) = "saveData(item)" type="submit"></i>
-   </span>
-  <table id="customers">
-    <tr>
-      <th>Worker's Name</th>
-      <th>Contact</th>
-      <th>Charge</th>
-      <th>Calender</th>
-      <th>Record View</th>
-      <th>Task Image</th>
-      </tr>
-    <tr *ngFor = "let labour of item.laboursArray;let j =index">
-      <td  id="name"><input type="text" [(ngModel)]="labour.name"  [disabled]="!editData"></td>
-      <td id="contact"><input type="text" [(ngModel)]="labour.contact"  [disabled]="!editData"></td>
-      <td id="charge"><input type="text" [(ngModel)]="labour.charge"  [disabled]="!editData"></td>
-      <td><i  *ngIf="labour.actionBtn" (click)="viewCaledner(i,j,labour,item)" style="color:#f9a805;" class="fa">&#xf073;</i><input type="date"  *ngIf="!labour.actionBtn"  (change)= "handleDateClick($event);"> &nbsp;<i   *ngIf="!labour.actionBtn"  (click)="removeCalender(i,j,labour,item)"style="font-size:16px" style="color:red" class="fa">&#xf00d;</i></td>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-sm-9">
+        <span class="card-heading">
+          Task
+       </span>
+      </div>
+      <div class="col-sm-3">
+        <button class="header-button" id="header-btn" (click)="addTask()"nbButton status="primary">Add Task</button>
+      </div>
+    </div>
     
-     
-      <td><i   (click)="viewRecord(labour,item)" class="fa" style="color: #0095ff">&#xf06e;</i></td>
-    <td>
-      <i class="fa fa-picture-o" (click)="viewImage(item)" style="color: #db8b00" aria-hidden="true"></i>
-    </td>
-    </tr>
+
+</nb-card-header>
+
+   <nb-card-body>
+    <h5 style="text-align: center;color:rgb(23, 23, 96)">{{siteNameForHeader}} - {{locationNameForHeader}}</h5>
+
+<div  *ngFor = "let item of gridData;index as i">
+
+ 
+      <div class="row">
+        <div class="col-sm-4">
+          <span class="duration-class"><b>Start Date:</b>&nbsp;{{item.startDate |date}}&nbsp;<b>End Date:</b>&nbsp;{{item.endDate |date}}&nbsp;<i (click) = "updateCalednder($event,i)" *ngIf="calenderHide" class="fa">&#xf073;</i><input type="date" *ngIf="!calenderHide"  [(ngModel)]="calenderFrom" (change)="handler(item)"></span>
+        </div>
+        <div class="col-sm-4">
+          <span class="duration-class"><b>Task Name : </b>&nbsp;{{item.taskName}}</span>
    
-  </table>
-  <div class="botom-icon"> <span (click)="addRow(i,item)"><i class="fa fa-plus" aria-hidden="true"></i></span></div>
+        </div>
+        <div class="col-sm-2" id="header-btn1">
+          <button class="btn btn-danger" (click)="delete(item)">Delete Task</button>
+        </div>
+        <div class="col-sm-2" id="header-btn1">
+          <button class="btn btn-primary" (click)="saveData(item)" *ngIf="isEdit">Update Task</button>
+        </div>
+       
+      </div>
+
+   <div class="row">
+    <div class="col-sm-2 add-row mt-2" >
+      <button class="btn btn-success" (click)="addRow(item)">Add Row</button>
+    </div>
+    <div class="col-sm-12 table ">
+      <table id="customers">
+        <thead>
+          <tr>
+            <th>Worker's Name</th>
+            <th>Contact</th>
+            <th>Charge (₹)</th>
+            <th>Action</th>
+            </tr>
+        </thead>
+       
+          <tbody id="newtable" >
+            <tr *ngFor = "let labour of item.laboursArray;let j =index">
+              <td  id="name"><input type="text" [(ngModel)]="labour.name" [ngClass]="!labour.isEdit ? 'input-border' : 'input-not-border'" [disabled]="labour.isEdit"></td>
+              <td id="contact"><input type="text" [(ngModel)]="labour.contact"  [ngClass]="!labour.isEdit ? 'input-border' : 'input-not-border'" [disabled]="labour.isEdit"></td>
+              <td id="charge"><input type="text" [(ngModel)]="labour.charge"  [ngClass]="!labour.isEdit ? 'input-border' : 'input-not-border'" [disabled]="labour.isEdit"></td>
+              <td>
+                <div class="row">
+                  <div class="col-sm-1 offset-sm-1" *ngIf="item.laboursArray.length !=1">
+                    <button class="del"  data-toggle="tooltip" (click)="remove(j,item)" data-placement="top" title="Remove">
+                      <img src="../../../assets/icon/delete.png">
+                      <!-- <i   [ngStyle]="(styleOne && byIndexingChangeColor == i  ) ?  {'color': 'red','font-size':'22px'} : {'color': 'grey','font-size':'22px'} " title="Delete"  data-toggle="tooltip" class="fa">&#xf014;</i> -->
+                    </button>
+                  </div>
+                  <div class="col-sm-1 offset-sm-1">
+                    <button class="del"  data-toggle="tooltip" data-placement="top" title="Edit"  (click)="editBox(item,j)">
+                      <img src="../../../assets/icon/edit.png">
+                      <!-- <i   [ngStyle]="(styleOne && byIndexingChangeColor == i  ) ?  {'color': 'red','font-size':'22px'} : {'color': 'grey','font-size':'22px'} " title="Delete"  data-toggle="tooltip" class="fa">&#xf014;</i> -->
+                    </button>
+                  </div>
+
+                  <div class="col-sm-1 offset-sm-1">
+                    <button class="del"  data-toggle="tooltip" data-placement="top" (click)="viewImage(item)" title="Image">
+                      <img src="../../../assets/icon/gallery.png">
+                      <!-- <i   [ngStyle]="(styleOne && byIndexingChangeColor == i  ) ?  {'color': 'red','font-size':'22px'} : {'color': 'grey','font-size':'22px'} " title="Delete"  data-toggle="tooltip" class="fa">&#xf014;</i> -->
+                    </button>
+                  </div>
+                 
+                  <div class="col-sm-1 offset-sm-1">
+                    <button class="del"  data-toggle="tooltip" (click)="viewRecord(labour,item)" data-placement="top" title="Record">
+                      <img src="../../../assets/icon/report.png">
+                      <!-- <i   [ngStyle]="(styleOne && byIndexingChangeColor == i  ) ?  {'color': 'red','font-size':'22px'} : {'color': 'grey','font-size':'22px'} " title="Delete"  data-toggle="tooltip" class="fa">&#xf014;</i> -->
+                    </button>
+                  </div>
+                 
+
+
+
+
+                 <div class="col-sm-1 offset-sm-1">
+                  <button class="image-upload" (click)="viewCaledner(i,j,labour,item)" toggle="tooltip"  data-placement="data-top" title="Attendence">
+                    <span>
+                      <label for="date-picker"  tabindex="0">       
+                        <img src="../../../assets/icon/calender.webp">    
+                    </label>
+                    </span>
+                    <span>
+                      <input type="date" class="date-control"  (change)= "handleDateClick($event);" id="date-picker">
+                    </span>
+                    
+                    
+                 
+                  </button>
+                 </div>
+                  
+            
+               
+               
+                  
+                  </div>
+              </td>
+              <!-- <td><i  *ngIf="labour.actionBtn" (click)="viewCaledner(i,j,labour,item)" style="color:#f9a805;" class="fa">&#xf073;</i><input type="date"  *ngIf="!labour.actionBtn"  (change)= "handleDateClick($event);"> &nbsp;<i   *ngIf="!labour.actionBtn"  (click)="removeCalender(i,j,labour,item)"style="font-size:16px" style="color:red" class="fa">&#xf00d;</i></td>
+            
+             
+              <td><i   (click)="viewRecord(labour,item)" class="fa" style="color: #0095ff">&#xf06e;</i></td>
+            <td>
+              <i class="fa fa-picture-o" (click)="viewImage(item)" style="color: #db8b00" aria-hidden="true"></i>
+            </td> -->
+            </tr>
+          </tbody>
+       
+       
+      </table>
+        </div>
+        </div>
+
   <br>
 </div>
 </nb-card-body>
@@ -68,7 +150,7 @@
 
 <ng-template #dialogview let-data let-ref="dialogRef">
   <nb-card  style="width:950px" class="imageClass">
-    <nb-card-header>View Gallery
+    <nb-card-header><h5>View Gallery</h5>
   <button type="submit" class="leave-btn" nbButton hero status="success" (click)="showWorkers()">Workers</button>
     </nb-card-header>
     <nb-card-body>
@@ -80,24 +162,6 @@
           </div> 
         </div>
       </div>
-   
-<!-- <div  *ngIf="workerShow">
-<table id="customers">
-  <tr>
-    <th>Worker's Name</th>
-    <th>Contact</th>
-    <th>Charge</th>
-    <th>Calender</th>
-    </tr>
-  <tr *ngFor = "let item of workersArray;index as i">
-    <td>{{item.name}}</td>
-    <td>{{item.contact}}</td>
-    <td>{{item.charge}}</td>
-    <td  ><i style="font-size:24px" *ngIf="!calenderView" (click)="viewCaledner(i,item)" class="fa">&#xf073;</i><input type="date"  *ngIf="calenderView && enableCalender == i"  (change)= "handleDateClick($event);"></td>
-  </tr>
- </table>
-</div> -->
-
 
 </nb-card-body>
     <nb-card-footer>
@@ -210,7 +274,9 @@
 
 <ng-template #dialogviewImage let-data let-ref="dialogRef">
   <nb-card  style="width:950px" class="imageClass">
-    <nb-card-header><span class="card-heading">View Gallery</span></nb-card-header>
+    <nb-card-header><h5 style="color:white">
+      View Gallery
+    </h5></nb-card-header>
     <nb-card-body>
       <div class="row">
           <div class="col-sm-2" *ngFor="let img of urlOFFirebae" >

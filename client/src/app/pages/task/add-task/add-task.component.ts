@@ -1,8 +1,10 @@
 import { Component, OnInit} from '@angular/core';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NbComponentStatus, NbToastrService } from '@nebular/theme';
 import { DynamicGrid, labourGrid } from 'src/app/model/grid.model';
 import { Task } from 'src/app/model/task.model';
+import { CustomvalidationService } from 'src/app/shared/customValidator.service';
 import { GalleryService } from 'src/app/shared/gallery.service';
 import { SiteRegService } from 'src/app/shared/site-reg.service';
 @Component({
@@ -11,12 +13,13 @@ import { SiteRegService } from 'src/app/shared/site-reg.service';
     styleUrls:['/add-task.component.scss']
   })
   export class AddTaskComponent implements OnInit{
-       public TaskFormModel: Task = new Task();
+       
        public model: any = {};
        public siteNameValue:any = "";
        public locationValue:any = "";
        public isShow: boolean = false;
        public dialogTitle = "Add Task";
+       taskForm!: FormGroup;
        dynamicArray: Array<labourGrid> = [];
         newDynamic: any = {};
        public clickTitle ="Save"
@@ -26,43 +29,28 @@ import { SiteRegService } from 'src/app/shared/site-reg.service';
         fileObj:any = [];
         public siteLocation =[{_id:"null",location:"null"}];
        public siteName =[{_id:"null",siteName:"null"}];
+  submitted: boolean;
 
       constructor(
         private galleryService: GalleryService,
         private route: ActivatedRoute,
         private toastrService: NbToastrService,
         private router:Router,
-        private siteService:SiteRegService
+        private siteService:SiteRegService,
+        private formBuilder:FormBuilder,
+        private customVal:CustomvalidationService
       ){
-
+      this.formInitialization()
       }
 
       ngOnInit(): void {
-        if(
-          localStorage.getItem('routingSiteName') || localStorage.getItem('routinglocation')
-        ){
-          this.isShow = true;
-          this.TaskFormModel.location =  localStorage.getItem('routinglocation')
-          this.TaskFormModel.siteName =  localStorage.getItem('routingSiteName')
-        }
-        if(
-          localStorage.getItem('siteName') || localStorage.getItem('location')
-        ){
-          this.isShow = true;
-          this.TaskFormModel.location =  localStorage.getItem('location')
-          this.TaskFormModel.siteName =  localStorage.getItem('siteName')
-        }
-      
-        this. getSite()
+        this.getSite()
         this.fetchId = this.route.snapshot.paramMap.get('id');
         if(this.fetchId){
           this.dialogTitle = "Edit Task",
           this.clickTitle = "Update"
           this.getTaskByID(this.fetchId);
         }
-
-        this.newDynamic = { name: "", contact: "",charge: "",work:[]};
-        this.dynamicArray.push(this.newDynamic);
       }
       
       getSite(){
@@ -87,11 +75,18 @@ import { SiteRegService } from 'src/app/shared/site-reg.service';
 
     this.model['files'] =  this.fileObj;
     }
+
+
       saveData(){
-        
+        this.submitted = true;
+        console.log("this.labour",this.labour.length);
+        this.labour.markAllAsTouched()
+        if (this.taskForm.invalid) { 
+          return;
+        }
         if(this.fetchId){
          
-            this.galleryService.updateTask(this.TaskFormModel,this.fetchId).subscribe(e=>{
+            this.galleryService.updateTask(this.taskForm.value,this.fetchId).subscribe(e=>{
               if(e){
                
                 this.showToast('success','Task Updated Successfully');
@@ -104,12 +99,7 @@ import { SiteRegService } from 'src/app/shared/site-reg.service';
         }
       
         else{
-           this.dynamicArray = this.dynamicArray.filter((e)=>{
-            return e.name != ""
-          })
-          this.TaskFormModel.uniqueSiteId = String(localStorage.getItem('siteKeyId'))
-         
-          this.galleryService.addTask(this.TaskFormModel , this.dynamicArray,this.model['files']).subscribe(e=>{
+          this.galleryService.addTask(this.taskForm.value ,this.model['files']).subscribe(e=>{
             if(e){
              
               this.showToast('success','Task Added Successfully');
@@ -121,20 +111,17 @@ import { SiteRegService } from 'src/app/shared/site-reg.service';
           })
        }
         }
-       
-
-
-     
-   
+      
         showToast(status: NbComponentStatus,msg:any) {
           this.toastrService.show(status, msg, { status });
         }    
 
         getTaskByID(id:any){
           this.galleryService.getTaskById(id).subscribe(data => {
-            this.TaskFormModel = data.file;
-            this.TaskFormModel.startDate = new Date(data.file.startDate)
-            this.TaskFormModel.endDate = new Date(data.file.endDate)
+            this.taskForm.patchValue(data.file);
+            // this.taskForm.patchValue(data.file) = data.file;
+            // this.TaskFormModel.startDate = new Date(data.file.startDate)
+            // this.TaskFormModel.endDate = new Date(data.file.endDate)
         })
     }
 
@@ -142,7 +129,7 @@ import { SiteRegService } from 'src/app/shared/site-reg.service';
      
       this.newDynamic = { name: "", contact: "" ,charge:"",work:[]};
       this.dynamicArray.push(this.newDynamic);
-      this.TaskFormModel.totalLabour = Number((this.dynamicArray.length)-1)
+      // this.TaskFormModel.totalLabour = Number((this.dynamicArray.length)-1)
       return true;
     }
   
@@ -158,5 +145,56 @@ import { SiteRegService } from 'src/app/shared/site-reg.service';
       }
     }
   
+ formInitialization(){
+  this.taskForm = this.formBuilder.group({
+    imageUrl: ['',Validators.required],
+    startDate: ['',Validators.required],
+    endDate:[''],
+    taskName:['',Validators.required],
+    siteName: [localStorage.getItem('routingSiteName'),Validators.required],
+    location: [localStorage.getItem('routinglocation'),Validators.required],
+    totalLabour:[''],
+    uniqueSiteId:[localStorage.getItem('siteKeyId')],
+    progressStatus:['',Validators.required],
+    laboursArray: this.formBuilder.array([this.createLabours()],Validators.required)
+  })
+ }
 
+ createLabours(){
+  return this.formBuilder.group({
+    name:[null,Validators.required],
+    contact:[null,[Validators.required,this.customVal.phoneNumberValidator()]],
+    charge:[null,Validators.required],
+    work:[[]]
+  })
+ }
+
+ get labour():FormArray{
+  return <FormArray> this.taskForm.get('laboursArray');
+}
+
+get f(): { [key: string]: AbstractControl } {
+  return this.taskForm.controls;
+}
+
+addLabourRow(){
+  const lastItem = this.labour.at(this.labour.length - 1);
+    if (lastItem.valid) {
+      this.labour.push(this.createLabours());
+    } else {
+      
+      this.labour.markAllAsTouched()
+    }
+}
+getItem(index: number) {
+  return this.labour.controls[index] as FormGroup;
+}
+
+getNameControl(index: number,controlName:any) {
+  return this.getItem(index).get(controlName);
+}
+
+remove(index:any){
+    this.labour.removeAt(index)
+}
   }

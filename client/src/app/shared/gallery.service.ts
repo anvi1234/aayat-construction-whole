@@ -103,7 +103,10 @@ import { finalize, tap } from 'rxjs/operators';
         )
       }
 
-      addTask(task:any , labourArray:any, file: File): Observable<any> {
+      addTask(task:any , file: File): Observable<any> {
+
+        console.log("taskkkk",task);
+        
         const url = `${this.baseUri}/task/add-task`;
         var arr:any = []
         let path :any
@@ -120,7 +123,7 @@ import { finalize, tap } from 'rxjs/operators';
         
         let obj = {
           totalLabour :  task.totalLabour,
-          labourArray :JSON.stringify(labourArray),
+          labourArray :JSON.stringify(task.laboursArray),
           taskName : task.taskName,
           siteName:task.siteName,
           location: task.location,
@@ -130,6 +133,8 @@ import { finalize, tap } from 'rxjs/operators';
           progressStatus: task.progressStatus,
           avatar: firebaseArr
         }
+       
+        console.log("objectOftask",obj)
         return this.http.post(url, obj)
         .pipe(
           catchError(this.errorMgmt)

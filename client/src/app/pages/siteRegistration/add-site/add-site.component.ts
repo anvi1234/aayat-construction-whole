@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NbComponentStatus, NbGlobalLogicalPosition, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
-import { SiteDetails } from 'src/app/model/site.model';
 import { SiteRegService } from 'src/app/shared/site-reg.service';
+
 
 @Component({
   selector: 'app-add-site',
@@ -20,6 +21,7 @@ export class AddSiteRegComponent implements OnInit {
   public dialogTiltle = 'Add Site';
   physicalPositions = NbGlobalPhysicalPosition;
   logicalPositions = NbGlobalLogicalPosition;
+  siteRegisterationForm!: FormGroup;
   public siteName = [
     { name: 'Company Operator(CC)', value: 'Company Operator(CC)' },
     { name: 'Dealer Operator(DC)', value: 'Dealer Operator(DC)' },
@@ -29,9 +31,6 @@ export class AddSiteRegComponent implements OnInit {
     { name: 'Small Upgradation', value: 'Small Upgradation' },
     { name: 'Other', value: 'Other' },
   ];
-  public SiteFormModel: SiteDetails = new SiteDetails();
-  // error = ExpensesValidation(this.ExpensesFormModel, "init")
-
   public month = [
     'January',
     'February',
@@ -46,12 +45,16 @@ export class AddSiteRegComponent implements OnInit {
     'November',
     'December',
   ];
+  submitted: boolean;
   constructor(
     private siteService: SiteRegService,
     private route: ActivatedRoute,
     private toastrService: NbToastrService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private formBuilder:FormBuilder
+  ) {
+    this.formInitialization()
+  }
   ngOnInit(): void {
     this.fetchId = this.route.snapshot.paramMap.get('id');
     if (this.fetchId) {
@@ -61,29 +64,36 @@ export class AddSiteRegComponent implements OnInit {
   }
 
   saveData(type: any) {
-    if (type === 'Save') {
-      this.SiteFormModel.uniqueSiteId = this.genterateRandom()
-      if( this.SiteFormModel.uniqueSiteId){
-        this.siteService.createSite(this.SiteFormModel).subscribe((e: any) => {
-          if (e) {
-            this.showToast('success', 'Site Details Added Successfully');
-            this.router.navigate(['site']);
-          } else {
-            this.showToast('success', 'Site Details Not Added');
-          }
-        });
-      }
-    
+    this.submitted = true;
+    if (this.siteRegisterationForm.invalid) {
+      return;
     }
 
-    if (type == 'Update') {
-      this.siteService
-        .updateSite(this.fetchId, this.SiteFormModel)
-        .subscribe((res: any) => {
-          this.showToast('success', 'Sites Updated Successfully');
-          this.router.navigate(['site']);
-        });
+    else{
+      if (type === 'Save') {
+          this.siteService.createSite(this.siteRegisterationForm.value).subscribe((e: any) => {
+            if (e) {
+              this.showToast('success', 'Site Details Added Successfully');
+              this.router.navigate(['site']);
+            } else {
+              this.showToast('success', 'Site Details Not Added');
+            }
+          });
+        
+      
+      }
+  
+      if (type == 'Update') {
+        this.siteService
+          .updateSite(this.fetchId, this.siteRegisterationForm.value)
+          .subscribe((res: any) => {
+            this.showToast('success', 'Sites Updated Successfully');
+            this.router.navigate(['site']);
+          });
+      }
     }
+
+   
   }
 
   showToast(status: NbComponentStatus, msg: any) {
@@ -91,14 +101,21 @@ export class AddSiteRegComponent implements OnInit {
   }
 
   siteValueChange(data: any) {
-    if (data === 'Other') {
+    let value  = data.target.value
+    if (value === 'Other') {
       this.isOther = true;
-      this.SiteFormModel.siteName = '';
+      this.siteRegisterationForm.get('siteName')?.setValue('')
     }
   }
 
   getSiteByID(id: any) {
     this.siteService.getSiteById(id).subscribe((data) => {
+      this.siteRegisterationForm.patchValue(data.user)
+      this.siteRegisterationForm.get("date")?.patchValue(this.getConvert(data.user.date));
+      if(data.user.closingDate){
+        this.siteRegisterationForm.get("closingdate")?.patchValue(this.getConvert(data.user.closingDate));
+      }
+      
       let a = this.siteName.filter((e: any) => {
         if (e.name === data.user.siteName) {
           return true;
@@ -112,17 +129,7 @@ export class AddSiteRegComponent implements OnInit {
       } else {
         this.isOther = true;
       }
-      this.SiteFormModel = data.user;
-      this.SiteFormModel.number = data.user.number;
-      // this.closingDate = new Date(this.closingDate
-
-       if( this.SiteFormModel.closingdate!= null){
-        this.SiteFormModel.closingdate = this.getConvert(
-          this.SiteFormModel.closingdate
-        );
-       }
-    
-      this.SiteFormModel.date = this.getConvert(this.SiteFormModel.date);
+     
     });
   }
 
@@ -139,4 +146,23 @@ export class AddSiteRegComponent implements OnInit {
 
   }
 
+
+  formInitialization(){
+    this.siteRegisterationForm = this.formBuilder.group({
+      siteName: ['',Validators.required],
+      location: ['',Validators.required],
+      poNo: [''],
+      work:['',Validators.required],
+      number:[''],
+      billNo: ['',Validators.required],
+      date: ['',Validators.required],
+      status:['',Validators.required],
+      closingdate:[''],
+      uniqueSiteId:[this.genterateRandom()]
+    })
+  }
+
+  get f(): { [key: string]: AbstractControl } {
+    return this.siteRegisterationForm.controls;
+  }
 }

@@ -12,39 +12,40 @@
         margin-top: 30px;
         width: 170px;
         font-size: 18px;
-        text-shadow: 2px 2px black;
-        color:rgb(250, 247, 247)
+        
+        color:black
     }
 }
 .yellow button{
-    background-color: rgb(0, 223, 7);
+    background-color: #a6e9a8;
    
 }
 .red button{
-    background-color: red;
+    background-color: #fab9b9;
     
 }
 .userColor button{
-    background-color: rgb(255, 0, 238);
+    background-color: rgb(234, 180, 231);
   
 }
+
 .siteColor  button{
-    background-color: rgb(111, 0, 255);
+    background-color: rgb(210, 179, 249);
   
 }
 
 .attendColor button{
-    background-color: #ffea00;
+    background-color: #f0e788;
 }
 
 .expenseColor button{
-    background-color: rgb(30, 0, 255);
+    background-color: #bab3ed;
 }
 .galleryColor button{
-    background-color: rgb(77, 77, 82);
+    background-color: #9a9a9e;
 }
 .taskColor button{
-    background-color: rgb(208, 230, 7);
+    background-color: #ddbee1;
 }
 .otherToggle{
     margin-top:40px

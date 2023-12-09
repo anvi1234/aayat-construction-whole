@@ -26,11 +26,6 @@ export class SiteRegComponent implements OnInit {
   index = -1;
   selectedRow = 0
   public styleOne: boolean = false
-  public style2: boolean = false
-  public style3: boolean = false
-  public style4: boolean = false
-  public style5: boolean = false
-  public style6: boolean = false
   public byIndexingChangeColor = -1
   public style
   public isActiveClass: boolean = false
@@ -218,21 +213,21 @@ export class SiteRegComponent implements OnInit {
   }
 
   getSite() {
-    this.siteService.getSite().subscribe((e: any) => {
-      this.gridData = e.map((y: any) => {
-        y["date"] = y.date;
-        return y;
-      })
-      this.gridData = this.gridData.sort((dateA: any, dateB: any) => new Date(dateB.date).valueOf() - new Date(dateA.date).valueOf());
+    this.siteService.getSite().subscribe((e: any) => { 
+      this.gridData = e;
       let active = this.gridData.filter((e) => {
         return e.status === "Active"
+      })
+      let hold = this.gridData.filter((e) => {
+        return e.status === "Hold"
       })
       let closed = this.gridData.filter((e) => {
         return e.status === "Closed"
       })
 
-      this.gridData = [...active, ...closed]
+      this.gridData = [...active,...hold, ...closed]
       this.filteredData = this.gridData
+     
       this.siteService.dataForFilter.next(this.gridData)
       this.source.load(this.gridData);
     })

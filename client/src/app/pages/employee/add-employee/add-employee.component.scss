@@ -13,25 +13,6 @@ nb-checkbox {
   nb-card.inline-form-card nb-card-body {
     padding-bottom: 0;
   }
-  nb-card{
-    background-color: transparent;
-  }
-  input{
-    margin-bottom: 1rem;
-  
-  }
-  nb-select{
-    width:100%;
-    margin-bottom: 1rem;
-  }
-
-  #dateBox{
-    width:100%
-  }
-
-  .label{
-    font-size: 15px;
-  }
 
   th{
     color:#8f9bb3
@@ -40,4 +21,18 @@ nb-checkbox {
   .icon{
     color:white;
     font-size: 25px;
+  }
+
+  nb-card{
+    background-color: white;
+  }
+  .requiredcolor{
+    color: red;
+  }
+  label{
+    font-size: 14px;
+  }
+  
+  .invalid-feedback{
+    font-size: 12px;
   }

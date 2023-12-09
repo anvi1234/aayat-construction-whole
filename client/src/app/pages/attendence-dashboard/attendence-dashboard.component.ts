@@ -73,6 +73,7 @@ export class AttendenceDashboardComponent implements OnInit {
   aatendecneObj: any;
   currentMonthAbscent: any;
   monthDetails: { Present: any; absent: number; noOfDay: number };
+  tempData: any;
   constructor(
     private route: ActivatedRoute,
     private attendenceService: EmployeeService,
@@ -98,7 +99,6 @@ export class AttendenceDashboardComponent implements OnInit {
     { id: 7, name: 'Aug' },
     { id: 8, name: 'Sept' },
     { id: 9, name: 'Oct' },
-    { id: 9, name: 'Sept' },
     { id: 10, name: 'Nov' },
     { id: 11, name: 'Dec' },
   ];
@@ -152,6 +152,7 @@ export class AttendenceDashboardComponent implements OnInit {
         return e;
       });
       this.allData = data;
+      this.tempData = this.allData;
       this.countAttendence(this.allData);
       this.monthDetails = this.getAbsentAndPresent(new Date().getMonth());
       this.currentMonthAtt = data.filter((y: any) => {
@@ -279,5 +280,13 @@ export class AttendenceDashboardComponent implements OnInit {
         this.lineChart1 = [{ data: this.monthCountArray, label: 'Present' }];
       }
     });
+  }
+
+  monthChangeForGrid(data:any){
+    let value = data.target.value;
+        this.tempData = this.allData.filter((e:any)=>{
+          return e.month == value
+        })
+   
   }
 }

@@ -113,6 +113,7 @@ export class DashboardComponent {
       this.expenseSerrvice.getExpenses().subscribe((res: any) => {
         this.expenseData = res;
         res?.forEach((amount: any) => {
+          console.log("totalExpense",amount.expenseAmount)
           this.totalEx = this.totalEx + amount.expenseAmount;
         });
         resolve(res);

@@ -26,7 +26,7 @@ export class SiteDetails {
     siteName:boolean;
     location:boolean;
     billNo:boolean;
-    closingdate:boolean;
+    date:boolean;
     work:boolean;
     status:boolean;
     constructor(status:any){
@@ -34,8 +34,9 @@ export class SiteDetails {
         this.siteName = status,
         this.location = status,
         this.billNo = status,
-        this.closingdate = status,
+        this.date = status,
         this.work = status
+        this.status = status
       
     }
 }
