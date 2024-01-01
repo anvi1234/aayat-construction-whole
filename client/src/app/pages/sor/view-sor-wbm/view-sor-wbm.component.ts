@@ -18,7 +18,6 @@ export class ViewSorWbmComponent implements OnInit {
 
   ngOnInit(): void {
     this.sorService.sitenameforBill.subscribe((res)=>{
-      console.log("bbbbbbbb",res)
         this.data = res;
     })
   }

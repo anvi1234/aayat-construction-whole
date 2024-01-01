@@ -8,6 +8,8 @@ import {
   NbToastrService,
 } from '@nebular/theme';
 import { Router } from '@angular/router';
+import { Subscribe } from '@firebase/util';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-sor',
@@ -57,10 +59,12 @@ export class AddSorComponent implements OnInit {
     },
   ];
   data: any = [];
+  siteNameBillSubscribe$:Subscription
   ngOnInit(): void {
     this.getSOR();
-    this.sorService.sitenameforBill.subscribe((res: any) => {
+    this.siteNameBillSubscribe$ = this.sorService.sitenameforBill.subscribe((res: any) => {
       if (res) {
+        console.log("res",res);
         (this.siteName = res.siteName),
           (this.nameOfConstruction = res.nameOfConstruction);
         this.nameOfWork = res.nameOfWork;
@@ -73,7 +77,11 @@ export class AddSorComponent implements OnInit {
         this.isSelect = false;
         this.UPDATE_ID = res._id;
       }
+      else{
+        this.isSelect = true;
+      }
     });
+
   }
   change(index1: any, index2: any, data: any) {
     let array: any = [];
@@ -136,7 +144,6 @@ export class AddSorComponent implements OnInit {
 
   getSOR() {
     this.sorService.getSampleSOR().subscribe((res) => {
-      console.log('xxxxxxxxxx', res);
       this.sampleSorData = res;
     });
   }
@@ -151,11 +158,11 @@ export class AddSorComponent implements OnInit {
   }
 
   generateAmount() {
+
     let number = 0;
 
     this.data.forEach((e) => {
       number = number + e.AMOUNT;
-      console.log('bbbbbbbb', e.AMOUNT);
     });
 
     this.totalAmount = Math.round(number);
@@ -237,5 +244,32 @@ export class AddSorComponent implements OnInit {
       }
     });
     console.log('value', this.data, this.siteName);
+  }
+
+  ngOnDestroy(){
+    console.log("destrou")
+    this.siteNameBillSubscribe$.unsubscribe();
+    this.sorService.sitenameforBill.next(null)
+    this.isSelect = true;
+  }
+
+  changeSGSTValue(){
+    this.sgstAmount = ((Number(this.totalAmount) * this.sgst) / 100).toFixed(2);
+    this.combineAmount = (
+      Number(this.totalAmount) +
+      Number(this.gstAmount) +
+      Number(this.sgstAmount)
+    ).toFixed(2);
+    this.sgstDialogRef.close();
+  }
+
+  changeCGSTValue(){
+    this.gstAmount = ((Number(this.totalAmount) * this.cgst) / 100).toFixed(2);
+    this.combineAmount = (
+      Number(this.totalAmount) +
+      Number(this.gstAmount) +
+      Number(this.sgstAmount)
+    ).toFixed(2);
+    this.cgstDialogRef.close();
   }
 }

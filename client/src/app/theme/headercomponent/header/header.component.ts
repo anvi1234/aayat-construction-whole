@@ -33,9 +33,23 @@ export class HeaderComponent  {
 
     }
 
+    public Designation = [
+      {id:1,name:"Admin"},
+      {id:2,name:"Supervisor"},
+      {id:3,name:"Mechanics"},
+      {id:4,name:"Electrician"},
+      {id:5,name:"Plumber"},
+      {id:6,name:"Driver"},
+      {id:7,name:"Office Staff"},
+  
+    ]
+
   ngOnInit(){
    this.employee =  localStorage.getItem("employee")
-   this.designation = localStorage.getItem("designation")
+   let value =  this.Designation.filter((e:any)=>{
+          return e.id == localStorage.getItem("designation");
+   })
+   this.designation = value[0].name;
     this.innerWidth = window.innerWidth;
     if(this.innerWidth <= 785){
       this.logoutShow = false

@@ -78,10 +78,6 @@ export class AddEmployeeComponent implements OnInit{
 
   }
 
-  getDesignationid(name:any){
-
-  }
-
   saveData1(){
     this.employeeService.createEmployee(this.empRegisterationForm.value).subscribe((e)=>{
       if(e){
@@ -99,24 +95,9 @@ export class AddEmployeeComponent implements OnInit{
   getEmployeeByID(id:any){
       this.employeeService.getEmployeeById(id).subscribe(data => {
         this.empRegisterationForm.patchValue(data.user);
-        // this.EmployeeFormModel.designation = this.getEmployeeDes(data.user.designation);
      });
     }
 
-    // getEmployeeDes(desId:any){
-    //    let nameValue = this.Designation.filter((e:any)=>{
-    //      return e.id == desId;
-    //     })
-    //     return nameValue[0].name
-    // }
-
-    // getEmployeeDesID(desName:any){
-    //    let idValue = this.Designation.filter((e:any)=>{
-    //      return e.name === desName;
-    //     })
-    //     return idValue[0].id
-    // }
-  
     updateEmployeeByID(id:any){
       this.employeeService.updateEmployee(id,this.empRegisterationForm.value)
       .subscribe(res => {
